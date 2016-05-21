@@ -236,8 +236,8 @@ uint32_t Get_v_value(const uint16_t cell_ID, uint32_t delta_ss, uint32_t M_sc, u
             calc_prs_c( c_init, len, n_prs); /*generate_pseudo random sequence*/
             if ((sequence_hopping == 1) && (group_hopping == 0))
             {
-		 v = n_prs[ns];
-		 return v;
+		       v = n_prs[ns];
+		       return v;
             }
         }
         else
@@ -503,7 +503,7 @@ srs_gen(r_srs, N_sc, n_ul_rb, sf_idx, group_hopping, sequence_hopping, cell_ID, 
 for ( n = 0; n < N_sc * n_ul_rb; n++)
         {
             //seq->r_srs[nslot][n] = cexpf( I * ( r_uv[n] + ( alpha * n ) ) );
-            printf("r_srs = %f + i %f \n ",creal (r_srs[n]),cimag( r_srs[n]));
+            //printf("r_srs = %f + i %f \n ",creal (r_srs[n]),cimag( r_srs[n]));
         }
 
 }
