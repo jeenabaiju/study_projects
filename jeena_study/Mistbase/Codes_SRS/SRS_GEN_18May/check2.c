@@ -431,7 +431,7 @@ static void compute_r_uv_arg(float *r_uv, uint32_t n_ul_rb, uint32_t ns, uint32_
     else
     {
         float r_uv_temp[N_zc];
-        float r_uv[M_sc];
+        //float r_uv[M_sc];
         float r_uv_xq[M_sc];
 		int i;
         //calculate sequence number v
