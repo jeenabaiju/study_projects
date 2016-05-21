@@ -232,7 +232,7 @@ uint32_t Get_v_value(const uint16_t cell_ID, uint32_t delta_ss, uint32_t M_sc, u
             uint8_t n_prs[len];
 	        const uint16_t n_ID = Get_cellID( N_ID_PUCCH, N_ID_PUSCH, cell_ID,PUCCH_ID, PUSCH_ID);
 
-            c_init = ((n_ID / 30) << 5) + (((n_ID  % 30) + delta_ss) % 30);
+            uint32_t  c_init = ((n_ID / 30) << 5) + (((n_ID  % 30) + delta_ss) % 30);
             calc_prs_c( c_init, len, n_prs); /*generate_pseudo random sequence*/
             if ((sequence_hopping == 1) && (group_hopping == 0))
             {
@@ -258,7 +258,7 @@ uint32_t get_f_gh(const uint16_t cell_ID, uint32_t ns, uint32_t group_hopping, u
     /*generate_pseudo random sequence /** Computes n_prs values as defined in 5.5.2.1.1 of 36.211 */
     calc_prs_c(c_init, len, n_prs);
     /** Computes sequence-group pattern f_gh according to 5.5.1.3 of 36.211 */
-    f_gh[ns] = 0;
+    f_gh = 0;
         int i;
 	
     if(SRS_UL.group_hopping == 1)
