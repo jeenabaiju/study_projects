@@ -458,6 +458,7 @@ int srs_gen(double complex *r_srs, uint32_t N_sc, uint32_t n_ul_rb,uint32_t sf_i
     uint32_t f_ss = get_f_ss(cell_ID, N_ID_PUCCH, N_ID_PUSCH, PUCCH_ID, PUSCH_ID);
     uint32_t u = Get_u_value( cell_ID, ns, group_hopping, N_ID_PUCCH, N_ID_PUSCH, PUCCH_ID, PUSCH_ID);
     uint32_t v = Get_v_value( cell_ID, delta_ss, M_sc, N_sc, ns, sequence_hopping, group_hopping, N_ID_PUCCH, N_ID_PUSCH, PUCCH_ID, PUSCH_ID);
+	printf(" vvalue = %d \n", v);
     float q = get_qvalue(u, v, N_zc);
 	printf(" q value = %f \n", q);
     for (nslot = 2*sf_idx; nslot < 2*(sf_idx + 1); nslot++)
