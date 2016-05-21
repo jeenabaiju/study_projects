@@ -478,7 +478,7 @@ uint32_t delta_ss = 0; // delta_ss Δ ss ∈ { 0 , 1 ,..., 29 }
 uint32_t group_hopping = 0;
 uint32_t sequence_hopping = 1;
 uint32_t N_sc = 12;
-uint32_t ns = 20, v, u;
+uint32_t ns = 20 ;
 uint32_t f_gh;
 uint32_t N_Tx = 1;
 uint32_t sf_idx = 0;
