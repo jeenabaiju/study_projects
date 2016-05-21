@@ -443,7 +443,7 @@ static void compute_r_uv_arg(float *r_uv, uint32_t n_ul_rb, uint32_t ns, uint32_
 
 /* Generate SRS signal as defined in Section 5.5.3.1 */
 /*int srs_gen(struct srs_sequence *seq, uint32_t N_sc,uint32_t n_ul_rb uint32_t N_zc, uint32_t sf_idx, uint32_t group_hopping, uint32_t sequence_hopping, const uint16_t cell_ID, uint32_t delta_ss, uint32_t ns, uint32_t N_Tx, uint32_t Cyclic_shift, uint32_t K_Tc)*/
-int srs_gen(__complex__ double *r_srs, uint32_t N_sc, uint32_t n_ul_rb,uint32_t sf_idx, uint32_t group_hopping, uint32_t sequence_hopping, const uint16_t cell_ID, uint32_t delta_ss, uint32_t ns, uint32_t N_Tx, uint32_t Cyclic_shift, uint32_t K_Tc, uint32_t bw_cfg,uint32_t B,uint32_t N_ID_PUCCH, uint32_t N_ID_PUSCH, const uint16_t PUCCH_ID, const uint16_t PUSCH_ID)
+int srs_gen(double complex *r_srs, uint32_t N_sc, uint32_t n_ul_rb,uint32_t sf_idx, uint32_t group_hopping, uint32_t sequence_hopping, const uint16_t cell_ID, uint32_t delta_ss, uint32_t ns, uint32_t N_Tx, uint32_t Cyclic_shift, uint32_t K_Tc, uint32_t bw_cfg,uint32_t B,uint32_t N_ID_PUCCH, uint32_t N_ID_PUSCH, const uint16_t PUCCH_ID, const uint16_t PUSCH_ID)
 {
     int n ;
     uint32_t nslot;
@@ -496,14 +496,16 @@ const uint16_t PUSCH_ID = 466;
 int n;
 uint32_t M_sc;
 uint32_t n_ul_rb = 6;
+M_sc = Get_Msc_values( bw_cfg, B, n_ul_rb, N_sc);
 uint32_t v = Get_v_value( cell_ID, delta_ss, M_sc, N_sc, ns, sequence_hopping, group_hopping, N_ID_PUCCH, N_ID_PUSCH, PUCCH_ID, PUSCH_ID);uint32_t u = Get_u_value( cell_ID, ns, group_hopping, N_ID_PUCCH, N_ID_PUSCH, PUCCH_ID, PUSCH_ID);
 printf("u = %d v = %d\n ",u,v);
-__complex__ double r_srs[N_sc * n_ul_rb];
+double complex r_srs[N_sc * n_ul_rb*2];
 srs_gen(r_srs, N_sc, n_ul_rb, sf_idx, group_hopping, sequence_hopping, cell_ID, delta_ss,ns, N_Tx, Cyclic_shift, K_Tc, bw_cfg, B, N_ID_PUCCH, N_ID_PUSCH,  PUCCH_ID, PUSCH_ID);
 for ( n = 0; n < N_sc * n_ul_rb; n++)
         {
             //seq->r_srs[nslot][n] = cexpf( I * ( r_uv[n] + ( alpha * n ) ) );
-            //printf("r_srs = %f + i %f \n ",creal (r_srs[n]),cimag( r_srs[n]));
+            printf("r_srs = %f + i %f \n ",creal (r_srs[n]),cimag( r_srs[n]));
+			//printf("Size %d",printf("r_srs = %f + i %f \n ",creal (r_srs[n]),cimag( r_srs[n]));)
         }
 
 }
