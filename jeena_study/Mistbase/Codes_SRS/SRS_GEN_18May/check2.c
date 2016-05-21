@@ -261,7 +261,7 @@ uint32_t get_f_gh(const uint16_t cell_ID, uint32_t ns, uint32_t group_hopping, u
     f_gh = 0;
         int i;
 	
-    if(SRS_UL.group_hopping == 1)
+    if(group_hopping == 1)
     {
         for (i = 0; i < 8; i++)
         {
