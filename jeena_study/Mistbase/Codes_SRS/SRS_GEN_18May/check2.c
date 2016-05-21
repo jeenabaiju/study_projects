@@ -228,7 +228,6 @@ uint32_t Get_v_value(const uint16_t cell_ID, uint32_t delta_ss, uint32_t M_sc, u
         {
             uint32_t len = ns;
             int i;
-            uint8_t prs[len];
             uint8_t n_prs[len];
 	        const uint16_t n_ID = Get_cellID( N_ID_PUCCH, N_ID_PUSCH, cell_ID,PUCCH_ID, PUSCH_ID);
 
@@ -237,6 +236,7 @@ uint32_t Get_v_value(const uint16_t cell_ID, uint32_t delta_ss, uint32_t M_sc, u
             if ((sequence_hopping == 1) && (group_hopping == 0))
             {
 		       v = n_prs[ns];
+			   printf( "v= %d \n", v);
 		       return v;
             }
         }
