@@ -4,7 +4,6 @@
 #include <strings.h>
 #include <stdlib.h>
 #include <complex.h>
-
 #include <stdint.h>
 #include <stdio.h>
 #include <stdbool.h>
@@ -221,7 +220,7 @@ void calc_prs_c(const uint32_t c_init, const uint32_t len, uint8_t* prs_c)
 	}
 
 }
-uint32_t Get_v_value(const uint16_t cell_ID, uint32_t delta_ss, uint32_t M_sc, uint32_t N_sc, uint32_t ns, uint32_t sequence_hopping, uint32_t group_hopping)
+uint32_t Get_v_value(const uint16_t cell_ID, uint32_t delta_ss, uint32_t M_sc, uint32_t N_sc, uint32_t ns, uint32_t sequence_hopping, uint32_t group_hopping,uint32_t N_ID_PUCCH, uint32_t N_ID_PUSCH, const uint16_t PUCCH_ID, const uint16_t  PUSCH_ID)
 {
         /*Sequence hopping only applies for reference-signals of length M_sc_RS ≥ 6*N_sc_RB .For M sc RS < 6 N sc RB ,  v within u is v = 0 .*/
         uint32_t v;
@@ -231,7 +230,9 @@ uint32_t Get_v_value(const uint16_t cell_ID, uint32_t delta_ss, uint32_t M_sc, u
             int i;
             uint8_t prs[len];
             uint8_t n_prs[len];
-	    uint32_t c_init = ((cell_ID / 30) << 5) + (((cell_ID % 30) + delta_ss) % 30);
+	        const uint16_t n_ID = Get_cellID( N_ID_PUCCH, N_ID_PUSCH, cell_ID,PUCCH_ID, PUSCH_ID);
+
+            c_init = ((n_ID / 30) << 5) + (((n_ID  % 30) + delta_ss) % 30);
             calc_prs_c( c_init, len, n_prs); /*generate_pseudo random sequence*/
             if ((sequence_hopping == 1) && (group_hopping == 0))
             {
@@ -245,30 +246,38 @@ uint32_t Get_v_value(const uint16_t cell_ID, uint32_t delta_ss, uint32_t M_sc, u
             return v;
         } 
 }
-uint32_t get_f_gh(uint32_t *f_gh, const uint16_t cell_ID, uint32_t ns, uint32_t group_hopping)
+uint32_t get_f_gh(const uint16_t cell_ID, uint32_t ns, uint32_t group_hopping, uint32_t N_ID_PUCCH, uint32_t N_ID_PUSCH, const uint16_t PUCCH_ID, const uint16_t PUSCH_ID)
 {
-    uint32_t len = ( 8 * ns + 7 );
+    uint32_t len = ( 8 * ns + 7 );// Maximum length
     uint8_t n_prs[len];
-    uint32_t c_init = floor( cell_ID / 30 );
+    uint32_t count = 0;
+    uint32_t f_gh;
+	
+    const uint16_t n_ID = Get_cellID( N_ID_PUCCH, N_ID_PUSCH,cell_ID, PUCCH_ID, PUSCH_ID);
+    uint32_t c_init = floor( n_ID / 30 );
     /*generate_pseudo random sequence /** Computes n_prs values as defined in 5.5.2.1.1 of 36.211 */
     calc_prs_c(c_init, len, n_prs);
     /** Computes sequence-group pattern f_gh according to 5.5.1.3 of 36.211 */
     f_gh[ns] = 0;
-    int i ;
-    if(group_hopping)
+        int i;
+	
+    if(SRS_UL.group_hopping == 1)
     {
         for (i = 0; i < 8; i++)
         {
-            f_gh[ns] += (((uint32_t) n_prs[8 * ns + i]) << i) % 30;/*
-
-                         i=7
-            summation of [c( 8*ns+ i )⋅ 2^i ]mod 30 if group hopping is enabled
-                         i=0                                                      */
+            count += (((uint32_t) n_prs[8 * ns + i]) << i) % 30;
         }
+        uint32_t f_gh = count;
+        return f_gh;
+
+        /*             i=7
+        summation of [c( 8*ns+ i )⋅ 2^i ]mod 30 if group hopping is enabled
+                       i=0                                                      */
     }
     else
     {
-        f_gh[ns] = 0;
+       uint32_t f_gh = 0;
+       return f_gh;
     }
 }
 /*
