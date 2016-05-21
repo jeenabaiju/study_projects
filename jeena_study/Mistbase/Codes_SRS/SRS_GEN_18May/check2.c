@@ -136,10 +136,11 @@ uint32_t srsbwtable_idx(uint32_t n_ul_rb)
     }
 }
 
-void Get_Msc_values(uint32_t bw_cfg, uint32_t B, uint32_t n_ul_rb, uint32_t N_sc)
+uint32_t  Get_Msc_values(uint32_t bw_cfg, uint32_t B, uint32_t n_ul_rb, uint32_t N_sc)
 {
    uint32_t M_sc;
-   return  m_srs_b[srsbwtable_idx(n_ul_rb)][B][bw_cfg] * N_sc / 2;/* According to 3GPP 36.211 5.5.3.2*/
+   M_sc = m_srs_b[srsbwtable_idx(n_ul_rb)][B][bw_cfg] * N_sc / 2;/* According to 3GPP 36.211 5.5.3.2*/
+   return M_sc;
 }
 /***********************************************************************************************************************/
 /*/*
@@ -189,8 +190,9 @@ const uint16_t Get_cellID(uint32_t N_ID_PUCCH, uint32_t N_ID_PUSCH, const uint16
 }
 
 
-void calc_prs_c(const uint32_t c_init, const uint32_t len, uint8_t* prs_c){
-	uint32_t N_c = 1600;
+void calc_prs_c(const uint32_t c_init, const uint32_t len, uint8_t* prs_c)
+{
+       	uint32_t N_c = 1600;
 	uint32_t x1, x2;
 	x1 = 0x54D21B24; // x1 sequence moved forward
 	x2 = c_init;
@@ -219,32 +221,31 @@ void calc_prs_c(const uint32_t c_init, const uint32_t len, uint8_t* prs_c){
 	}
 
 }
-uint32_t Sequence_Hopping(const uint16_t cell_ID, uint32_t delta_ss, uint32_t M_sc, uint32_t N_sc, uint32_t ns, uint32_t sequence_hopping, uint32_t group_hopping)
+uint32_t Get_v_value(const uint16_t cell_ID, uint32_t delta_ss, uint32_t M_sc, uint32_t N_sc, uint32_t ns, uint32_t sequence_hopping, uint32_t group_hopping)
 {
-    /*Sequence hopping only applies for reference-signals of length M_sc_RS ≥ 6*N_sc_RB .For M sc RS < 6 N sc RB ,  v within u is v = 0 .*/
-    uint32_t v;
-    if ( M_sc >= 6*N_sc)
-    {
-        uint32_t len = ns;
-        int i;
-        uint8_t prs[len];
-        uint8_t n_prs[len];
-        uint32_t c_init = ((cell_ID / 30) << 5) + (((cell_ID % 30) + delta_ss) % 30);
-        calc_prs_c( c_init, len, n_prs); /*generate_pseudo random sequence*/
-        if ((sequence_hopping == 1) && (group_hopping == 0))
+        /*Sequence hopping only applies for reference-signals of length M_sc_RS ≥ 6*N_sc_RB .For M sc RS < 6 N sc RB ,  v within u is v = 0 .*/
+        uint32_t v;
+        if ( M_sc >= 6*N_sc)
         {
-			 v = n_prs[ns];
-			 return v;
+            uint32_t len = ns;
+            int i;
+            uint8_t prs[len];
+            uint8_t n_prs[len];
+	    uint32_t c_init = ((cell_ID / 30) << 5) + (((cell_ID % 30) + delta_ss) % 30);
+            calc_prs_c( c_init, len, n_prs); /*generate_pseudo random sequence*/
+            if ((sequence_hopping == 1) && (group_hopping == 0))
+            {
+		 v = n_prs[ns];
+		 return v;
+            }
         }
-    }
-    else
-    {
-        v = 0;
-        return v;
-    }
-
+        else
+        {
+            v = 0;
+            return v;
+        } 
 }
-uint32_t Group_hopping_f_gh(uint32_t *f_gh, const uint16_t cell_ID, uint32_t ns, uint32_t group_hopping)
+uint32_t get_f_gh(uint32_t *f_gh, const uint16_t cell_ID, uint32_t ns, uint32_t group_hopping)
 {
     uint32_t len = ( 8 * ns + 7 );
     uint8_t n_prs[len];
@@ -287,14 +288,14 @@ uint32_t get_f_ss(const uint16_t cell_ID, uint32_t N_ID_PUCCH, uint32_t N_ID_PUS
  * input- number of slots, group hopping -enabled/disabled, cellID
  * output - u value
  */
-uint32_t Get_u_value(const uint16_t cell_ID, uint32_t ns, uint32_t  group_hopping, uint32_t  N_ID_PUSCH, uint32_t N_ID_PUSCH, const uint16_t PUCCH_ID, const uint16_t PUSCH_ID)
+uint32_t Get_u_value(const uint16_t cell_ID, uint32_t ns, uint32_t  group_hopping, uint32_t  N_ID_PUCCH, uint32_t N_ID_PUSCH, const uint16_t PUCCH_ID, const uint16_t PUSCH_ID)
 {
     uint32_t f_ss, f_gh;
     uint32_t u;
-    f_ss = get_f_ss( Scell_ID, N_ID_PUCCH, N_ID_PUSCH,PUCCH_ID, PUSCH_ID);
+    f_ss = get_f_ss( cell_ID, N_ID_PUCCH, N_ID_PUSCH,PUCCH_ID, PUSCH_ID);
     if(group_hopping == 1)
     {
-        f_gh = get_f_gh(cell_ID, ns, .group_hopping,N_ID_PUCCH, N_ID_PUSCH, PUCCH_ID, PUSCH_ID);
+        f_gh = get_f_gh(cell_ID, ns,group_hopping,N_ID_PUCCH, N_ID_PUSCH, PUCCH_ID, PUSCH_ID);
         u = ( f_gh + f_ss ) % 30;
         return u;
     }
@@ -387,8 +388,16 @@ static void Seq_Msc24_Exp(float *Seq_2Nsc_exp, uint8_t u, uint32_t N_sc)
     int i;
     for (i = 0 ;i < 2*N_sc; i++)
     {
-        Seq_2Nsc_exp[i] = Phi_M_sc_24[u][i] * M_PI / 4));
+        Seq_2Nsc_exp[i] = Phi_M_sc_24[u][i] * M_PI / 4;
 
+    }
+}
+static void r_uv_mprb(float *r_uv, float *r_uv_xq,uint32_t M_sc, uint32_t N_zc)
+{
+    int n;
+    for (n = 0; n < M_sc; n++)
+    {
+        r_uv[n] = r_uv_xq[n % N_zc];
     }
 }
 /***********************************************************************************************/
@@ -404,11 +413,11 @@ static void compute_r_uv_arg(float *r_uv, uint32_t n_ul_rb, uint32_t ns, uint32_
 
     if (n_ul_rb == 1)
     {
-        Seq_Msc12_Exp(r_uv, u);
+        Seq_Msc12_Exp(r_uv, u, N_sc);
     }
     else if (n_ul_rb == 2)
     {
-        Seq_Msc24_Exp(r_uv, u);
+        Seq_Msc24_Exp(r_uv, u,N_sc);
     }
     else
     {
@@ -421,27 +430,18 @@ static void compute_r_uv_arg(float *r_uv, uint32_t n_ul_rb, uint32_t ns, uint32_
     }
 }
 
-static void r_uv_mprb(float *r_uv, float *r_uv_xq,uint32_t M_sc, uint32_t N_zc)
-{
-    int n;
-    for (n = 0; n < M_sc; n++)
-    {
-        r_uv[n] = r_uv_xq[n % N_zc];
-    }
-}
-
 /* Generate SRS signal as defined in Section 5.5.3.1 */
 /*int srs_gen(struct srs_sequence *seq, uint32_t N_sc,uint32_t n_ul_rb uint32_t N_zc, uint32_t sf_idx, uint32_t group_hopping, uint32_t sequence_hopping, const uint16_t cell_ID, uint32_t delta_ss, uint32_t ns, uint32_t N_Tx, uint32_t Cyclic_shift, uint32_t K_Tc)*/
-int srs_gen(double complex *r_srs, uint32_t N_sc, uint32_t n_ul_rb,uint32_t sf_idx, uint32_t group_hopping, uint32_t sequence_hopping, const uint16_t cell_ID, uint32_t delta_ss, uint32_t ns, uint32_t N_Tx, uint32_t Cyclic_shift, uint32_t K_Tc, uint32_t bw_cfg,uint32_t B,uint32_t N_ID_PUCCH, uint32_t N_ID_PUSCH, const uint16_t PUCCH_ID, const uint16_t PUSCH_ID)
+int srs_gen(__complex__ double *r_srs, uint32_t N_sc, uint32_t n_ul_rb,uint32_t sf_idx, uint32_t group_hopping, uint32_t sequence_hopping, const uint16_t cell_ID, uint32_t delta_ss, uint32_t ns, uint32_t N_Tx, uint32_t Cyclic_shift, uint32_t K_Tc, uint32_t bw_cfg,uint32_t B,uint32_t N_ID_PUCCH, uint32_t N_ID_PUSCH, const uint16_t PUCCH_ID, const uint16_t PUSCH_ID)
 {
     int n ;
     uint32_t nslot;
-    float root_q_arg[N_zc];
     float Seq_Nsc_exp[N_sc];
     float Seq_2Nsc_exp[N_sc];
     uint32_t M_sc = Get_Msc_values( bw_cfg, B, n_ul_rb, N_sc);
     uint32_t N_zc = Get_Nzc( M_sc);
     float r_uv[M_sc];
+    float root_q_arg[N_zc];
     float r_uv_xq[M_sc];
     uint32_t f_gh = get_f_gh(cell_ID, ns, group_hopping, N_ID_PUCCH, N_ID_PUSCH, PUCCH_ID, PUSCH_ID);
     uint32_t f_ss = get_f_ss(cell_ID, N_ID_PUCCH, N_ID_PUSCH, PUCCH_ID, PUSCH_ID);
@@ -451,7 +451,7 @@ int srs_gen(double complex *r_srs, uint32_t N_sc, uint32_t n_ul_rb,uint32_t sf_i
     for (nslot = 2*sf_idx; nslot < 2*(sf_idx + 1); nslot++)
     {
         float alpha = alpha_p(N_Tx, Cyclic_shift, K_Tc);//n_srs
-        compute_r_uv_arg(r_uv, n_ul_rb, u, v, M_sc, N_zc, ns);
+        compute_r_uv_arg(r_uv, n_ul_rb,ns,M_sc, N_zc,sequence_hopping,group_hopping,u,v);
         // Do complex exponential and adjust amplitude
         for ( n = 0; n < M_sc; n++)
         {
@@ -474,21 +474,25 @@ uint32_t f_gh;
 uint32_t N_Tx = 1;
 uint32_t sf_idx = 0;
 uint32_t K_Tc = 2;
+uint32_t bw_cfg = 0;
+uint32_t B = 1;
 uint32_t Cyclic_shift = 0;
 uint32_t N_ID_PUCCH = 0;
 uint32_t N_ID_PUSCH = 0;
 const uint16_t PUCCH_ID = 499;
 const uint16_t PUSCH_ID = 466;
 int n;
+uint32_t M_sc;
+uint32_t n_ul_rb = 6;
 v = Sequence_Hopping( cell_ID, delta_ss, M_sc, N_sc, ns, sequence_hopping, group_hopping);
 u = Get_u_value( cell_ID, ns, group_hopping, N_ID_PUCCH, N_ID_PUSCH,  PUCCH_ID, PUSCH_ID);
 printf("u = %d v = %d\n ",u,v);
-double complex  r_srs[N_sc * n_ul_rb];
-srs_gen(*r_srs, N_sc, n_ul_rb, sf_idx, group_hopping, sequence_hopping, cell_ID, delta_ss,ns, N_Tx, Cyclic_shift, K_Tc, bw_cfg, B, N_ID_PUCCH, N_ID_PUSCH,  PUCCH_ID, PUSCH_ID)
+__complex__ double r_srs[N_sc * n_ul_rb];
+srs_gen(r_srs, N_sc, n_ul_rb, sf_idx, group_hopping, sequence_hopping, cell_ID, delta_ss,ns, N_Tx, Cyclic_shift, K_Tc, bw_cfg, B, N_ID_PUCCH, N_ID_PUSCH,  PUCCH_ID, PUSCH_ID);
 for ( n = 0; n < N_sc * n_ul_rb; n++)
         {
             //seq->r_srs[nslot][n] = cexpf( I * ( r_uv[n] + ( alpha * n ) ) );
-            printf("r_srs = %f + i %f \n ",creal (r_srs[n]),cimag( r_uv[n]));
+            printf("r_srs = %f + i %f \n ",creal (r_srs[n]),cimag( r_srs[n]));
         }
 
 }
