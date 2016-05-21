@@ -436,8 +436,8 @@ static void compute_r_uv_arg(float *r_uv, uint32_t n_ul_rb, uint32_t ns, uint32_
 		int i;
         //calculate sequence number v
         Root_q_arg(r_uv_temp, n_ul_rb, u, v, N_zc);  
-		printf(" r_uv_temp[%d] = %f \n ",N_zc, r_uv_temp[N_zc]);
-        r_uv_mprb(r_uv, r_uv_xq, M_sc, N_zc);
+		printf(" r_uv_temp[%d] = %f \n ",N_zc, r_uv_temp[N_zc-1]);
+        r_uv_mprb(r_uv, r_uv_temp, M_sc, N_zc);
     }
 }
 
