@@ -363,6 +363,7 @@ static void Root_q_arg(float *root_q_arg,uint32_t u, uint32_t v, uint32_t n_ul_r
     {
         /* argument of x_q(m) according to 3GPP 36.211 5.5.1.1*/
         root_q_arg[m] = (-1 * M_PI * q * m * (m + 1)) / n_zc;
+		printf(" root_q_arg[m] = %f \n",root_q_arg[m]);
     }
 }
 /***********************************************************************************************/
