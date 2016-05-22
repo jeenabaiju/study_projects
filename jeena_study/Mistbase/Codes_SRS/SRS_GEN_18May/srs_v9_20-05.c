@@ -72,6 +72,8 @@ struct SRS_UL{
            uint32_t N_ID_PUCCH;// Configured=1 and Not Configured=0
            uint32_t N_ID_PUSCH;// Configured=1 and Not Configured=0
            uint32_t srsMaxUpPTS;// Cell specific
+		   uint16_t PUCCH_ID;  // Configured  0 or 1
+		   uint16_t PUSCH_ID;  // Configured  0 or 1
        };
 	   
 	   
@@ -264,7 +266,7 @@ uint32_t srsbwtable_idx(struct SRS_UL *srs_ul)
 uint32_t  Get_Msc_values(struct SRS_UL *srs_ul, uint32_t N_sc)
 {
    uint32_t M_sc;
-   M_sc = m_srs_b[srsbwtable_idx(srs_ul->n_ul_rb)][srs_ul->B][srs_ul->bw_cfg] * N_sc / 2;/* According to 3GPP 36.211version 13 5.5.3.2 */
+   M_sc = m_srs_b[srsbwtable_idx(srs_ul)][srs_ul->B][srs_ul->bw_cfg] * N_sc / 2;/* According to 3GPP 36.211version 13 5.5.3.2 */
    return M_sc;
 }
 /************************************************************************************************/
