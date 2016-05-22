@@ -289,31 +289,31 @@ uint32_t Mode(uint32_t Duplex_Mode, uint32_t Config_Idx)
 		   }
            else
 	       {
-               if ( (I_srs > =10 ) && (I_srs < 15) )
+               if ( (I_srs >=10 ) && (I_srs < 15) )
                {
                    T_offset   = I_srs - 10; 
 	           } 
-               else if ((I_srs > =15) && (I_srs < 25) )
+               else if ((I_srs >=15) && (I_srs < 25) )
                { 
                     T_offset   = I_srs - 15; 
                } 
-               else if ( ( I_srs > =25) && (I_srs < 45) )
+               else if ( ( I_srs >=25) && (I_srs < 45) )
                {
                     T_offset   = I_srs - 25; 
                } 
-               else if (  (I_srs > =45) && ( I_srs < 85)  )  
+               else if (  (I_srs >=45) && ( I_srs < 85)  )  
                {
                    T_offset   = I_srs - 45; 
 	           }   
-               else if ((I_srs > =85) && (I_srs < 165) )
+               else if ((I_srs >=85) && (I_srs < 165) )
                {
                    T_offset   = I_srs - 85; 
                }
-               else if ((I_srs > =165) && (I_srs < 325)) 
+               else if ((I_srs >=165) && (I_srs < 325)) 
                {
                    T_offset  = I_srs - 165; 
 			   } 
-               else if ( (I_srs > =325) && () I_srs < 645) )
+               else if ( (I_srs >=325) && () I_srs < 645) )
                {
                   T_offset  = I_srs - 325; 
                } 
