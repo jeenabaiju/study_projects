@@ -57,6 +57,7 @@ struct SRS_UL{
            uint32_t freqDomainPosition_ap;// n_RRC
            uint32_t nf; //System frame number SFN 
            uint32_t Config_idx;// I_srs {0,..... 644}
+		   uint32_t  OffsetIdx; // takes 0 or 1 
            uint32_t K_Tc;//Transmission_comb =2 for SRS
            uint32_t Cyclic_shift;// n_srs_cs
            uint32_t Cyclic_shift_ap;// n_srs_cs
@@ -190,12 +191,11 @@ uint32_t T_srs_TDD(uint32_t Config_Idx)
 
  
 /*Table 8.2-2 of Subframe Offset Configuration T_offset for trigger type 0, TDD according to 3GPP TS 36.213 version 13.0.0 Release 13*/ 
-uint32_t Mode(uint32_t Duplex_Mode, uint32_t Config_Idx) 
+uint32_t Mode(uint32_t Duplex_Mode, uint32_t Config_Idx,  uint32_t OffsetIdx) 
 { 
 	uint32_t I_srs = Config_Idx;// I_srs is Config_Idx
 	uint32_t T_srs;
 	uint32_t T_offset;
-	uint32_t T_off1
 	if (Duplex_Mode == 0) //  FDD mode
 	{
 		 T_srs = T_srs_FDD(Config_Idx) ;
@@ -203,7 +203,7 @@ uint32_t Mode(uint32_t Duplex_Mode, uint32_t Config_Idx)
 	}
 	else if (Duplex_Mode == 1 )
 	{
-		T_srs = T_srs_TDD(Config_Idx, OffsetIdx) ;
+		T_srs = T_srs_TDD(Config_Idx) ;
 		if (T_srs == 2)
 		{
 		      if ((Config_Idx == 0)&&  (OffsetIdx == 0))
