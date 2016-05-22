@@ -613,7 +613,7 @@ struct {
            uint32_t Duplex_Mode;// FDD-0,TDD-1, Half Duplex -3
            uint32_t HoppingBandwidth; //b_hop={0,1,2,3}
            uint32_t freqDomainPosition;// n_RRC
-           uint32_t freqDomainPosition-ap;// n_RRC
+           uint32_t freqDomainPosition_ap;// n_RRC
            uint32_t nf; //System frame numberSFN 
            uint32_t Seq_no;
            uint32_t Config_idx;// I_srs {0,..... 644}
