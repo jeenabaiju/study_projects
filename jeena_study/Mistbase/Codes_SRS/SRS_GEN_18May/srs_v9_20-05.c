@@ -266,22 +266,22 @@ uint32_t Get_Nzc(uint32_t M_sc)
 * output- N_ID
 */
 /************************************************************************************************/
-coSRS_UL.nst uint16_t Get_cellID(uint32_t SRS_UL.N_ID_PUCCH, uint32_t SRS_UL.N_ID_PUSCH, coSRS_UL.nst uint16_t SRS_UL.cell_ID, coSRS_UL.nst uint16_t SRS_UL.PUCCH_ID, coSRS_UL.nst uint16_t SRS_UL.PUSCH_ID)
+const uint16_t Get_cellID(uint32_t SRS_UL.N_ID_PUCCH, uint32_t SRS_UL.N_ID_PUSCH, const uint16_t SRS_UL.cell_ID, const uint16_t SRS_UL.PUCCH_ID, const uint16_t SRS_UL.PUSCH_ID)
 {
-    coSRS_UL.nst uint16_t N_ID;
+    const uint16_t N_ID;
     if (SRS_UL.N_ID_PUCCH == 1)
     {
-        coSRS_UL.nst uint16_t N_ID= SRS_UL.PUCCH_ID;
+        const uint16_t N_ID= SRS_UL.PUCCH_ID;
         return  N_ID;
     }
     else if (SRS_UL.N_ID_PUSCH == 1)
     {
-        coSRS_UL.nst uint16_t N_ID= SRS_UL.PUSCH_ID;
+        const uint16_t N_ID= SRS_UL.PUSCH_ID;
         return  N_ID;
     }
     else
     {
-        coSRS_UL.nst uint16_t N_ID= SRS_UL.cell_ID;// for SRS also//
+        const uint16_t N_ID= SRS_UL.cell_ID;// for SRS also//
         return  N_ID;
     }
 }
@@ -293,7 +293,7 @@ coSRS_UL.nst uint16_t Get_cellID(uint32_t SRS_UL.N_ID_PUCCH, uint32_t SRS_UL.N_I
  * written by Henrik
  * */
 /***********************************************************************************************/
-void calc_prs_c(coSRS_UL.nst uint32_t c_init, coSRS_UL.nst uint32_t len, uint8_t* n_prs)
+void calc_prs_c(const uint32_t c_init, const uint32_t len, uint8_t* n_prs)
 {
    	uint32_t N_c = 1600;
 	uint32_t x1, x2;
@@ -331,7 +331,7 @@ void calc_prs_c(coSRS_UL.nst uint32_t c_init, coSRS_UL.nst uint32_t len, uint8_t
  * output-Calculate v
  */
 /***********************************************************************************************/
-uint32_t Get_v_value(coSRS_UL.nst uint16_t SRS_UL.cell_ID, uint32_t SRS_UL.delta_ss, uint32_t M_sc, uint32_t N_sc, uint32_t SRS_UL.ns, uint32_t SRS_UL.sequence_hopping, uint32_t SRS_UL.group_hopping,uint32_t SRS_UL.N_ID_PUCCH, uint32_t SRS_UL.N_ID_PUSCH, coSRS_UL.nst uint16_t SRS_UL.PUCCH_ID, coSRS_UL.nst uint16_t  SRS_UL.PUSCH_ID)
+uint32_t Get_v_value(const uint16_t SRS_UL.cell_ID, uint32_t SRS_UL.delta_ss, uint32_t M_sc, uint32_t N_sc, uint32_t SRS_UL.ns, uint32_t SRS_UL.sequence_hopping, uint32_t SRS_UL.group_hopping,uint32_t SRS_UL.N_ID_PUCCH, uint32_t SRS_UL.N_ID_PUSCH, const uint16_t SRS_UL.PUCCH_ID, const uint16_t  SRS_UL.PUSCH_ID)
 {
         /*Sequence hopping only applies for reference-signals of length M_sc_RS < 6*N_sc_RB .
 		 * For M sc RS < 6 N sc RB ,  v within u is v = 0 .*/
@@ -341,7 +341,7 @@ uint32_t Get_v_value(coSRS_UL.nst uint16_t SRS_UL.cell_ID, uint32_t SRS_UL.delta
             uint32_t len = SRS_UL.ns+1;
             int i;
             uint8_t n_prs[len];
-	        coSRS_UL.nst uint16_t n_ID = Get_cellID( SRS_UL.N_ID_PUCCH, SRS_UL.N_ID_PUSCH, SRS_UL.cell_ID,SRS_UL.PUCCH_ID, SRS_UL.PUSCH_ID);
+	        const uint16_t n_ID = Get_cellID( SRS_UL.N_ID_PUCCH, SRS_UL.N_ID_PUSCH, SRS_UL.cell_ID,SRS_UL.PUCCH_ID, SRS_UL.PUSCH_ID);
 
             uint32_t  c_init = ((n_ID / 30) << 5) + (((n_ID  % 30) + SRS_UL.delta_ss) % 30);
             calc_prs_c( c_init, len, n_prs); /*generate_pseudo random sequence*/
@@ -368,14 +368,14 @@ uint32_t Get_v_value(coSRS_UL.nst uint16_t SRS_UL.cell_ID, uint32_t SRS_UL.delta
  * output - f_gh value
  */
 /***********************************************************************************************/
-uint32_t get_f_gh(coSRS_UL.nst uint16_t SRS_UL.cell_ID, uint32_t SRS_UL.ns, uint32_t SRS_UL.group_hopping, uint32_t SRS_UL.N_ID_PUCCH, uint32_t SRS_UL.N_ID_PUSCH, coSRS_UL.nst uint16_t SRS_UL.PUCCH_ID, coSRS_UL.nst uint16_t SRS_UL.PUSCH_ID)
+uint32_t get_f_gh(const uint16_t SRS_UL.cell_ID, uint32_t SRS_UL.ns, uint32_t SRS_UL.group_hopping, uint32_t SRS_UL.N_ID_PUCCH, uint32_t SRS_UL.N_ID_PUSCH, const uint16_t SRS_UL.PUCCH_ID, const uint16_t SRS_UL.PUSCH_ID)
 {
     uint32_t len = ( 8 * SRS_UL.ns + 8 );// Maximum length
     uint8_t n_prs[len];
     uint32_t count = 0;
     uint32_t f_gh;
 	
-    coSRS_UL.nst uint16_t n_ID = Get_cellID( SRS_UL.N_ID_PUCCH, SRS_UL.N_ID_PUSCH,SRS_UL.cell_ID, SRS_UL.PUCCH_ID, SRS_UL.PUSCH_ID);
+    const uint16_t n_ID = Get_cellID( SRS_UL.N_ID_PUCCH, SRS_UL.N_ID_PUSCH,SRS_UL.cell_ID, SRS_UL.PUCCH_ID, SRS_UL.PUSCH_ID);
     uint32_t c_init = floor( n_ID / 30 );
     /*generate_pseudo random sequence /** Computes n_prs values as defined in 5.5.2.1.1 of 36.211 */
     calc_prs_c(c_init, len, n_prs);
@@ -408,10 +408,10 @@ uint32_t get_f_gh(coSRS_UL.nst uint16_t SRS_UL.cell_ID, uint32_t SRS_UL.ns, uint
  * output - f_ss value
  */
  /***********************************************************************************************/
-uint32_t get_f_ss(coSRS_UL.nst uint16_t SRS_UL.cell_ID, uint32_t SRS_UL.N_ID_PUCCH, uint32_t SRS_UL.N_ID_PUSCH, coSRS_UL.nst uint16_t SRS_UL.PUCCH_ID, coSRS_UL.nst uint16_t SRS_UL.PUSCH_ID)
+uint32_t get_f_ss(const uint16_t SRS_UL.cell_ID, uint32_t SRS_UL.N_ID_PUCCH, uint32_t SRS_UL.N_ID_PUSCH, const uint16_t SRS_UL.PUCCH_ID, const uint16_t SRS_UL.PUSCH_ID)
 {
     uint32_t f_ss;
-    coSRS_UL.nst uint16_t n_ID = Get_cellID( SRS_UL.N_ID_PUCCH, SRS_UL.N_ID_PUSCH, SRS_UL.cell_ID, SRS_UL.PUCCH_ID, SRS_UL.PUSCH_ID);
+    const uint16_t n_ID = Get_cellID( SRS_UL.N_ID_PUCCH, SRS_UL.N_ID_PUSCH, SRS_UL.cell_ID, SRS_UL.PUCCH_ID, SRS_UL.PUSCH_ID);
     f_ss = n_ID % 30;
     return f_ss;
 }
@@ -423,7 +423,7 @@ uint32_t get_f_ss(coSRS_UL.nst uint16_t SRS_UL.cell_ID, uint32_t SRS_UL.N_ID_PUC
  * output - u value
  */
 /***********************************************************************************************/
-static uint32_t Get_u_value(coSRS_UL.nst uint16_t SRS_UL.cell_ID, uint32_t SRS_UL.ns, uint32_t  SRS_UL.group_hopping, uint32_t  SRS_UL.N_ID_PUCCH, uint32_t SRS_UL.N_ID_PUSCH, coSRS_UL.nst uint16_t SRS_UL.PUCCH_ID, coSRS_UL.nst uint16_t SRS_UL.PUSCH_ID)
+static uint32_t Get_u_value(const uint16_t SRS_UL.cell_ID, uint32_t SRS_UL.ns, uint32_t  SRS_UL.group_hopping, uint32_t  SRS_UL.N_ID_PUCCH, uint32_t SRS_UL.N_ID_PUSCH, const uint16_t SRS_UL.PUCCH_ID, const uint16_t SRS_UL.PUSCH_ID)
 {
     uint32_t f_ss, f_gh;
     uint32_t u;
@@ -574,7 +574,7 @@ static void compute_r_uv_arg(float *r_uv, uint32_t SRS_UL.n_ul_rb, uint32_t M_sc
  * output- SRS sequence 
  * */
 /***********************************************************************************************/
-int srs_gen(double complex *r_srs, uint32_t N_sc, uint32_t SRS_UL.n_ul_rb,uint32_t SRS_UL.sf_idx, uint32_t SRS_UL.group_hopping, uint32_t SRS_UL.sequence_hopping, const uint16_t  SRS_UL.cell_ID, uint32_t SRS_UL.delta_ss, uint32_t SRS_UL.ns, uint32_t SRS_UL.N_Tx , uint32_t SRS_UL.Cyclic_shift, uint32_t SRS_UL.K_Tc, uint32_t SRS_UL.bw_cfg,uint32_t SRS_UL.B,uint32_t SRS_UL.N_ID_PUCCH, uint32_t SRS_UL.N_ID_PUSCH, coSRS_UL.nst uint16_t SRS_UL.PUCCH_ID, coSRS_UL.nst uint16_t SRS_UL.PUSCH_ID)
+int srs_gen(double complex *r_srs, uint32_t N_sc, uint32_t SRS_UL.n_ul_rb,uint32_t SRS_UL.sf_idx, uint32_t SRS_UL.group_hopping, uint32_t SRS_UL.sequence_hopping, const uint16_t  SRS_UL.cell_ID, uint32_t SRS_UL.delta_ss, uint32_t SRS_UL.ns, uint32_t SRS_UL.N_Tx , uint32_t SRS_UL.Cyclic_shift, uint32_t SRS_UL.K_Tc, uint32_t SRS_UL.bw_cfg,uint32_t SRS_UL.B,uint32_t SRS_UL.N_ID_PUCCH, uint32_t SRS_UL.N_ID_PUSCH, const uint16_t SRS_UL.PUCCH_ID, const uint16_t SRS_UL.PUSCH_ID)
 {
     int n ;
     uint32_t SRS_UL.nslot;
