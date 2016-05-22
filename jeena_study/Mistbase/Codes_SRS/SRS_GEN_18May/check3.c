@@ -413,7 +413,7 @@ static void r_uv_mprb(float *r_uv, float *r_uv_xq,uint32_t M_sc, uint32_t N_zc)
  * input- N_PRB,Grp no, Seq No, other values needed
  * output -argument values to find sequence */
 /* Computes argument of r_u_v signal */
-static void compute_r_uv_arg(float *r_uv, uint32_t n_ul_rb, uint32_t ns, uint32_t M_sc, uint32_t N_zc, uint32_t sequence_hopping, uint32_t group_hopping,  uint32_t u, uint32_t v)
+static void compute_r_uv_arg(float *r_uv, uint32_t n_ul_rb, uint32_t M_sc, uint32_t N_zc, uint32_t sequence_hopping, uint32_t group_hopping,  uint32_t u, uint32_t v)
 {
     // get u
 
@@ -458,7 +458,7 @@ int srs_gen(double complex *r_srs, uint32_t N_sc, uint32_t n_ul_rb,uint32_t sf_i
     float q = get_qvalue(u, v, N_zc);
 	printf(" q value = %f \n", q);
     float alpha = alpha_p(N_Tx, Cyclic_shift, K_Tc);//n_srs
-    compute_r_uv_arg(r_uv, n_ul_rb,ns,M_sc, N_zc,sequence_hopping,group_hopping,u,v);
+    compute_r_uv_arg(r_uv, n_ul_rb,M_sc, N_zc,sequence_hopping,group_hopping,u,v);
 	printf("u2= %d, v2=%d \n", u,v);
     // Do complex exponential and adjust amplitude
     for ( n = 0; n < M_sc; n++)
