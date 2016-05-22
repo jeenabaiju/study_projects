@@ -480,7 +480,7 @@ uint32_t f_gh;
 uint32_t N_Tx = 1;
 uint32_t sf_idx = 0;
 uint32_t K_Tc = 2;
-uint32_t bw_cfg = 5;
+uint32_t bw_cfg = 7;
 uint32_t B = 0;
 uint32_t Cyclic_shift = 0;
 uint32_t N_ID_PUCCH = 0;
