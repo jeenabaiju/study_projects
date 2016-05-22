@@ -313,7 +313,7 @@ uint32_t Mode(uint32_t Duplex_Mode, uint32_t Config_Idx,  uint32_t OffsetIdx)
                {
                    T_offset  = I_srs - 165; 
 			   } 
-               else if ( (I_srs >=325) && () I_srs < 645) )
+               else if ( (I_srs >=325) &&  I_srs < 645) )
                {
                   T_offset  = I_srs - 325; 
                } 
