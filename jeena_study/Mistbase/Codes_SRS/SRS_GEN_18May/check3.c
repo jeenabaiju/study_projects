@@ -345,6 +345,7 @@ static float alpha_p(uint32_t N_Tx, uint32_t Cyclic_shift, uint32_t K_Tc)
     float n_zc = (float) N_zc;
     q_bar = n_zc * (u + 1) / 31;
     q = ( floor ( q_bar + 0.5) ) + ( v * ( pow( (-1) , ( floor( 2 * q_bar) ) ) ) );
+	printf("u= %d, v=%d \n", u,v);
     return q;
 }
 /*************************************************************************************************/
