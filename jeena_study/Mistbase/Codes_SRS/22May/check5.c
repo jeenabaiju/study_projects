@@ -51,13 +51,13 @@ struct SRS_UL{
            uint32_t n_ul_rb;// must be 6 or greater in value
            uint32_t CyclicPrefixLength;
            uint32_t CP;// Normal -0, Extended-1
-           uint32_t Duplex_Mode =1;// FDD-0,TDD-1, Half Duplex -2
+           uint32_t Duplex_Mode ;// FDD-0,TDD-1, Half Duplex -2
            uint32_t HoppingBandwidth; //b_hop={0,1,2,3}
            uint32_t freqDomainPosition;// n_RRC
            uint32_t freqDomainPosition_ap;// n_RRC
            uint32_t nf; //System frame number SFN 
-           uint32_t Config_idx = 0;// I_srs {0,..... 644}
-		   uint32_t  OffsetIdx = 0; // takes 0 or 1 
+           uint32_t Config_idx;// I_srs {0,..... 644}
+		   uint32_t  OffsetIdx ; // takes 0 or 1 
            uint32_t K_Tc;//Transmission_comb =2 for SRS
            uint32_t Cyclic_shift;// n_srs_cs
            uint32_t Cyclic_shift_ap;// n_srs_cs
