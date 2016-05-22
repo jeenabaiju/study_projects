@@ -300,7 +300,7 @@ uint32_t get_f_ss(const uint16_t cell_ID, uint32_t N_ID_PUCCH, uint32_t N_ID_PUS
  * input- number of slots, group hopping -enabled/disabled, cellID
  * output - u value
  */
-uint32_t Get_u_value(const uint16_t cell_ID, uint32_t ns, uint32_t  group_hopping, uint32_t  N_ID_PUCCH, uint32_t N_ID_PUSCH, const uint16_t PUCCH_ID, const uint16_t PUSCH_ID)
+static uint32_t Get_u_value(const uint16_t cell_ID, uint32_t ns, uint32_t  group_hopping, uint32_t  N_ID_PUCCH, uint32_t N_ID_PUSCH, const uint16_t PUCCH_ID, const uint16_t PUSCH_ID)
 {
     uint32_t f_ss, f_gh;
     uint32_t u;
