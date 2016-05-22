@@ -358,7 +358,7 @@ static void Root_q_arg(float *root_q_arg,uint32_t u, uint32_t v, uint32_t n_ul_r
 {
     int m;
     float n_zc = (float) N_zc;
-    float q = get_qvalue(u,v,N_sc);
+    float q = get_qvalue(u,v,N_zc);
     for (m = 0; m < N_zc; m++)
     {
         /* argument of x_q(m) according to 3GPP 36.211 5.5.1.1*/
