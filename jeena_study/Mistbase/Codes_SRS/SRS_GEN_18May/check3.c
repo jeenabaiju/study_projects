@@ -395,6 +395,7 @@ static void Seq_Msc24_Exp(float *Seq_2Nsc_exp, uint8_t u, uint32_t N_sc)
     for (i = 0 ;i < 2*N_sc; i++)
     {
         Seq_2Nsc_exp[i] = Phi_M_sc_24[u][i] * M_PI / 4;
+		printf(" Seq_2Nsc_exp[%d] = %f\n",i,Seq_2Nsc_exp[i]);
 
     }
 }
