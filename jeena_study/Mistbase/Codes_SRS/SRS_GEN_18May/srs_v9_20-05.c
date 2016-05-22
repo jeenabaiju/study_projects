@@ -44,7 +44,7 @@
 #include <assert.h>
 #include <unistd.h>
 #include <inttypes.h>
-struct {
+struct SRS_UL{
            const uint16_t cell_ID;
            uint32_t  B;//B_srs={0,1,2,3} UE specific
            uint32_t bw_cfg; //C_srs is an element of {0,1,2,3,4,5,6,7}/ cell specific parameter
@@ -72,7 +72,7 @@ struct {
            uint32_t N_ID_PUCCH;// Configured=1 and Not Configured=0
            uint32_t N_ID_PUSCH;// Configured=1 and Not Configured=0
            uint32_t srsMaxUpPTS;// Cell specific
-       }SRS_UL;
+       };
 	   
 	   
 /* //Table 5.2.3-1: Resource block parameters according to 3GPP 36.211 5.2.3*/
