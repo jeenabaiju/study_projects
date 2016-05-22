@@ -574,7 +574,7 @@ static void compute_r_uv_arg(float *r_uv, uint32_t SRS_UL.n_ul_rb, uint32_t M_sc
  * output- SRS sequence 
  * */
 /***********************************************************************************************/
-int srs_gen(double complex *r_srs, uint32_t N_sc, uint32_t SRS_UL.n_ul_rb,uint32_t SRS_UL.sf_idx, uint32_t SRS_UL.group_hopping, uint32_t SRS_UL.sequence_hopping, coSRS_UL.nst uint16_t SRS_UL.cell_ID, uint32_t SRS_UL.delta_ss, uint32_t SRS_UL.ns, uint32_t SRS_UL.N_Tx , uint32_t SRS_UL.Cyclic_shift, uint32_t SRS_UL.K_Tc, uint32_t SRS_UL.bw_cfg,uint32_t SRS_UL.B,uint32_t SRS_UL.N_ID_PUCCH, uint32_t SRS_UL.N_ID_PUSCH, coSRS_UL.nst uint16_t SRS_UL.PUCCH_ID, coSRS_UL.nst uint16_t SRS_UL.PUSCH_ID)
+int srs_gen(double complex *r_srs, uint32_t N_sc, uint32_t SRS_UL.n_ul_rb,uint32_t SRS_UL.sf_idx, uint32_t SRS_UL.group_hopping, uint32_t SRS_UL.sequence_hopping, const uint16_t  SRS_UL.cell_ID, uint32_t SRS_UL.delta_ss, uint32_t SRS_UL.ns, uint32_t SRS_UL.N_Tx , uint32_t SRS_UL.Cyclic_shift, uint32_t SRS_UL.K_Tc, uint32_t SRS_UL.bw_cfg,uint32_t SRS_UL.B,uint32_t SRS_UL.N_ID_PUCCH, uint32_t SRS_UL.N_ID_PUSCH, coSRS_UL.nst uint16_t SRS_UL.PUCCH_ID, coSRS_UL.nst uint16_t SRS_UL.PUSCH_ID)
 {
     int n ;
     uint32_t SRS_UL.nslot;
