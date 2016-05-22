@@ -432,6 +432,7 @@ static void compute_r_uv_arg(float *r_uv, uint32_t n_ul_rb, uint32_t ns, uint32_
         //calculate sequence number v
         Root_q_arg(r_uv_temp, n_ul_rb, u, v, N_zc);  
 		printf(" r_uv_temp[%d] = %f \n ",N_zc-2, r_uv_temp[N_zc-2]);
+		printf("u1= %d, v1=%d \n", u,v);
         r_uv_mprb(r_uv, r_uv_temp, M_sc, N_zc);
     }
 }
@@ -458,6 +459,7 @@ int srs_gen(double complex *r_srs, uint32_t N_sc, uint32_t n_ul_rb,uint32_t sf_i
 	printf(" q value = %f \n", q);
     float alpha = alpha_p(N_Tx, Cyclic_shift, K_Tc);//n_srs
     compute_r_uv_arg(r_uv, n_ul_rb,ns,M_sc, N_zc,sequence_hopping,group_hopping,u,v);
+	printf("u2= %d, v2=%d \n", u,v);
     // Do complex exponential and adjust amplitude
     for ( n = 0; n < M_sc; n++)
     {
