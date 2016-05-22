@@ -619,8 +619,7 @@ struct {
            uint32_t Config_idx;// I_srs {0,..... 644}
            uint32_t K_Tc;//Transmission_comb =2 for SRS
            uint32_t Cyclic_shift;// n_srs_cs
-           uint32_t Cyclic_shift-ap;// n_srs_cs
-           uint32_t N_Tx;
+           uint32_t Cyclic_shift_ap;// n_srs_cs
            uint32_t N_Tx;
            uint32_t ns;//Slot number within a radio frame
            uint32_t N_sp;////Number of downlink to uplink switch points within the radio frame = 5ms
