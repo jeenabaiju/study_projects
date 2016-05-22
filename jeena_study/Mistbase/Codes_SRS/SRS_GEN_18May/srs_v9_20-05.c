@@ -44,6 +44,37 @@
 #include <assert.h>
 #include <unistd.h>
 #include <inttypes.h>
+struct {
+           const uint16_t cell_ID;
+           uint32_t  B;//B_srs={0,1,2,3} UE specific
+           uint32_t bw_cfg; //C_srs is an element of {0,1,2,3,4,5,6,7}/ cell specific parameter
+           uint32_t srsSubframeConfig;
+           uint32_t n_ul_rb;// must be 6 or greater in value
+           uint32_t CyclicPrefixLength;
+           uint32_t CP;// Normal -0, Extended-1
+           uint32_t Duplex_Mode;// FDD-0,TDD-1, Half Duplex -3
+           uint32_t HoppingBandwidth; //b_hop={0,1,2,3}
+           uint32_t freqDomainPosition;// n_RRC
+           uint32_t freqDomainPosition_ap;// n_RRC
+           uint32_t nf; //System frame numberSFN 
+           uint32_t Seq_no;
+           uint32_t Config_idx;// I_srs {0,..... 644}
+           uint32_t K_Tc;//Transmission_comb =2 for SRS
+           uint32_t Cyclic_shift;// n_srs_cs
+           uint32_t Cyclic_shift_ap;// n_srs_cs
+           uint32_t N_Tx;
+           uint32_t ns;//Slot number within a radio frame
+           uint32_t N_sp;////Number of downlink to uplink switch points within the radio frame = 5ms
+           uint32_t sf_idx;
+           uint32_t sequence_hopping;// enable=1 and disbale=0
+           uint32_t group_hopping;// enable=1 and disbale=0
+           uint32_t delta_ss;
+           uint32_t N_ID_PUCCH;// Configured=1 and Not Configured=0
+           uint32_t N_ID_PUSCH;// Configured=1 and Not Configured=0
+           uint32_t srsMaxUpPTS;// Cell specific
+       }SRS_UL;
+	   
+	   
 /* //Table 5.2.3-1: Resource block parameters according to 3GPP 36.211 5.2.3*/
 uint32_t N_sc = 12;
 uint32_t N_symbol_ul[2] = {7,6};
@@ -602,32 +633,4 @@ int srs_gen(double complex *r_srs, uint32_t N_sc, uint32_t SRS_UL.n_ul_rb,uint32
     }
 }
 /***************************************************************************************************************************/
-struct {
-           const uint16_t cell_ID;
-           uint32_t  B;//B_srs={0,1,2,3} UE specific
-           uint32_t bw_cfg; //C_srs is an element of {0,1,2,3,4,5,6,7}/ cell specific parameter
-           uint32_t srsSubframeConfig;
-           uint32_t n_ul_rb;// must be 6 or greater in value
-           uint32_t CyclicPrefixLength;
-           uint32_t CP;// Normal -0, Extended-1
-           uint32_t Duplex_Mode;// FDD-0,TDD-1, Half Duplex -3
-           uint32_t HoppingBandwidth; //b_hop={0,1,2,3}
-           uint32_t freqDomainPosition;// n_RRC
-           uint32_t freqDomainPosition_ap;// n_RRC
-           uint32_t nf; //System frame numberSFN 
-           uint32_t Seq_no;
-           uint32_t Config_idx;// I_srs {0,..... 644}
-           uint32_t K_Tc;//Transmission_comb =2 for SRS
-           uint32_t Cyclic_shift;// n_srs_cs
-           uint32_t Cyclic_shift_ap;// n_srs_cs
-           uint32_t N_Tx;
-           uint32_t ns;//Slot number within a radio frame
-           uint32_t N_sp;////Number of downlink to uplink switch points within the radio frame = 5ms
-           uint32_t sf_idx;
-           uint32_t sequence_hopping;// enable=1 and disbale=0
-           uint32_t group_hopping;// enable=1 and disbale=0
-           uint32_t delta_ss;
-           uint32_t N_ID_PUCCH;// Configured=1 and Not Configured=0
-           uint32_t N_ID_PUSCH;// Configured=1 and Not Configured=0
-           uint32_t srsMaxUpPTS;// Cell specific
-       }SRS_UL;
+
