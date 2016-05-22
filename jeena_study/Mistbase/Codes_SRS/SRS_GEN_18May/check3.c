@@ -418,11 +418,11 @@ static void compute_r_uv_arg(float *r_uv, uint32_t n_ul_rb, uint32_t M_sc, uint3
 {
     // get u
 
-    if (n_ul_rb == 1)
+    if (M_sc == N_sc)
     {
         Seq_Msc12_Exp(r_uv, u, N_sc);
     }
-    else if (n_ul_rb == 2)
+    else if (M_sc == 2*N_sc)
     {
         Seq_Msc24_Exp(r_uv, u,N_sc);
     }
