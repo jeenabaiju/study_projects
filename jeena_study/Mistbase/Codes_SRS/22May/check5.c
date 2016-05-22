@@ -338,6 +338,6 @@ void main()
     uint32_t OffsetIdx = 0;
 	uint32_t T_offset;
 	uint32_t T_srs;
-    Mode(&T_srs, &T_offset Duplex_Mode, Config_Idx,  OffsetIdx) ;
+    Mode(&T_srs, &T_offset ,Duplex_Mode, Config_Idx,  OffsetIdx) ;
 	printf("T_offset = %d , T_srs = %d \n", T_offset,T_srs);
 }
