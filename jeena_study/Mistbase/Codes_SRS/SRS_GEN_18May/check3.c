@@ -355,7 +355,7 @@ static float alpha_p(uint32_t N_Tx, uint32_t Cyclic_shift, uint32_t K_Tc)
  * input- q value , N_zc
  * output root_q for exponential calculation
  */
-static void Root_q_arg(float *root_q_arg,uint32_t u, uint32_t v, uint32_t n_ul_rb, uint32_t N_zc)
+static void Root_q_arg(float *root_q_arg, uint32_t n_ul_rb, uint32_t u, uint32_t v,  uint32_t N_zc)
 {
     int m;
     float n_zc = (float) N_zc;
