@@ -194,7 +194,6 @@ uint32_t T_srs_TDD(uint32_t Config_Idx)
 uint32_t Mode(uint32_t *T_srs, uint32_t Duplex_Mode, uint32_t Config_Idx,  uint32_t OffsetIdx) 
 { 
 	uint32_t I_srs = Config_Idx;// I_srs is Config_Idx
-	uint32_t T_srs;
 	uint32_t T_offset;
 	if (Duplex_Mode == 0) //  FDD mode
 	{
@@ -335,6 +334,9 @@ uint32_t Mode(uint32_t *T_srs, uint32_t Duplex_Mode, uint32_t Config_Idx,  uint3
 }
 void main()
 {
+	uint32_tDuplex_Mode = 0;
+	uint32_tConfig_Idx =0;
+    uint32_tOffsetIdx = 0;
 	uint32_t T_offset;
 	uint32_t T_srs;
 	T_offset = Mode(&T_srs, Duplex_Mode, Config_Idx,  OffsetIdx) ;
