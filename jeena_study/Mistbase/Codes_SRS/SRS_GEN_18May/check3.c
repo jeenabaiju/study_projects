@@ -466,7 +466,7 @@ int srs_gen(double complex *r_srs, uint32_t N_sc, uint32_t n_ul_rb,uint32_t sf_i
 void main()
 {
 
-const uint16_t cell_ID = 100;
+const uint16_t cell_ID = 0;
 uint32_t delta_ss = 0; // delta_ss Δ ss ∈ { 0 , 1 ,..., 29 }
 uint32_t group_hopping = 0;
 uint32_t sequence_hopping = 1;
