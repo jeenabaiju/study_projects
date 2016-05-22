@@ -51,7 +51,7 @@ struct SRS_UL{
            uint32_t n_ul_rb;// must be 6 or greater in value
            uint32_t CyclicPrefixLength;
            uint32_t CP;// Normal -0, Extended-1
-           uint32_t Duplex_Mode = 1;// FDD-0,TDD-1, Half Duplex -2
+           uint32_t Duplex_Mode =1;// FDD-0,TDD-1, Half Duplex -2
            uint32_t HoppingBandwidth; //b_hop={0,1,2,3}
            uint32_t freqDomainPosition;// n_RRC
            uint32_t freqDomainPosition_ap;// n_RRC
@@ -191,7 +191,7 @@ uint32_t T_srs_TDD(uint32_t Config_Idx)
 
  
 /*Table 8.2-2 of Subframe Offset Configuration T_offset for trigger type 0, TDD according to 3GPP TS 36.213 version 13.0.0 Release 13*/ 
-uint32_t Mode(uint32_t Duplex_Mode, uint32_t Config_Idx,  uint32_t OffsetIdx) 
+uint32_t Mode(uint32_t *T_srs, uint32_t Duplex_Mode, uint32_t Config_Idx,  uint32_t OffsetIdx) 
 { 
 	uint32_t I_srs = Config_Idx;// I_srs is Config_Idx
 	uint32_t T_srs;
@@ -332,4 +332,11 @@ uint32_t Mode(uint32_t Duplex_Mode, uint32_t Config_Idx,  uint32_t OffsetIdx)
 				}
 	  }
    return T_offset; 
+}
+void main()
+{
+	uint32_t T_offset;
+	uint32_t T_srs;
+	T_offset = Mode(&T_srs, Duplex_Mode, Config_Idx,  OffsetIdx) ;
+	printf("T_offset = %d , T_srs = %d \n", T_offset,T_srs);
 }
