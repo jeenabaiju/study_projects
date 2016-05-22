@@ -494,9 +494,9 @@ M_sc = Get_Msc_values( bw_cfg, B, n_ul_rb, N_sc);
 printf("M_sc = %d\n", M_sc);
 uint32_t v = Get_v_value( cell_ID, delta_ss, M_sc, N_sc, ns, sequence_hopping, group_hopping, N_ID_PUCCH, N_ID_PUSCH, PUCCH_ID, PUSCH_ID);uint32_t u = Get_u_value( cell_ID, ns, group_hopping, N_ID_PUCCH, N_ID_PUSCH, PUCCH_ID, PUSCH_ID);
 printf("Vrx= %d \n ",v);
-double complex r_srs[N_sc * n_ul_rb];
+double complex r_srs[M_sc];
 srs_gen(r_srs, N_sc, n_ul_rb, sf_idx, group_hopping, sequence_hopping, cell_ID, delta_ss,ns, N_Tx, Cyclic_shift, K_Tc, bw_cfg, B, N_ID_PUCCH, N_ID_PUSCH,  PUCCH_ID, PUSCH_ID);
-for ( n = 0; n < N_sc * n_ul_rb; n++)
+for ( n = 0; n < M_sc; n++)
         {
             //seq->r_srs[nslot][n] = cexpf( I * ( r_uv[n] + ( alpha * n ) ) );
             printf("r_srs = %f + i %f \n ",creal (r_srs[n]),cimag( r_srs[n]));
