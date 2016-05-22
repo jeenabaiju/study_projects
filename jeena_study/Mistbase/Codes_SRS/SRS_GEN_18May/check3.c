@@ -235,7 +235,7 @@ uint32_t Get_v_value(const uint16_t cell_ID, uint32_t delta_ss, uint32_t M_sc, u
             calc_prs_c( c_init, len, n_prs); /*generate_pseudo random sequence*/
             if ((sequence_hopping == 1) && (group_hopping == 0))
             {
-		       v = n_prs[ns];
+		       v = n_prs[len];
 			   for (i=0; i<len ; i++)
 			   { 
 				  printf( "nprs[%d]= %d \n",i,n_prs[i]); 
