@@ -226,7 +226,7 @@ uint32_t Get_v_value(const uint16_t cell_ID, uint32_t delta_ss, uint32_t M_sc, u
         uint32_t v;
         if ( M_sc >= 6*N_sc)
         {
-            uint32_t len = ns;
+            uint32_t len = ns+1;
             int i;
             uint8_t n_prs[len];
 	        const uint16_t n_ID = Get_cellID( N_ID_PUCCH, N_ID_PUSCH, cell_ID,PUCCH_ID, PUSCH_ID);
