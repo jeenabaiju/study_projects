@@ -551,7 +551,6 @@ uint32_t get_k_0_pbar(uint32_t bw_cfg, uint32_t N_sc, uint32_t n_ul_rb ,uint32_t
 uint32_t srslte_refsignal_srs_rb_L_cs(uint32_t bw_cfg, uint32_t n_ul_rb) {
   if (bw_cfg < 8) {
     return m_srs_b[srsbwtable_idx(n_ul_rb)][0][bw_cfg];
-	printf (" M_SRS = %d\n",m_srs_b[srsbwtable_idx(n_ul_rb)][0][bw_cfg]);
   } 
   return 0; 
 }
@@ -614,6 +613,7 @@ void main()
         uint32_t n_b = Get_nb( HoppingBandwidth,B, n_ul_rb, bw_cfg, freqDomainPosition, n_srs, Fb,N_b);
 		uint32_t K_Tc_p = Get_K_Tc_p(Cyclic_shift,  N_Tx, K_Tc);
     	printf("T_offset = %d ,T_offset_max = %d , T_srs = %d , n_srs = %d, Fb = %d, n_b = %d, K_Tc_p = %d\n", T_offset,T_offset_max,T_srs,n_srs,Fb,n_b,K_Tc_p);
-		srslte_refsignal_srs_rb_L_cs(bw_cfg,  n_ul_rb);
+		uint32_t M_sc = srslte_refsignal_srs_rb_L_cs(bw_cfg,  n_ul_rb);
+		printf (" M_SRS = %d\n",M_sc);
 		Get_m_srs_0(  bw_cfg);
 }
