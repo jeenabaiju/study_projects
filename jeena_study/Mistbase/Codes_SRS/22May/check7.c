@@ -572,5 +572,7 @@ void main()
         printf("N_b = %d\n",N_b);
         uint32_t Fb = Get_Fb(n_ul_rb,B,bw_cfg,HoppingBandwidth,n_srs,N_b);
         uint32_t n_b = Get_nb( HoppingBandwidth,B, n_ul_rb, bw_cfg, freqDomainPosition, n_srs, Fb,N_b);
-    	printf("T_offset = %d ,T_offset_max = %d , T_srs = %d , n_srs = %d, Fb = %d, n_b = %d\n", T_offset,T_offset_max,T_srs,n_srs,Fb,n_b);
+		uint32_t K_Tc_p = Get_K_Tc_p(Cyclic_shift,  N_Tx, K_Tc);
+    	printf("T_offset = %d ,T_offset_max = %d , T_srs = %d , n_srs = %d, Fb = %d, n_b = %d, K_Tc_p = %d\n", T_offset,T_offset_max,T_srs,n_srs,Fb,n_b,K_Tc_p);
+		
 }
