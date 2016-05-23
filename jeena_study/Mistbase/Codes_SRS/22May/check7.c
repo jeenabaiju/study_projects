@@ -608,14 +608,14 @@ uint32_t Get_Freq_domain_start_k0p(uint32_t HoppingBandwidth, uint32_t B, uint32
 void main()
 {
            const uint16_t cell_ID = 100;
-           uint32_t  B = 0;//B_srs={0,1,2,3} UE specific
+           uint32_t  B = 1;//B_srs={0,1,2,3} UE specific
            uint32_t bw_cfg = 5; //C_srs is an element of {0,1,2,3,4,5,6,7}/ cell specific parameter
            uint32_t srsSubframeConfig;
            uint32_t n_ul_rb = 6;// must be 6 or greater in value
            uint32_t CyclicPrefixLength;
            uint32_t CP = 0;// Normal -0, Extended-1
            uint32_t Duplex_Mode = 1;// FDD-0,TDD-1
-           uint32_t HoppingBandwidth = 1; //b_hop={0,1,2,3} if b_hop is > B, frequency hopping enabled
+           uint32_t HoppingBandwidth = 2; //b_hop={0,1,2,3} if b_hop is > B, frequency hopping enabled
            uint32_t freqDomainPosition = 0;// n_RRC
            uint32_t freqDomainPosition_ap;// n_RRC if enabled b_hop is disabled.
            uint32_t nf = 0; //System frame number SFN 
