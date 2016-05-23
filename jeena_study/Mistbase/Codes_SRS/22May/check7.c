@@ -614,5 +614,6 @@ void main()
         uint32_t n_b = Get_nb( HoppingBandwidth,B, n_ul_rb, bw_cfg, freqDomainPosition, n_srs, Fb,N_b);
 		uint32_t K_Tc_p = Get_K_Tc_p(Cyclic_shift,  N_Tx, K_Tc);
     	printf("T_offset = %d ,T_offset_max = %d , T_srs = %d , n_srs = %d, Fb = %d, n_b = %d, K_Tc_p = %d\n", T_offset,T_offset_max,T_srs,n_srs,Fb,n_b,K_Tc_p);
-		
+		srslte_refsignal_srs_rb_L_cs(bw_cfg,  n_ul_rb);
+		Get_m_srs_0(  bw_cfg);
 }
