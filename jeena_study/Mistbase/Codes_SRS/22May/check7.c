@@ -615,7 +615,7 @@ void main()
            uint32_t CyclicPrefixLength;
            uint32_t CP = 0;// Normal -0, Extended-1
            uint32_t Duplex_Mode = 1;// FDD-0,TDD-1
-           uint32_t HoppingBandwidth = 2; //b_hop={0,1,2,3} if b_hop is > B, frequency hopping enabled
+           uint32_t HoppingBandwidth = 1; //b_hop={0,1,2,3} if b_hop is > B, frequency hopping enabled
            uint32_t freqDomainPosition = 0;// n_RRC
            uint32_t freqDomainPosition_ap;// n_RRC if enabled b_hop is disabled.
            uint32_t nf = 0; //System frame number SFN 
