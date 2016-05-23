@@ -594,7 +594,9 @@ uint32_t Get_Freq_domain_start_k0p(uint32_t HoppingBandwidth, uint32_t B, uint32
         for (b = 0; b <= B;  b++)
         {
 				 uint32_t M_sc = Get_Msc_values( bw_cfg, b, n_ul_rb, N_sc);
+				 printf(" M_sc = %d \n ", M_sc);
 				 uint32_t n_b = Get_nb(HoppingBandwidth, b, n_ul_rb, bw_cfg, freqDomainPosition,n_srs,Fb,N_b);
+				 printf(" n_b= %d \n ", n_b);
 	             k_0_p += k_0_pbar + (K_Tc * M_sc * n_b);
         }
         return k_0_p;
