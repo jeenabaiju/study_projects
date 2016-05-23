@@ -585,7 +585,7 @@ return m_srs_0[c_srs];
 * output- k_0_p values
 */
 
-uint32_t Get_Freq_domain_start_k0p(uint32_t B,  uint32_t bw_cfg,uint32_t K_Tc,  uint32_t M_sc,  uint32_t k_0_pbar,  uint32_t n_b)
+uint32_t Get_Freq_domain_start_k0p(uint32_t B,  uint32_t bw_cfg,uint32_t K_Tc,  uint32_t M_sc,  uint32_t k_0_pbar,  uint32_t n_b, uint32_t K_Tc_p)
 {
     if (bw_cfg < 8 && B < 4 && K_Tc_p < 2) 
     {
@@ -648,7 +648,7 @@ void main()
 		uint32_t k_0_pbar = get_k_0_pbar( bw_cfg,  N_sc,  n_ul_rb , K_Tc_p,m_srs_0);
 		
 		uint32_t  M_sc = Get_Msc_values(bw_cfg, B,  n_ul_rb, N_sc);
-		uint32_t k_p = Get_Freq_domain_start_k0p(B,   bw_cfg, K_Tc,  M_sc,  k_0_pbar, n_b);
+		uint32_t k_p = Get_Freq_domain_start_k0p(B,   bw_cfg, K_Tc,  M_sc,  k_0_pbar, n_b,K_Tc_p);
 		printf("k_0_pbar = %d, K_p = %d \n",k_0_pbar,k_p);
 		
 }
