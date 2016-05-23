@@ -519,27 +519,33 @@ uint32_t Get_nb(uint32_t HoppingBandwidth, uint32_t B, uint32_t n_ul_rb, uint32_
 /***********************************************************************************************/
 uint32_t Get_K_Tc_p(uint32_t Cyclic_shift, uint32_t N_Tx, uint32_t K_Tc)
 {
-    uint32_t K_Tc_bar = K_Tc;
+    uint32_t K_Tc_bar = 0;
     int p_index;
     uint32_t K_Tc_p;//K_Tc_p={0,1,...SRS_UL.K_Tc-1}
-    static const unsigned n_SRS_cs = (1 << 4) | (1 << 5) | (1 << 6) | (1 << 7);
-    static const unsigned p_hat = (1 << 1) | (1 << 3) ;
-    /*find K_Tc_p*/
-    for (p_index = 0; p_index <=3; p_index++)
-    {
-        if (((1 << Cyclic_shift) & n_SRS_cs) && ((1 << p_index) & p_hat) && (N_Tx == 4) ) // p_hat ands p relation table Table 5.2.1-1
-        {
-            K_Tc_p = 1 - K_Tc_bar;// for p_index = 1,3
-        }
-        else 
-        {
-            K_Tc_p = K_Tc_bar;// for p_index = 0,2
-        }
-    }
+          static const unsigned n_SRS_cs = (1 << 4) | (1 << 5) | (1 << 6) | (1 << 7);
+          static const unsigned p_hat = (1 << 1) | (1 << 3) ;
+          /*find K_Tc_p*/
+          for (p_index = 0; p_index <=3; p_index++)
+          {
+                 if (((1 << Cyclic_shift) & n_SRS_cs) && ((1 << p_index) & p_hat) && (N_Tx == 4) ) // p_hat ands p relation table Table 5.2.1-1
+                 {
+                     K_Tc_p = 1 - K_Tc_bar;// for p_index = 1,3
+                  }
+                   else 
+                  {
+                       K_Tc_p = K_Tc_bar;// for p_index = 0,2
+                  }
+         }
     return K_Tc_p;  // returns 2 for NTx=1
 }
 /*******************************************************/
+//  K_Tc_p
 
+
+
+
+
+/*******************************************************/
     /*For  normal UL subframes  find k_0_pbar  */
 uint32_t get_k_0_pbar(uint32_t bw_cfg, uint32_t N_sc, uint32_t n_ul_rb ,uint32_t K_Tc_p,uint32_t m_srs_0)
 {
@@ -581,7 +587,7 @@ return m_srs_0[c_srs];
 
 uint32_t Get_Freq_domain_start_k0p(uint32_t B,  uint32_t bw_cfg,uint32_t K_Tc,  uint32_t M_sc,  uint32_t k_0_pbar,  uint32_t n_b)
 {
-    if (bw_cfg < 8 && B < 4 && K_Tc < 2) 
+    if (bw_cfg < 8 && B < 4 && K_Tc_p < 2) 
     {
         int b;
         uint32_t k_0_p;
