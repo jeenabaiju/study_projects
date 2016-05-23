@@ -538,10 +538,13 @@ uint32_t get_k_0_pbar(uint32_t bw_cfg, uint32_t N_sc, uint32_t n_ul_rb ,uint32_t
 {
     uint32_t k_0_pbar;
 	uint32_t K_0_temp;
+	uint32_t m_sc;
     //K_Tc_p={0,1,...SRS_UL.K_Tc-1}
     if (bw_cfg < 8)
     {
-		  K_0_temp = floor(n_ul_rb / 2) -  m_srs_b[srsbwtable_idx(n_ul_rb)][0][bw_cfg] / 2 ;
+		   m_sc = m_srs_b[srsbwtable_idx(n_ul_rb)][0][bw_cfg];
+		  K_0_temp = (floor(n_ul_rb / 2) )- ( m_sc / 2 );
+		  printf("m_srs_b= %d\n",m_sc);
 		  printf("k_0_temp= %d\n",K_0_temp );
           k_0_pbar =(K_0_temp *N_sc ) + K_Tc_p;
 		  //k_0_pbar = (((floor(n_ul_rb / 2)) - (m_srs_0 / 2 ))*N_sc ) + K_Tc_p;
