@@ -585,7 +585,7 @@ return m_srs_0[c_srs];
 * output- k_0_p values
 */
 
-uint32_t Get_Freq_domain_start_k0p(uint32_t B,  uint32_t bw_cfg,uint32_t K_Tc,  uint32_t M_sc,  uint32_t k_0_pbar,  uint32_t n_b, uint32_t K_Tc_p)
+uint32_t Get_Freq_domain_start_k0p(uint32_t HoppingBandwidth, uint32_t B, uint32_t n_ul_rb, uint32_t bw_cfg, uint32_t freqDomainPosition, uint32_t K_Tc, uint32_t n_srs, uint32_t Fb, uint32_t N_b , uint32_t k_0_pbar,  uint32_t K_Tc_p)
 {
     if (bw_cfg < 8 && B < 4 && K_Tc_p < 2) 
     {
@@ -593,6 +593,8 @@ uint32_t Get_Freq_domain_start_k0p(uint32_t B,  uint32_t bw_cfg,uint32_t K_Tc,  
         uint32_t k_0_p;
         for (b = 0; b <= B;  b++)
         {
+				 uint32_t M_sc = Get_Msc_values( bw_cfg, b, n_ul_rb, N_sc);
+				 uint32_t n_b = Get_nb(HoppingBandwidth, b, n_ul_rb, bw_cfg, freqDomainPosition,n_srs,Fb,N_b);
 	             k_0_p += k_0_pbar + (K_Tc * M_sc * n_b);
         }
         return k_0_p;
