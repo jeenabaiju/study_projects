@@ -650,7 +650,7 @@ void main()
 		uint32_t k_0_pbar = get_k_0_pbar( bw_cfg,  N_sc,  n_ul_rb , K_Tc_p,m_srs_0);
 		
 		uint32_t  M_sc = Get_Msc_values(bw_cfg, B,  n_ul_rb, N_sc);
-		uint32_t k_p = Get_Freq_domain_start_k0p(B,   bw_cfg, K_Tc,  M_sc,  k_0_pbar, n_b,K_Tc_p);
+		uint32_t k_p = Get_Freq_domain_start_k0p(HoppingBandwidth, B, n_ul_rb, bw_cfg, freqDomainPosition,  K_Tc, n_srs, Fb,  N_b , k_0_pbar,   K_Tc_p);
 		printf("k_0_pbar = %d, K_p = %d ,M_sc = %d\n",k_0_pbar,k_p,M_sc);
 		
 }
