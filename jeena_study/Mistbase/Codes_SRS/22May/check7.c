@@ -548,7 +548,7 @@ void main()
            uint32_t nf = 0; //System frame number SFN 
            uint32_t Config_idx = 7;// I_srs {0,..... 644}
            uint32_t Offset_Idx = 0;// {0,1}
-           uint32_t K_Tc;//Transmission_comb =2 for SRS
+           uint32_t K_Tc = 2;//Transmission_comb =2 for SRS
            uint32_t Cyclic_shift = 0;// n_srs_cs
            uint32_t Cyclic_shift_ap;// n_srs_cs
            uint32_t N_Tx = 1; //{1,2,4}
