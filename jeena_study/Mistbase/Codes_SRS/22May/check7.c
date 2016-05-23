@@ -640,9 +640,9 @@ void main()
 		uint32_t m_srs_0 = Get_m_srs_0(  bw_cfg);
 		printf (" M_SRS1= %d\n",m_srs_0);
 		uint32_t k_0_pbar = get_k_0_pbar( bw_cfg,  N_sc,  n_ul_rb , K_Tc_p,m_srs_0);
-		printf("k_0_pbar = %d\n",k_0_pbar);
+		
 		uint32_t  M_sc = Get_Msc_values(bw_cfg, B,  n_ul_rb, N_sc);
 		uint32_t k_p = Get_Freq_domain_start_k0p(B,   bw_cfg, K_Tc,  M_sc,  k_0_pbar, n_b);
-		
+		printf("k_0_pbar = %d, K_p = %d \n",k_0_pbar,k_p);
 		
 }
