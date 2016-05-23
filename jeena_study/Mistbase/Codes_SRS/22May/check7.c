@@ -534,7 +534,7 @@ uint32_t Get_K_Tc_p(uint32_t Cyclic_shift, uint32_t N_Tx, uint32_t K_Tc)
 /*******************************************************/
 
     /*For  normal UL subframes  find k_0_pbar  */
-uint32_t get_k_0_pbar(uint32_t bw_cfg, uint32_t N_sc, uint32_t n_ul_rb ,uint32_t K_Tc_p)
+uint32_t get_k_0_pbar(uint32_t bw_cfg, uint32_t N_sc, uint32_t n_ul_rb ,uint32_t K_Tc_p,uint32_t m_srs_0)
 {
     uint32_t k_pbar;
 	uint32_t K_0_temp;
@@ -542,12 +542,10 @@ uint32_t get_k_0_pbar(uint32_t bw_cfg, uint32_t N_sc, uint32_t n_ul_rb ,uint32_t
     //K_Tc_p={0,1,...SRS_UL.K_Tc-1}
     if (bw_cfg < 8)
     {
-		   m_sc = m_srs_b[srsbwtable_idx(n_ul_rb)][0][bw_cfg];
-		   temp1= floor(n_ul_rb / 2) ;
-		   
-		  K_0_temp = temp1- ( m_sc / 2 );
-		  printf("m_srs_b= %d , temp1 =%d \n",m_sc,temp1);
-		  printf("k_0_temp= %d\n",K_0_temp );
+		  //m_sc = m_srs_b[srsbwtable_idx(n_ul_rb)][0][bw_cfg];
+		  m_sc= m_srs_0;
+		  temp1= floor(n_ul_rb / 2) ;
+		  K_0_temp = temp1-( m_sc / 2 );
           k_pbar =(K_0_temp *N_sc ) + K_Tc_p;
 		  //k_0_pbar = (((floor(n_ul_rb / 2)) - (m_srs_0 / 2 ))*N_sc ) + K_Tc_p;
 		  printf("k_0_pbar 1= %d\n",k_pbar);
@@ -624,7 +622,7 @@ void main()
     	printf("T_offset = %d ,T_offset_max = %d , T_srs = %d , n_srs = %d, Fb = %d, n_b = %d, K_Tc_p = %d\n", T_offset,T_offset_max,T_srs,n_srs,Fb,n_b,K_Tc_p);
 		uint32_t m_srs_0 = Get_m_srs_0(  bw_cfg);
 		printf (" M_SRS1= %d\n",m_srs_0);
-		uint32_t k_0_pbar = get_k_0_pbar( bw_cfg,  N_sc,  n_ul_rb , K_Tc_p);
+		uint32_t k_0_pbar = get_k_0_pbar( bw_cfg,  N_sc,  n_ul_rb , K_Tc_p,m_srs_0);
 		printf("k_0_pbar = %d\n",k_0_pbar);
 		uint32_t start = srslte_refsignal_srs_rb_start_cs(bw_cfg, n_ul_rb);
 		uint32_t K_pbar = (start * N_sc)+ K_Tc;
