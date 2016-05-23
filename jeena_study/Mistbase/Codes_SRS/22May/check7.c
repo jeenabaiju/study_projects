@@ -562,7 +562,7 @@ uint32_t Get_m_srs_0( uint32_t bw_cfg)
         m_srs_0 [i] = *((uint32_t*)m_srs_b+ i);
         
     }
-printf (" M_SRS1= %d\n",m_srs_0[c_srs]);
+//printf (" M_SRS1= %d\n",m_srs_0[c_srs]);
 return m_srs_0[c_srs];
 }
 void main()
@@ -608,6 +608,7 @@ void main()
 		uint32_t K_Tc_p = Get_K_Tc_p(Cyclic_shift,  N_Tx, K_Tc);
     	//printf("T_offset = %d ,T_offset_max = %d , T_srs = %d , n_srs = %d, Fb = %d, n_b = %d, K_Tc_p = %d\n", T_offset,T_offset_max,T_srs,n_srs,Fb,n_b,K_Tc_p);
 		uint32_t m_srs_0 = Get_m_srs_0(  bw_cfg);
-		uint32_t k_0_pbar =get_k_0_pbar( bw_cfg,  N_sc,  n_ul_rb , K_Tc_p, m_srs_0);
+		printf (" M_SRS1= %d\n",m_srs_0);
+		uint32_t k_0_pbar = get_k_0_pbar( bw_cfg,  N_sc,  n_ul_rb , K_Tc_p, m_srs_0);
 		printf("k_0_pbar = %d\n",k_0_pbar);
 }
