@@ -536,7 +536,7 @@ uint32_t Get_K_Tc_p(uint32_t Cyclic_shift, uint32_t N_Tx, uint32_t K_Tc)
     /*For  normal UL subframes  find k_0_pbar  */
 uint32_t get_k_0_pbar(uint32_t bw_cfg, uint32_t N_sc, uint32_t n_ul_rb ,uint32_t K_Tc_p)
 {
-    uint32_t k_0_pbar;
+    uint32_t k_pbar;
 	uint32_t K_0_temp;
 	uint32_t m_sc, temp1;
     //K_Tc_p={0,1,...SRS_UL.K_Tc-1}
