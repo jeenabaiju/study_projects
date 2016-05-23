@@ -619,6 +619,6 @@ void main()
 		printf("k_0_pbar = %d\n",k_0_pbar);
 		uint32_t start = srslte_refsignal_srs_rb_start_cs(bw_cfg, n_ul_rb);
 		uint32_t K_pbar = (start * n_ul_rb)+ K_Tc;
-		printf("k_pbar = %d\n",K_pbar);
+		printf("k_pbar = %d, start = %d \n",K_pbar,start);
 		
 }
