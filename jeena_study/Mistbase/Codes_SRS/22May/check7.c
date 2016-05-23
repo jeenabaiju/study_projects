@@ -551,6 +551,7 @@ uint32_t get_k_0_pbar(uint32_t bw_cfg, uint32_t N_sc, uint32_t n_ul_rb ,uint32_t
 uint32_t srslte_refsignal_srs_rb_L_cs(uint32_t bw_cfg, uint32_t n_ul_rb) {
   if (bw_cfg < 8) {
     return m_srs_b[srsbwtable_idx(n_ul_rb)][0][bw_cfg];
+	printf (" M_SRS = %d\n",m_srs_b[srsbwtable_idx(n_ul_rb)][0][bw_cfg]);
   } 
   return 0; 
 }
@@ -566,8 +567,9 @@ uint32_t Get_m_srs_0( uint32_t bw_cfg)
     for (i=0 ; i < 8; i++)
     {
         m_srs_0 [i] = *((uint32_t*)m_srs_b+ i);
-    
+        
     }
+printf (" M_SRS1= %d\n",m_srs_0[c_srs]);
 return m_srs_0[c_srs];
 }
 void main()
