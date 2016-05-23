@@ -534,13 +534,14 @@ uint32_t Get_K_Tc_p(uint32_t Cyclic_shift, uint32_t N_Tx, uint32_t K_Tc)
 /*******************************************************/
 
     /*For  normal UL subframes  find k_0_pbar  */
-uint32_t get_k_0_pbar(uint32_t bw_cfg, uint32_t N_sc, uint32_t n_ul_rb ,uint32_t K_Tc_p)
+uint32_t get_k_0_pbar(uint32_t bw_cfg, uint32_t N_sc, uint32_t n_ul_rb ,uint32_t K_Tc_p, uint32_t m_srs_0)
 {
     uint32_t k_0_pbar;
     //K_Tc_p={0,1,...SRS_UL.K_Tc-1}
     if (bw_cfg < 8)
     {
-          k_0_pbar = (((floor(n_ul_rb / 2)) - (m_srs_b[srsbwtable_idx(n_ul_rb)][0][bw_cfg] / 2 ))*N_sc ) + K_Tc_p;
+          //k_0_pbar = (((floor(n_ul_rb / 2)) - (m_srs_b[srsbwtable_idx(n_ul_rb)][0][bw_cfg] / 2 ))*N_sc ) + K_Tc_p;
+		  k_0_pbar = (((floor(n_ul_rb / 2)) - (m_srs_0 / 2 ))*N_sc ) + K_Tc_p;
     }
 
 }
@@ -548,14 +549,7 @@ uint32_t get_k_0_pbar(uint32_t bw_cfg, uint32_t N_sc, uint32_t n_ul_rb ,uint32_t
 
 
 /* Returns number of RB defined for the cell-specific SRS */
-uint32_t srslte_refsignal_srs_rb_L_cs(uint32_t bw_cfg, uint32_t n_ul_rb) {
-  if (bw_cfg < 8) {
-    return m_srs_b[srsbwtable_idx(n_ul_rb)][0][bw_cfg];
-  } 
-  return 0; 
-}
 /* /*Compute m_srs_0[bw_cfg]
-
 * input - bw_cfg
 * output- m_srs_0 values   **************************** not required just a general calculation*/
 uint32_t Get_m_srs_0( uint32_t bw_cfg)
@@ -568,7 +562,7 @@ uint32_t Get_m_srs_0( uint32_t bw_cfg)
         m_srs_0 [i] = *((uint32_t*)m_srs_b+ i);
         
     }
-printf (" M_SRS1= %d\n",m_srs_0[c_srs]);
+//printf (" M_SRS1= %d\n",m_srs_0[c_srs]);
 return m_srs_0[c_srs];
 }
 void main()
@@ -608,12 +602,12 @@ void main()
 	uint32_t T_offset = Offset_value(T_srs,Duplex_Mode, Config_idx,Offset_Idx,&T_offset_max);
 	uint32_t n_srs = Get_n_srs( Config_idx, ns,  nf, N_sp, T_srs, Duplex_Mode, T_offset,  T_offset_max);
         uint32_t N_b = Nb[srsbwtable_idx(n_ul_rb)][B][bw_cfg];
-        printf("N_b = %d\n",N_b);
+        //printf("N_b = %d\n",N_b);
         uint32_t Fb = Get_Fb(n_ul_rb,B,bw_cfg,HoppingBandwidth,n_srs,N_b);
         uint32_t n_b = Get_nb( HoppingBandwidth,B, n_ul_rb, bw_cfg, freqDomainPosition, n_srs, Fb,N_b);
 		uint32_t K_Tc_p = Get_K_Tc_p(Cyclic_shift,  N_Tx, K_Tc);
-    	printf("T_offset = %d ,T_offset_max = %d , T_srs = %d , n_srs = %d, Fb = %d, n_b = %d, K_Tc_p = %d\n", T_offset,T_offset_max,T_srs,n_srs,Fb,n_b,K_Tc_p);
-		uint32_t M_sc = srslte_refsignal_srs_rb_L_cs(bw_cfg,  n_ul_rb);
-		printf (" M_SRS = %d\n",M_sc);
-		Get_m_srs_0(  bw_cfg);
+    	//printf("T_offset = %d ,T_offset_max = %d , T_srs = %d , n_srs = %d, Fb = %d, n_b = %d, K_Tc_p = %d\n", T_offset,T_offset_max,T_srs,n_srs,Fb,n_b,K_Tc_p);
+		uint32_t m_srs_0 = Get_m_srs_0(  bw_cfg);
+		uint32_t k_0_pbar =get_k_0_pbar( bw_cfg,  N_sc,  n_ul_rb , K_Tc_p, m_srs_0);
+		printf("k_0_pbar = %d\n",k_0_pbar);
 }
