@@ -153,6 +153,13 @@ uint32_t srsbwtable_idx(uint32_t n_ul_rb)
         return 3;
     }
 }
+uint32_t  Get_Msc_values(uint32_t bw_cfg, uint32_t B, uint32_t n_ul_rb,  uint32_t N_sc)
+{
+   uint32_t M_sc;
+   
+   M_sc = m_srs_b[srsbwtable_idx(n_ul_rb)][B][bw_cfg] * N_sc / 2;/* According to 3GPP 36.211 5.5.3.2*/
+   return M_sc;
+}
 /***********************************************************************************************/
 uint32_t T_srs_FDD(uint32_t Config_idx) 
 {
@@ -547,20 +554,10 @@ uint32_t get_k_0_pbar(uint32_t bw_cfg, uint32_t N_sc, uint32_t n_ul_rb ,uint32_t
 		  temp1= floor(n_ul_rb / 2) ;
 		  K_0_temp = temp1-( m_sc / 2 );
           k_pbar =(K_0_temp *N_sc ) + K_Tc_p;
-		  //k_0_pbar = (((floor(n_ul_rb / 2)) - (m_srs_0 / 2 ))*N_sc ) + K_Tc_p;
-		  printf("k_0_pbar 1= %d\n",k_pbar);
-    }
+	}
 	return k_pbar ;
 }
-
-/* Returns start of common SRS BW region */
-uint32_t srslte_refsignal_srs_rb_start_cs(uint32_t bw_cfg, uint32_t n_ul_rb) {
-  if (bw_cfg < 8) {
-    return n_ul_rb/2-m_srs_b[srsbwtable_idx(n_ul_rb)][0][bw_cfg]/2;
-  }
-  return 0; 
-}
-
+/*******************************************************/
 /* Returns number of RB defined for the cell-specific SRS */
 /* /*Compute m_srs_0[bw_cfg]
 * input - bw_cfg
@@ -573,11 +570,31 @@ uint32_t Get_m_srs_0( uint32_t bw_cfg)
     for (i=0 ; i < 8; i++)
     {
         m_srs_0 [i] = *((uint32_t*)m_srs_b+ i);
-        
-    }
-//printf (" M_SRS1= %d\n",m_srs_0[c_srs]);
+	}
 return m_srs_0[c_srs];
 }
+/*******************************************************/
+/* /*Compute frequency-domain starting position k0_p -UE specific
+* input - HoppingBandwidth,B_srs,freqDomainPosition,K_Tc,bw_cfg,n_ul_rb
+* output- k_0_p values
+*/
+
+uint32_t Get_Freq_domain_start_k0p(uint32_t B,  uint32_t bw_cfg,uint32_t K_Tc,  uint32_t M_sc,  uint32_t k_0_pbar,  uint32_t n_b)
+{
+    if (bw_cfg < 8 && B < 4 && K_Tc < 2) 
+    {
+        int b;
+        uint32_t k_0_p;
+        for (b = 0; b <= B;  b++)
+        {
+	             k_0_p += k_0_pbar + (K_Tc * M_sc * n_b);
+        }
+        return k_0_p;
+    }
+    return 0;
+}
+
+
 void main()
 {
            const uint16_t cell_ID = 100;
@@ -624,8 +641,8 @@ void main()
 		printf (" M_SRS1= %d\n",m_srs_0);
 		uint32_t k_0_pbar = get_k_0_pbar( bw_cfg,  N_sc,  n_ul_rb , K_Tc_p,m_srs_0);
 		printf("k_0_pbar = %d\n",k_0_pbar);
-		uint32_t start = srslte_refsignal_srs_rb_start_cs(bw_cfg, n_ul_rb);
-		uint32_t K_pbar = (start * N_sc)+ K_Tc;
-		printf("k_pbar = %d, start = %d \n",K_pbar,start);
+		uint32_t  M_sc = Get_Msc_values(bw_cfg, B,  n_ul_rb, N_sc);
+		Get_Freq_domain_start_k0p(uB,   bw_cfg, K_Tc,  M_sc,  k_0_pbar, n_b);
+		
 		
 }
