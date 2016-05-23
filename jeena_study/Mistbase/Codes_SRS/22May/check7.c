@@ -546,7 +546,13 @@ uint32_t get_k_0_pbar(uint32_t bw_cfg, uint32_t N_sc, uint32_t n_ul_rb ,uint32_t
 
 }
 
-
+/* Returns start of common SRS BW region */
+uint32_t srslte_refsignal_srs_rb_start_cs(uint32_t bw_cfg, uint32_t n_ul_rb) {
+  if (bw_cfg < 8) {
+    return n_ul_rb/2-m_srs_b[srsbwtable_idx(n_ul_rb)][0][bw_cfg]/2;
+  }
+  return 0; 
+}
 
 /* Returns number of RB defined for the cell-specific SRS */
 /* /*Compute m_srs_0[bw_cfg]
@@ -611,4 +617,8 @@ void main()
 		printf (" M_SRS1= %d\n",m_srs_0);
 		uint32_t k_0_pbar = get_k_0_pbar( bw_cfg,  N_sc,  n_ul_rb , K_Tc_p, m_srs_0);
 		printf("k_0_pbar = %d\n",k_0_pbar);
+		uint32_t start = srslte_refsignal_srs_rb_start_cs(bw_cfg, n_ul_rb);
+		uint32_t K_pbar = (start * n_ul_rb)+ K_Tc;
+		printf("k_pbar = %d\n",K_pbar);
+		
 }
