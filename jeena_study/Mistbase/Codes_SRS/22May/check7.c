@@ -546,7 +546,7 @@ uint32_t get_k_0_pbar(uint32_t bw_cfg, uint32_t N_sc, uint32_t n_ul_rb ,uint32_t
 		  //k_0_pbar = (((floor(n_ul_rb / 2)) - (m_srs_0 / 2 ))*N_sc ) + K_Tc_p;
 		  printf("k_0_pbar 1= %d\n",k_0_pbar);
     }
-
+	return k_0_pbar ;
 }
 
 /* Returns start of common SRS BW region */
