@@ -531,7 +531,45 @@ uint32_t Get_K_Tc_p(uint32_t Cyclic_shift, uint32_t N_Tx, uint32_t K_Tc)
     }
     return K_Tc_p;
 }
+/*******************************************************/
 
+    /*For  normal UL subframes  find k_0_pbar  */
+uint32_t get_k_0_pbar(uint32_t bw_cfg, uint32_t N_sc, uint32_t n_ul_rb ,uint32_t K_Tc_p)
+{
+    uint32_t k_0_pbar;
+    //K_Tc_p={0,1,...SRS_UL.K_Tc-1}
+    if (bw_cfg < 8)
+    {
+          k_0_pbar = (((floor(n_ul_rb / 2)) - (m_srs_b[srsbwtable_idx(n_ul_rb)][0][bw_cfg] / 2 ))*N_sc ) + K_Tc_p;
+    }
+
+}
+
+
+
+/* Returns number of RB defined for the cell-specific SRS */
+uint32_t srslte_refsignal_srs_rb_L_cs(uint32_t bw_cfg, uint32_t n_ul_rb) {
+  if (bw_cfg < 8) {
+    return m_srs_b[srsbwtable_idx(n_ul_rb)][0][bw_cfg];
+  } 
+  return 0; 
+}
+/* /*Compute m_srs_0[bw_cfg]
+
+* input - bw_cfg
+* output- m_srs_0 values   **************************** not required just a general calculation*/
+uint32_t Get_m_srs_0( uint32_t bw_cfg)
+{
+    int i;
+    uint32_t c_srs = bw_cfg; 
+    uint32_t m_srs_0[8];
+    for (i=0 ; i < 8; i++)
+    {
+        m_srs_0 [i] = *((uint32_t*)m_srs_b+ i);
+    
+    }
+return m_srs_0[c_srs];
+}
 void main()
 {
            const uint16_t cell_ID = 100;
