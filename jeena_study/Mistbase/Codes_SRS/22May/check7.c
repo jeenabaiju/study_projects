@@ -576,7 +576,7 @@ void main()
 {
            const uint16_t cell_ID = 100;
            uint32_t  B = 0;//B_srs={0,1,2,3} UE specific
-           uint32_t bw_cfg = 7; //C_srs is an element of {0,1,2,3,4,5,6,7}/ cell specific parameter
+           uint32_t bw_cfg = 5; //C_srs is an element of {0,1,2,3,4,5,6,7}/ cell specific parameter
            uint32_t srsSubframeConfig;
            uint32_t n_ul_rb = 6;// must be 6 or greater in value
            uint32_t CyclicPrefixLength;
