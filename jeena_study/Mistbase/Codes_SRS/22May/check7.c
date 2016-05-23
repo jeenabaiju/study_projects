@@ -529,7 +529,7 @@ uint32_t Get_K_Tc_p(uint32_t Cyclic_shift, uint32_t N_Tx, uint32_t K_Tc)
             K_Tc_p = K_Tc_bar;// for p_index = 0,2
         }
     }
-    return K_Tc_p;
+    return K_Tc_p;  // returns 2 for NTx=1
 }
 /*******************************************************/
 
@@ -540,8 +540,8 @@ uint32_t get_k_0_pbar(uint32_t bw_cfg, uint32_t N_sc, uint32_t n_ul_rb ,uint32_t
     //K_Tc_p={0,1,...SRS_UL.K_Tc-1}
     if (bw_cfg < 8)
     {
-          //k_0_pbar = (((floor(n_ul_rb / 2)) - (m_srs_b[srsbwtable_idx(n_ul_rb)][0][bw_cfg] / 2 ))*N_sc ) + K_Tc_p;
-		  k_0_pbar = (((floor(n_ul_rb / 2)) - (m_srs_0 / 2 ))*N_sc ) + K_Tc_p;
+          k_0_pbar = (((floor(n_ul_rb / 2)) - (m_srs_b[srsbwtable_idx(n_ul_rb)][0][bw_cfg] / 2 ))*N_sc ) + K_Tc_p;
+		  //k_0_pbar = (((floor(n_ul_rb / 2)) - (m_srs_0 / 2 ))*N_sc ) + K_Tc_p;
     }
 
 }
