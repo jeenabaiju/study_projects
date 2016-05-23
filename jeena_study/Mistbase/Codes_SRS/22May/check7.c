@@ -562,7 +562,7 @@ uint32_t Get_m_srs_0( uint32_t bw_cfg)
         m_srs_0 [i] = *((uint32_t*)m_srs_b+ i);
         
     }
-//printf (" M_SRS1= %d\n",m_srs_0[c_srs]);
+printf (" M_SRS1= %d\n",m_srs_0[c_srs]);
 return m_srs_0[c_srs];
 }
 void main()
