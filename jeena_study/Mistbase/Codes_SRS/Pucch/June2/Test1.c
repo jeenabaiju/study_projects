@@ -53,6 +53,7 @@ void get_n_cs_cell(uint32_t CP, uint32_t n_cs_cell[3][3])
 	uint32_t CP_NSYMB = CP?3:2;
     uint32_t len = 8 * (NSLOTS_X_FRAME) * CP_NSYMB + 8 * (CP_NSYMB) + 7;
     uint8_t n_prs[len];
+    int i;
 	calc_prs_c( c_init, len, n_prs);
 	for (i = 0; i < len; i++)
 	    {
