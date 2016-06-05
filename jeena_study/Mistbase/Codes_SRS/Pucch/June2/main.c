@@ -1412,7 +1412,7 @@ struct pucch_config pucch;
 	       pucch.N_cs_1 = 6; // No.of cyclic shift for PUCCH 1/1a/1b{0...7}
 	       pucch.N_RB_2 = 0; // N_RB_2 <= 0 denotes BW available for PUCCH 2/2a/2b{0...98}
 	       pucch.ns = 0;// slot number
-	       pucch.NSLOTS_X_FRAME = 20;//number of slots per frame
+	       pucch.NSLOTS_X_FRAME = 2;//number of slots per frame
 	       pucch.N_UL_RB = 6;
 	       pucch.n_pucch_1 = 1;//{0...2047}
 	       pucch.n_pucch_2 =1;
