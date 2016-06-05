@@ -74,7 +74,7 @@ void get_n_cs_cell(uint32_t CP, uint32_t n_cs_cell[3][3])
 void main ()
 {
 int nslot, l;
-uint32_t NSLOTS_X_FRAME = 2;
+uint32_t NSLOTS_X_FRAME = 3;
 uint32_t CP = 1;
 uint32_t n_cs_cell[NSLOTS_X_FRAME ][3];
 get_n_cs_cell(CP,n_cs_cell);
