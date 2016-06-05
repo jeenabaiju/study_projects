@@ -935,7 +935,7 @@ int pucch_format2a_2b_mod_symbol(uint32_t format, uint32_t bits[2], float comple
 /****************************************************************************/
 int get_n_cs_cell(struct pucch_config *cfg, uint32_t n_cs_cell[cfg->NSLOTS_X_FRAME][3],struct SRS_UL *srs_ul,uint32_t ns)
 {
-    uint32_t len = ns+1;
+    uint32_t len = 7;
     uint8_t n_prs[len];
 	const uint16_t N_ID = Get_cellID(srs_ul);
 	const uint32_t c_init = N_ID;
