@@ -935,15 +935,17 @@ int pucch_format2a_2b_mod_symbol(uint32_t format, uint32_t bits[2], float comple
 /****************************************************************************/
 int get_n_cs_cell(struct pucch_config *cfg, uint32_t n_cs_cell[cfg->NSLOTS_X_FRAME][3],struct SRS_UL *srs_ul,uint32_t ns)
 {
-    uint32_t len = 7;
+    uint32_t nslot;
+	uint32_t l;
+	int i;
+    uint32_t CP_NSYMB = cfg->CP?3:2;
+    uint32_t len = 8 * (cfg->NSLOTS_X_FRAME) * CP_NSYMB + 8 * (CP_NSYMB) + 7;
     uint8_t n_prs[len];
 	const uint16_t N_ID = Get_cellID(srs_ul);
 	const uint32_t c_init = N_ID;
 	calc_prs_c( c_init, len, n_prs);
-	uint32_t CP_NSYMB = cfg->CP?3:2;
-	uint32_t nslot;
-	uint32_t l;
-	int i;
+
+
 	  for (nslot = 0; nslot < cfg->NSLOTS_X_FRAME; nslot++)
 	  {
 	    for (l = 0; l < CP_NSYMB; l++)
