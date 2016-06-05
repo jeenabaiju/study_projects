@@ -64,7 +64,7 @@ void get_n_cs_cell(uint32_t CP, uint32_t n_cs_cell[3][3])
 	      for (i = 0;i < 8; i++)
 	      {
 	        n_cs_cell[nslot][l] += (((uint32_t) n_prs[8 * nslot * CP_NSYMB + 8 * l + i]) << i);
-	        printf ("N_cs_cell[%d][%d] = %d", nslot, l, n_cs_cell[nslot][l]);
+	        printf ("N_cs_cell[%d][%d] = %d\n ", nslot, l, n_cs_cell[nslot][l]);
 	      }
 	    }
 	  }
