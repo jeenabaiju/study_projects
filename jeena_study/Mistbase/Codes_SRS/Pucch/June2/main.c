@@ -1031,6 +1031,7 @@ uint32_t get_pucch_format1(struct pucch_config *cfg,uint32_t ns, uint32_t l, uin
 	/****************************************************************************/
     float alpha;
     *n_oc = ((ns % 2)== 0)?n_oc_slot1:n_oc_slot2;
+    printf("n_oc1 = %d \nn_oc2= %d\n",n_oc_slot1,n_oc_slot2);
     alpha = 2 * M_PI * n_cs_format1 / N_sc;
     return alpha;
 }
