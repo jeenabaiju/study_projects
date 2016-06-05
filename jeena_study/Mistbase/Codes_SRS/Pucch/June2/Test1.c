@@ -49,7 +49,7 @@ void get_n_cs_cell(uint32_t CP, uint32_t n_cs_cell[3][3])
     uint32_t len = 7;
     uint8_t n_prs[len];
 	const uint16_t N_ID = 1;
-	uint32_t NSLOTS_X_FRAME = 3;
+	uint32_t NSLOTS_X_FRAME = 2;
 	const uint32_t c_init = N_ID;
 	calc_prs_c( c_init, len, n_prs);
 	uint32_t CP_NSYMB = CP?3:2;
@@ -64,7 +64,7 @@ void get_n_cs_cell(uint32_t CP, uint32_t n_cs_cell[3][3])
 	      for (i = 0;i < 8; i++)
 	      {
 	        n_cs_cell[nslot][l] += (((uint32_t) n_prs[8 * nslot * CP_NSYMB + 8 * l + i]) << i);
-	        printf ("N_cs_cell[%d][%d] = %d\n ", nslot, l, n_cs_cell[nslot][l]);
+	        printf ("N_cs_cell[%d][%d] = %d\n CP_NSYMB = %d\nn_prs[%d]", nslot, l, n_cs_cell[nslot][l],CP_NSYMB,i,n_prs[i]);
 	      }
 	    }
 	  }
