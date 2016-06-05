@@ -62,7 +62,6 @@ void get_n_cs_cell(uint32_t CP, uint32_t n_cs_cell[3][3])
 
 	uint32_t nslot;
 	uint32_t l;
-	int i;
 	  for (nslot = 0; nslot < NSLOTS_X_FRAME; nslot++)
 	  {
 	    for (l = 0; l < CP_NSYMB; l++)
