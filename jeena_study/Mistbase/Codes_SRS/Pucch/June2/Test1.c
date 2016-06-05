@@ -48,7 +48,7 @@ void get_n_cs_cell(uint32_t CP, uint32_t n_cs_cell[3][3])
 {
 
 	const uint16_t N_ID = 1;
-	uint32_t NSLOTS_X_FRAME = 2;
+	uint32_t NSLOTS_X_FRAME = 3;
 	const uint32_t c_init = N_ID;
 	uint32_t CP_NSYMB = CP?3:2;
     uint32_t len = 8 * (NSLOTS_X_FRAME-1) * CP_NSYMB + 8 * (CP_NSYMB-1) + 7;
