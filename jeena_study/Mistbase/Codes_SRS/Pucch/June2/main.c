@@ -944,7 +944,7 @@ int get_n_cs_cell(struct pucch_config *cfg, uint32_t n_cs_cell[cfg->NSLOTS_X_FRA
 	const uint16_t N_ID = Get_cellID(srs_ul);
 	const uint32_t c_init = N_ID;
 	calc_prs_c( c_init, len, n_prs);
-
+    n_cs_cell[2][3]= {{192,46,212},{91,84,25;
 
 	  for (nslot = 0; nslot < cfg->NSLOTS_X_FRAME; nslot++)
 	  {
