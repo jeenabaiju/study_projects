@@ -75,7 +75,7 @@ void main ()
 {
 int nslot, l;
 uint32_t NSLOTS_X_FRAME = 2;
-uint32_t CP = 1;
+uint32_t CP = 0;
 uint32_t n_cs_cell[NSLOTS_X_FRAME ][3];
 get_n_cs_cell(CP,n_cs_cell);
  for (nslot = 0; nslot < NSLOTS_X_FRAME; nslot++)
