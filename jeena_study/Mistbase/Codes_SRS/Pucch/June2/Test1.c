@@ -44,7 +44,7 @@ void calc_prs_c(const uint32_t c_init, const uint32_t len, uint8_t* n_prs)
 
 }
 /******************************************************************************/
-void get_n_cs_cell(uint32_t CP, uint32_t n_cs_cell[3][2])
+void get_n_cs_cell(uint32_t CP, uint32_t n_cs_cell[3][3])
 {
 
 	const uint16_t N_ID = 1;
@@ -75,12 +75,12 @@ void main ()
 {
 int nslot, l;
 uint32_t NSLOTS_X_FRAME = 2;
-uint32_t CP = 0;
-uint32_t n_cs_cell[NSLOTS_X_FRAME ][2];
+uint32_t CP = 1;
+uint32_t n_cs_cell[NSLOTS_X_FRAME ][3];
 get_n_cs_cell(CP,n_cs_cell);
  for (nslot = 0; nslot < NSLOTS_X_FRAME; nslot++)
 	  {
-	    for (l = 0; l < 2; l++)
+	    for (l = 0; l < 3; l++)
 	    {
 	    printf ("N_cs_cell[%d][%d] = %d\n", nslot, l, n_cs_cell[nslot][l]);
 	    }
