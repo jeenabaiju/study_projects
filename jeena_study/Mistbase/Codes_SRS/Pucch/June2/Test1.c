@@ -76,11 +76,11 @@ void main ()
 int nslot, l;
 uint32_t NSLOTS_X_FRAME = 2;
 uint32_t CP = 0;
-uint32_t n_cs_cell[NSLOTS_X_FRAME ][3];
+uint32_t n_cs_cell[NSLOTS_X_FRAME ][2];
 get_n_cs_cell(CP,n_cs_cell);
  for (nslot = 0; nslot < NSLOTS_X_FRAME; nslot++)
 	  {
-	    for (l = 0; l < 3; l++)
+	    for (l = 0; l < 2; l++)
 	    {
 	    printf ("N_cs_cell[%d][%d] = %d\n", nslot, l, n_cs_cell[nslot][l]);
 	    }
