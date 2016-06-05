@@ -1,3 +1,11 @@
+/*
+ * ref_srsgen.c
+ *
+ *  Created on: Jun 3, 2016
+ *      Author: mistbasejeena
+ */
+
+
 #include <math.h>
 #include <string.h>
 #include <strings.h>
@@ -11,25 +19,6 @@
 #include <inttypes.h>
 //#include <ref_table.h>
 //#include <ref_srsgen.h>
-
-
-
-
-
-/*
- * ref_srsgen.c
- *
- *  Created on: Jun 3, 2016
- *      Author: mistbasejeena
- */
-
-
-/*
- *SRS_Gen.c
- *
- *  Created on: May12, 2016
- *      Author: Jeena
- */
 
 //Calculate the value of n_prb
 //Calculate the value of n_REs
@@ -52,13 +41,6 @@
 // place SRS in subframe
 // TDD configuration
 
-
-
-
-
-// srs-configIdx - bw-cfg, B, n_srs_cs(Cyclic shift), SRS_UL.sf_idx,
-//SRS_UL.delta_ss, SRS_UL.group_hopping,sequence_hopping,uint8_t
-//SRS_UL.n_ul_rb=6, HoppingBandwidth, freqdomainposition etc;
 /**********************************************************************/
 #include <math.h>
 #include <string.h>
