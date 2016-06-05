@@ -46,13 +46,15 @@ void calc_prs_c(const uint32_t c_init, const uint32_t len, uint8_t* n_prs)
 /******************************************************************************/
 void get_n_cs_cell(uint32_t CP, uint32_t n_cs_cell[3][3])
 {
-    uint32_t len = 7;
-    uint8_t n_prs[len];
+
 	const uint16_t N_ID = 1;
 	uint32_t NSLOTS_X_FRAME = 2;
 	const uint32_t c_init = N_ID;
-	calc_prs_c( c_init, len, n_prs);
 	uint32_t CP_NSYMB = CP?3:2;
+    uint32_t len = 8 * (NSLOTS_X_FRAME-1) * CP_NSYMB + 8 * (CP_NSYMB-1) + 7;
+    uint8_t n_prs[len];
+	calc_prs_c( c_init, len, n_prs);
+
 	uint32_t nslot;
 	uint32_t l;
 	int i;
