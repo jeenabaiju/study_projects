@@ -44,7 +44,7 @@ void calc_prs_c(const uint32_t c_init, const uint32_t len, uint8_t* n_prs)
 
 }
 /******************************************************************************/
-int get_n_cs_cell(uint32_t CP, uint32_t n_cs_cell[NSLOTS_X_FRAME][3])
+int get_n_cs_cell(uint32_t CP, uint32_t n_cs_cell[uint32_t NSLOTS_X_FRAME][3])
 {
     uint32_t len = 7;
     uint8_t n_prs[len];
