@@ -1047,7 +1047,7 @@ int get_n_cs_cell(struct pucch_config *cfg, uint32_t n_cs_cell[cfg->NSLOTS_X_FRA
     alpha = 2 * M_PI * n_cs_format1 / N_sc;
     return alpha;
 }*/
-uint32_t get_pucch_format1(struct pucch_config *cfg,uint32_t ns, uint32_t l, uint32_t n_cs_cell,uint32_t* n_oc)
+uint32_t get_pucch_format1(struct pucch_config *cfg,uint32_t ns, uint32_t l, uint32_t n_cs_cell[cfg->NSLOTS_X_FRAME][3],uint32_t* n_oc)
 {
 	uint32_t temp;
 	uint32_t temp1;
@@ -1078,7 +1078,7 @@ uint32_t get_pucch_format1(struct pucch_config *cfg,uint32_t ns, uint32_t l, uin
            nprime[nslot] = (cfg->n_pucch_1 < ((c * cfg->N_cs_1)/cfg->delta_ss ))?cfg->n_pucch_1:(cfg->n_pucch_1 - temp1) % temp;// for ns-1
            d = cfg->CP?2:0;
            h_p = (nprime[nslot] + d) % ((c * Nprime)/cfg->delta_ss); // Calculate h_p
-           nprime[nslot+1] = (cfg->n_pucch_1 >= ((c * cfg->N_cs_1)/cfg->delta_ss ))?((c *(n_prime_slot1 + 1)) % (temp + 1) - 1):((h_p / c) + temp3);// for ns
+           nprime[nslot+1] = (cfg->n_pucch_1 >= ((c * cfg->N_cs_1)/cfg->delta_ss ))?((c *(nprime[nslot] + 1)) % (temp + 1) - 1):((h_p / c) + temp3);// for ns
                // Calculate n_oc
            n_oc1[nslot] =(nprime[nslot] * cfg->delta_ss)/Nprime;// for slot ns-1
            n_oc1[nslot+1] = (nprime[nslot+1] * cfg->delta_ss)/Nprime;// for slot ns
@@ -1109,16 +1109,16 @@ uint32_t get_pucch_format1(struct pucch_config *cfg,uint32_t ns, uint32_t l, uin
 	         /****************************************************************************/
 	// ALPHA PUCCH format1/1a/1b
 	/****************************************************************************/
-    float alpha;
-    *n_oc = ((ns % 2)== 0)?n_oc1[i]:n_oc1[i+1];
-    printf("n_oc1 = %d \nn_oc2= %d\n",n_oc1[i],n_oc1[i+1]);
-    alpha[nslot] = 2 * M_PI * n_cs_format1[nslot][l] / N_sc
-    printf("alpha[%d] = %f \n",nslot,alpha[nslot]);
+    float alpha[cfg->NSLOTS_X_FRAME][c];
+    *n_oc = ((ns % 2)== 0)?n_oc1[nslot]:n_oc1[nslot+1];
+    printf("n_oc1 = %d \nn_oc2= %d\n",n_oc1[nslot],n_oc1[nslot+1]);
+    alpha[nslot][l] = 2 * M_PI * n_cs_format1[nslot][l] / N_sc
+    printf("alpha[%d][%d]= %f \n",nslot,l,alpha[nslot][l]);
      }
      }
      }
 
-   return alpha;
+   return alpha[ns][l];
 }
 /******************************************************************************************************************************/
 /*format2/2a/2b */
