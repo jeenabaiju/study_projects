@@ -1081,6 +1081,7 @@ uint32_t get_pucch_format1(struct pucch_config *cfg,uint32_t ns, uint32_t l,stru
     int d;
     int c ;
     c = cfg->CP?3:2;
+    uint32_t n_cs_format1[cfg->NSLOTS_X_FRAME][c];
     uint32_t Nprime, nprime[2],n_oc1[2];
     // Calculate Nprime
     Nprime = (cfg->n_pucch_1 < ((c * cfg->N_cs_1)/cfg->delta_ss ))?cfg->N_cs_1:N_sc;
@@ -1125,7 +1126,7 @@ uint32_t get_pucch_format1(struct pucch_config *cfg,uint32_t ns, uint32_t l,stru
 		   }
 		   	temp_n_cs[nslot]= (temp_1[nslot] + temp_2[nslot]) % Nprime;
 			temp_n_cs[nslot+1]= (temp_1[nslot+1] + temp_2[nslot+1]) % Nprime;
-             uint32_t n_cs_format1[cfg->NSLOTS_X_FRAME][c];
+
 			n_cs_format1 [nslot][l]= (n_cs_cell[nslot][l]+ temp_n_cs[nslot]) % N_sc;
 			n_cs_format1 [nslot+1][l]= (n_cs_cell[nslot+1][l]+ temp_n_cs[nslot+1]) % N_sc;
 	         printf("n_cs1[%d][%d] = %d \nn_cs2[%d][%d] = %d \n",nslot,l, n_cs_format1[nslot][l],nslot+1,l,n_cs_format1[nslot+1][l]);
