@@ -1047,10 +1047,9 @@ int get_n_cs_cell(struct pucch_config *cfg, uint32_t n_cs_cell[cfg->NSLOTS_X_FRA
     alpha = 2 * M_PI * n_cs_format1 / N_sc;
     return alpha;
 }*/
-uint32_t get_pucch_format1(struct pucch_config *cfg,uint32_t ns, uint32_t l,uint32_t* n_oc)
+uint32_t get_pucch_format1(struct pucch_config *cfg,uint32_t ns, uint32_t l,struct SRS_UL *srs_ul,uint32_t* n_oc)
 {
-	    uint32_t nslot;
-	uint32_t l;
+    uint32_t nslot;
 	int i;
     uint32_t CP_NSYMB = cfg->CP?3:2;
     uint32_t len = 8 * (cfg->NSLOTS_X_FRAME) * CP_NSYMB + 8 * (CP_NSYMB) + 7;
@@ -1061,9 +1060,10 @@ uint32_t get_pucch_format1(struct pucch_config *cfg,uint32_t ns, uint32_t l,uint
 	calc_prs_c( c_init, len, n_prs);
     uint32_t n_cs_cell1[2][3] = {{192, 46, 212},
                       {91, 84, 25}};
-    for (nslot = 0; nslot < 2; nslot++)
+    uint32_t n_cs_cell[cfg->NSLOTS_X_FRAME][CP_NSYMB ]
+    for (nslot = 0; nslot < cfg->NSLOTS_X_FRAME; nslot++)
 	  {
-	    for (l = 0; l < 3; l++)
+	    for (l = 0; l < CP_NSYMB ; l++)
 	    {
 
 	        n_cs_cell[nslot][l] = n_cs_cell1[nslot][l];
@@ -1241,7 +1241,7 @@ uint32_t get_pucch_format3(struct pucch_config *cfg,uint32_t ns,uint32_t l, uint
 /****************************************************************************/
 /* Generates DMRS for PUCCH formats 1/1a/1b,2/2a/2b,3 according to 5.5.2.2 in 36.211 */
 /*******************************************************/
-int pucch_dmrs_gen(uint32_t format,struct pucch_config *cfg,struct SRS_UL *srs_ul, uint32_t pucch_bits[2], float complex *r_pucch, struct cell *cell)
+/*int pucch_dmrs_gen(uint32_t format,struct pucch_config *cfg,struct SRS_UL *srs_ul, uint32_t pucch_bits[2], float complex *r_pucch, struct cell *cell)
 {
   int ret = ERROR_INVALID_INPUTS;
   uint32_t m;
