@@ -1047,7 +1047,7 @@ int get_n_cs_cell(struct pucch_config *cfg, uint32_t n_cs_cell[cfg->NSLOTS_X_FRA
     alpha = 2 * M_PI * n_cs_format1 / N_sc;
     return alpha;
 }*/
-uint32_t get_pucch_format1(struct pucch_config *cfg,uint32_t ns, uint32_t l, uint32_t n_cs_cell[cfg->NSLOTS_X_FRAME][3],uint32_t* n_oc)
+uint32_t get_pucch_format1(struct pucch_config *cfg,uint32_t ns, uint32_t l, uint32_t *n_cs_cell[cfg->NSLOTS_X_FRAME][3],uint32_t* n_oc)
 {
 	uint32_t temp;
 	uint32_t temp1;
