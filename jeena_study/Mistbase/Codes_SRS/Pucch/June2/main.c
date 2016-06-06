@@ -1056,7 +1056,7 @@ uint32_t get_pucch_format1(struct pucch_config *cfg,uint32_t ns, uint32_t l,stru
     uint8_t n_prs[len];
 	const uint16_t N_ID = Get_cellID(srs_ul);
 	const uint32_t c_init = N_ID;
-	printf("NID = %d \n",N_ID);
+
 	calc_prs_c( c_init, len, n_prs);
     uint32_t n_cs_cell1[2][3] = {{192, 46, 212},
                       {91, 84, 25}};
@@ -1127,14 +1127,21 @@ uint32_t get_pucch_format1(struct pucch_config *cfg,uint32_t ns, uint32_t l,stru
 			temp_n_cs[nslot+1]= (temp_1[nslot+1] + temp_2[nslot+1]) % Nprime;
              uint32_t n_cs_format1[cfg->NSLOTS_X_FRAME][c];
 			n_cs_format1 [nslot][l]= (n_cs_cell[nslot][l]+ temp_n_cs[nslot]) % N_sc;
-	         printf("n_cs1[%d][%d] = %d \n", n_cs_format1[nslot][l]);
+			n_cs_format1 [nslot+1][l]= (n_cs_cell[nslot+1][l]+ temp_n_cs[nslot+1]) % N_sc;
+	         printf("n_cs1[%d][%d] = %d \nn_cs2[%d][%d] = %d \n",nslot,l, n_cs_format1[nslot][l],nslot+1,l,n_cs_format1[nslot+1][l]);
 
 	         /****************************************************************************/
 	// ALPHA PUCCH format1/1a/1b
 	/****************************************************************************/
     float alpha[cfg->NSLOTS_X_FRAME][c];
     *n_oc = ((ns % 2)== 0)?n_oc1[nslot]:n_oc1[nslot+1];
-    printf("n_oc1 = %d \nn_oc2= %d\n",n_oc1[nslot],n_oc1[nslot+1]);
+    printf("n_oc1 = %d \nn_oc2= %d\n",n_oc1[nslot],n_oc1[nslot+1])
+        }
+        }
+    for (nslot = 0; nslot < cfg->NSLOTS_X_FRAME; nslot++)
+	  {
+	    for (l = 0; l < CP_NSYMB ; l++)
+	    {
     alpha[nslot][l] = 2 * M_PI * n_cs_format1[nslot][l] / N_sc;
     printf("alpha[%d][%d]= %f \n",nslot,l,alpha[nslot][l]);
      }
