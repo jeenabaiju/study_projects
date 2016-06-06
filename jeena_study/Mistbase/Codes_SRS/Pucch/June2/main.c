@@ -1135,7 +1135,7 @@ uint32_t get_pucch_format1(struct pucch_config *cfg,uint32_t ns, uint32_t l,stru
 	/****************************************************************************/
     float alpha[cfg->NSLOTS_X_FRAME][c];
     *n_oc = ((ns % 2)== 0)?n_oc1[nslot]:n_oc1[nslot+1];
-    printf("n_oc1 = %d \nn_oc2= %d\n",n_oc1[nslot],n_oc1[nslot+1])
+    printf("n_oc1 = %d \nn_oc2= %d\n",n_oc1[nslot],n_oc1[nslot+1]);
         }
         }
     for (nslot = 0; nslot < cfg->NSLOTS_X_FRAME; nslot++)
