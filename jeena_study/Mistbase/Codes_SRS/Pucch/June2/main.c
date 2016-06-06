@@ -943,7 +943,7 @@ int get_n_cs_cell(struct pucch_config *cfg, uint32_t n_cs_cell[cfg->NSLOTS_X_FRA
     uint8_t n_prs[len];
 	const uint16_t N_ID = Get_cellID(srs_ul);
 	const uint32_t c_init = N_ID;
-	printf("NID = %d \n",N_ID)
+	printf("NID = %d \n",N_ID);
 	calc_prs_c( c_init, len, n_prs);
     uint32_t n_cs_cell1[2][3] = {{192, 46, 212},
                       {91, 84, 25}};
@@ -1118,7 +1118,6 @@ uint32_t get_pucch_format1(struct pucch_config *cfg,uint32_t ns, uint32_t l, uin
      }
      }
 
-   return float alpha[ns][l];
 }
 /******************************************************************************************************************************/
 /*format2/2a/2b */
@@ -1559,15 +1558,16 @@ for (n = 0; n < pucch.NSLOTS_X_FRAME; n++)
   for (l = 0; l < 3; l++)
   {
     	printf ("n_cs_cell[%d][%d] = %d \n\n",n,l,n_cs_cell[n][l]);
+    	uint32_t n_oc;
+        float alpha1[n][l] = get_pucch_format1(&pucch, n_cs_cell[n][l],pucch.ns, l,&n_oc);
 
   }
 }
-uint32_t n_oc;
-float alpha1 = get_pucch_format1(&pucch, n_cs_cell[pucch.ns][l],pucch.ns, l,&n_oc);
+
 float alpha2 = get_pucch_format2(&pucch,n_cs_cell[pucch.ns][l],pucch.ns,l);
 float alpha3 = get_pucch_format3(&pucch,pucch.ns,l,n_cs_cell[pucch.ns][l]);
 float alpha_lambda1 = alpha_lambda(&pucch,pucch.format,n_oc,pucch.ns);
-printf ("alpha1 = %f \nalpha2 = %f \nalpha3= %f\nalphalambda = %f n_oc = %d \n\n",alpha1,alpha2,alpha3,alpha_lambda1,n_oc);
+//printf ("alpha1 = %f \nalpha2 = %f \nalpha3= %f\nalphalambda = %f n_oc = %d \n\n",alpha1,alpha2,alpha3,alpha_lambda1,n_oc);
 uint32_t pucch_bits[2] = {0,1};
 float complex r_pucch[N_sc];
 pucch_dmrs_gen(pucch.format,&pucch,&srs,pucch_bits,r_pucch, &cells);
