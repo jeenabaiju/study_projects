@@ -1047,11 +1047,34 @@ int get_n_cs_cell(struct pucch_config *cfg, uint32_t n_cs_cell[cfg->NSLOTS_X_FRA
     alpha = 2 * M_PI * n_cs_format1 / N_sc;
     return alpha;
 }*/
-uint32_t get_pucch_format1(struct pucch_config *cfg,uint32_t ns, uint32_t l, uint32_t *n_cs_cell[cfg->NSLOTS_X_FRAME][3],uint32_t* n_oc)
+uint32_t get_pucch_format1(struct pucch_config *cfg,uint32_t ns, uint32_t l,uint32_t* n_oc)
 {
+	    uint32_t nslot;
+	uint32_t l;
+	int i;
+    uint32_t CP_NSYMB = cfg->CP?3:2;
+    uint32_t len = 8 * (cfg->NSLOTS_X_FRAME) * CP_NSYMB + 8 * (CP_NSYMB) + 7;
+    uint8_t n_prs[len];
+	const uint16_t N_ID = Get_cellID(srs_ul);
+	const uint32_t c_init = N_ID;
+	printf("NID = %d \n",N_ID);
+	calc_prs_c( c_init, len, n_prs);
+    uint32_t n_cs_cell1[2][3] = {{192, 46, 212},
+                      {91, 84, 25}};
+    for (nslot = 0; nslot < 2; nslot++)
+	  {
+	    for (l = 0; l < 3; l++)
+	    {
+
+	        n_cs_cell[nslot][l] = n_cs_cell1[nslot][l];
+	    }
+	  }
+
+
+
 	uint32_t temp;
 	uint32_t temp1;
-	int temp2, nslot;
+	int temp2;
     uint32_t temp3;
     uint32_t temp_n_cs[2] , temp_1[2],temp_2[2];
     uint32_t h_p = 0;
@@ -1559,7 +1582,7 @@ for (n = 0; n < pucch.NSLOTS_X_FRAME; n++)
   {
     	printf ("n_cs_cell[%d][%d] = %d \n\n",n,l,n_cs_cell[n][l]);
     	uint32_t n_oc;
-    	float alpha1[pucch.NSLOTS_X_FRAME][3]
+    	float alpha1[pucch.NSLOTS_X_FRAME][3];
         alpha1[n][l] = get_pucch_format1(&pucch, n_cs_cell[n][l],pucch.ns, l,&n_oc);
 
   }
