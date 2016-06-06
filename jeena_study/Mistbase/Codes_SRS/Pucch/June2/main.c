@@ -1112,13 +1112,13 @@ uint32_t get_pucch_format1(struct pucch_config *cfg,uint32_t ns, uint32_t l, uin
     float alpha[cfg->NSLOTS_X_FRAME][c];
     *n_oc = ((ns % 2)== 0)?n_oc1[nslot]:n_oc1[nslot+1];
     printf("n_oc1 = %d \nn_oc2= %d\n",n_oc1[nslot],n_oc1[nslot+1]);
-    alpha[nslot][l] = 2 * M_PI * n_cs_format1[nslot][l] / N_sc
+    alpha[nslot][l] = 2 * M_PI * n_cs_format1[nslot][l] / N_sc;
     printf("alpha[%d][%d]= %f \n",nslot,l,alpha[nslot][l]);
      }
      }
      }
 
-   return alpha[ns][l];
+   return float alpha[ns][l];
 }
 /******************************************************************************************************************************/
 /*format2/2a/2b */
