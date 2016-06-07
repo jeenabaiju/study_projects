@@ -107,8 +107,8 @@ void decode_QPSK_soft(int16_t* data, uint16_t CW, uint8_t* td_data)
       {
         result[1]= -8 + (abs(im + sq1)*superalphascaler);
       }
-      result[0] = result[0] >>2;
-      result[1] = result[1] >>2;
+      result[0] = result[0] >>16;
+      result[1] = result[1] >>16;
        printf(" result[0] = %d \nresult[1] = %d \n",result[0],result[1]);
       uint16_t stuffer;
       stuffer = result[0] & 0x0F;
