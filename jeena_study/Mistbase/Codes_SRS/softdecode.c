@@ -73,7 +73,7 @@ void decode_QPSK_soft(int16_t* data, uint16_t CW, uint8_t* td_data)
     int32_t alpha = 0x2D41; //  // 1/2* sqrt(2) bcz [ (1/sqrt(2)+0)/2 = 1/2* sqrt(2)]
     int32_t sq1 =  0x5A82;   //  1/sqrt(2)
     int32_t sq2 =  0x16A0;   //  1/(4*sqrt(2)) between alpha and 0
-    int32_t subalphascaler = (21));  //scalefactor -alpha<x<alpha  [7*0xffff/sq1]
+    int32_t subalphascaler = (21);  //scalefactor -alpha<x<alpha  [7*0xffff/sq1]
     int32_t superalphascaler = (21); //scalefactor x<-alpha;x>alpha [7*0xffff/sq1-alpha]// alpha =0
     if (CW > MAX_CW*2)
     {
