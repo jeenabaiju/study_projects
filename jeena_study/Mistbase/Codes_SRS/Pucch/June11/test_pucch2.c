@@ -851,7 +851,7 @@ static uint32_t get_N_rs_PUCCH(uint32_t format, uint32_t CP)
          n_cs_cell[nslot][l[m]] = 0;
          for ( i=0;i<8;i++)
          {
-             n_cs_cell[nslot][l[m]] += n_prs[8*CP_NSYMB(cfg->CP) *nslot+8*l+i]<<i;
+             n_cs_cell[nslot][l[m]] += n_prs[8*CP_NSYMB(cfg->CP) *nslot+8*l[m]+i]<<i;
          }
        }
      }
@@ -865,12 +865,12 @@ uint32_t get_pucch_format1(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32
 {
     uint32_t nslot,m, l[n_rs];
 	int i;
-    uint32_t c ;uint32_t ns1;
+    uint32_t c ;
     c = cfg->CP?3:2;
      /**************************************************************************/
     uint32_t n_cs_cell[cfg->NSLOTS_X_FRAME][CP_NSYMB(cfg->CP)];
    /* Generates n_cs_cell according to Sec 5.4 of 36.211 */
-    get_n_cs_cell(cfg,n_cs_cell,srs_ul);
+    get_n_cs_cell(cfg,n_cs_cell,srs_ul,n_rs);
     get_pucch_dmrs_symbol(cfg->format,cfg->CP,l);
       for ( nslot = 0; nslot < cfg->NSLOTS_X_FRAME; nslot++)
       {
@@ -922,7 +922,7 @@ uint32_t get_pucch_format1(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32
            *n_oc = ((nslot % 2)== 0)?n_oc1[0]:n_oc1[1];
           }
      }
-           uint32_t n_cs[cfg->NSLOTS_X_FRAME][CP_NSYMB(cfg->CP)-idx];
+           uint32_t n_cs[cfg->NSLOTS_X_FRAME][CP_NSYMB(cfg->CP)];
 
            for ( nslot=0;nslot<cfg->NSLOTS_X_FRAME;nslot++)
            {
@@ -973,7 +973,7 @@ uint32_t get_pucch_format2(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32
     uint32_t n_cs[cfg->NSLOTS_X_FRAME][CP_NSYMB(cfg->CP)-idx];
 /**************************************************************************/
    /* Generates n_cs_cell according to Sec 5.4 of 36.211 */
-    get_n_cs_cell(cfg,n_cs_cell,srs_ul);
+    get_n_cs_cell(cfg,n_cs_cell,srs_ul,n_rs);
 
     for ( nslot = 0; nslot < cfg->NSLOTS_X_FRAME; nslot++)
     {
