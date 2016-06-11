@@ -1052,10 +1052,15 @@ int pucch_format2a_2b_mod_symbol(uint32_t format, uint32_t bits[2], float comple
 /******************************************************************************************************************************/
 /*format 3 */
 /******************************************************************************************************************************/
-uint32_t get_pucch_format3(struct pucch_config *cfg,uint32_t *n_oc)
+uint32_t get_pucch_format3(struct pucch_config *cfg,uint32_t n_rs,uint32_t *n_oc)
 {
 
-    uint32_t nprime[2],i;
+    uint32_t nprime[2],i,l[n_rs],nslot;
+    uint32_t n_cs[cfg->NSLOTS_X_FRAME][CP_NSYMB(cfg->CP)];
+    uint32_t n_cs_cell[cfg->NSLOTS_X_FRAME][CP_NSYMB(cfg->CP)];
+    get_pucch_dmrs_symbol(cfg->format,cfg->CP,l);
+    /* Generates n_cs_cell according to Sec 5.4 of 36.211 */
+    get_n_cs_cell(cfg,n_cs_cell,srs_ul,n_rs);
     //uint32_t N_SF0_PUCCH = 0;
     uint32_t N_SF1_PUCCH = 0;
     //N_SF0_PUCCH = (cfg->shortened)?5:5;
@@ -1092,7 +1097,15 @@ uint32_t get_pucch_format3(struct pucch_config *cfg,uint32_t *n_oc)
            break;
     }
     }
-            printf("\n Resource Index nprime[%d  %d]  \n\n",nprime[0],nprime[1]);
+    printf("\n Resource Index nprime[%d  %d]  \n\n",nprime[0],nprime[1]);
+    for ( nslot = 0; nslot < cfg->NSLOTS_X_FRAME; nslot++)
+    {
+       for (m = 0; m < n_rs  ; m++)
+       {
+            n_cs[nslot][l[m]] = 0;
+	        n_cs[nslot][l[m]] = (n_cs_cell[nslot][l[m]] + nprime[nslot]) % N_sc;
+	        printf("\n n_cs[%d][%d]=%d  \n\n",nslot,l[m],n_cs[nslot][l[m]]);
+       }
 
 return 0;
 }
@@ -1311,7 +1324,7 @@ float complex r_uv_n[N_sc*n_rs*pucch.NSLOTS_X_FRAME];
 float complex r_uv[N_sc*n_rs*pucch.NSLOTS_X_FRAME];
 pucch_dmrs_gen(pucch.format,&pucch,&srs, &cells,n_rs,r_uv_n,l);
 //get_pucch_format2(&pucch,&srs,n_rs,alpha);
-get_pucch_format3(&pucch,n_oc);
+get_pucch_format3(&pucch,n_rs,n_oc);
 
 
 }
