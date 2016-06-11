@@ -1105,6 +1105,9 @@ uint32_t get_pucch_format3(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32
             n_cs[nslot][l[m]] = 0;
 	        n_cs[nslot][l[m]] = (n_cs_cell[nslot][l[m]] + nprime[nslot]) % N_sc;
 	        printf("\n n_cs[%d][%d]=%d  \n\n",nslot,l[m],n_cs[nslot][l[m]]);
+	        alpha[nslot][l[m]] = 0;
+            alpha[nslot][l[m]] = (2*M_PI*n_cs[nslot][l[m]])/N_sc;
+            printf ("alpha[%d][%d] = %f \n\n",nslot,l[m],alpha[nslot][l[m]]);
        }
     }
 return 0;
