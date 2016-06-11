@@ -1112,19 +1112,6 @@ uint32_t get_pucch_format3(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32
     }
 return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 /******************************************************************************/
 /* * Calculate Sequence Hopping(v)Tue 24 May 2016 10:18:08 AM
  * input- pucch config, srs config, ns
@@ -1200,6 +1187,11 @@ int ret = ERROR_INVALID_INPUTS;
           {
              get_pucch_format2(cfg,srs_ul,n_rs,alpha);
           }
+          else if (format == format_3)
+          {
+              get_pucch_format3(cfg,srs_ul,n_rs,n_oc,alpha);
+          }
+
           // Choose number of symbols and orthogonal sequence from Tables 5.5.2.2.1-1 to 5.5.2.2.1-3
           float  *w=0;
           switch (format)
@@ -1215,6 +1207,9 @@ int ret = ERROR_INVALID_INPUTS;
               case format_2a:
               case format_2b:
                    w = w_arg_pucch_format2_cpnorm;// extended CP not applicable as per Table  5.5.2.2.1-1
+                   break;
+              case format_3:
+                   w = cfg->CP?w_arg_pucch_format3_cpnorm:w_arg_pucch_format3_cpext;
                    break;
           }
           float complex z_m = 1.0;
