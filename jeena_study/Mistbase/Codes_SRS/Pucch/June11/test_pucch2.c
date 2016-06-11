@@ -997,7 +997,7 @@ uint32_t get_pucch_format2(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32
             nprime[1] = (cfg->n_pucch_2 < (N_sc * cfg->N_RB_2))?(((N_sc * (nprime[0] + 1)) % (N_sc +1))-1):((N_sc - 2 - cfg->n_pucch_2 ) % N_sc);
             printf("\n Resource Index nprime[%d  %d]  \n\n",nprime[0],nprime[1]);
 
-	        n_cs[nslot][l[m] = (n_cs_cell[nslot][l[m]] + nprime[0]) % N_sc;
+	        n_cs[nslot][l[m]] = (n_cs_cell[nslot][l[m]] + nprime[0]) % N_sc;
 	        n_cs[nslot+1][l[m]] = (n_cs_cell[nslot][l[m]]  + nprime[1]) % N_sc;
             }
 
@@ -1215,7 +1215,7 @@ float alpha[pucch.NSLOTS_X_FRAME][CP_NSYMB(pucch.CP)];
 uint32_t n_oc;
 uint32_t n_rs = get_N_rs_PUCCH(pucch.format,pucch.CP);
 uint32_t l[n_rs];
-get_pucch_dmrs_symbol(n_rs, pucch.format, pucch.CP,l);
+get_pucch_dmrs_symbol(pucch.format,pucch.CP,l);
 uint32_t n_cs_cell[pucch.NSLOTS_X_FRAME][CP_NSYMB(pucch.CP)-pucch.n_pucch_1];
 get_n_cs_cell(&pucch,n_cs_cell,&srs,n_rs);
 get_pucch_format1(&pucch,&srs,&n_oc,n_rs,alpha,m);
