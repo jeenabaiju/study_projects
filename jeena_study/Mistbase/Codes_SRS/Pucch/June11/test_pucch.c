@@ -1021,6 +1021,8 @@ int pucch_dmrs_gen(uint32_t format,struct pucch_config *cfg,struct SRS_UL *srs_u
 {
 int ret = ERROR_INVALID_INPUTS;
   uint32_t m;
+   uint32_t ns,uint32_t l;
+   ns =0; l=2;
   float arg;
   uint32_t n_oc;
   uint32_t u,v;
@@ -1035,12 +1037,9 @@ int ret = ERROR_INVALID_INPUTS;
   float Seq_Nsc_exp[N_sc];
 
   float complex r_uv_12[N_sc];
-  for (l=idx;l<CP_NSYMB(cfg->CP)-idx;l++)
+  for (mprime = 0; mprime < 2; mprime++)
   {
-  for (ns = 2*cfg->sf_idx; ns < 2*(cfg->sf_idx+1);ns++)
-  {
-
-	   u = Get_u_value(srs_ul);
+       u = Get_u_value(srs_ul);
 	   v = Get_v_value_pucch(cfg, M_sc,srs_ul,ns);
 	   printf ("SeqIdx = %d \nSeqGroup = %d\n",v,u);
 	   Seq_Msc12_Exp(Seq_Nsc_exp, u, N_sc); // M_sc = 12
@@ -1081,15 +1080,13 @@ int ret = ERROR_INVALID_INPUTS;
 
         	    for (n = 0;n < N_sc; n++)
         	    {
-        	             tot=(ns%2)*M_sc*n_rs+m*M_sc+n;
+        	             tot=(mprime*M_sc*n_rs+m*M_sc+n;
         	             printf ("m = %d , ns = %d , tot= %d \n",m,ns,tot);// Symbols
-
         	             r_uv_n[tot] = z_m*w[m]*r_uv_12[n]*cexpf(I*alpha[ns][l]*n);// this is applied in the following with w(p). exp(A.B)=exp(A)+exp(B)
         	             printf("r_uv_n[%d] = %.4f + i%.4f \n\n",tot,creal(r_uv_n[tot] ),cimag(r_uv_n[tot] ));
-                        }
+                }
 
-        	 }
-       	   }
+           }
            else
            {
         	  return ERROR;
