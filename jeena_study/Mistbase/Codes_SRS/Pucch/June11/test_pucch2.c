@@ -1063,7 +1063,7 @@ uint32_t get_pucch_format3(struct pucch_config *cfg,uint32_t *n_oc)
     //uint32_t n_oc[2];
     n_oc[0]= cfg->n_pucch_3 % N_SF1_PUCCH;// for first slot
     n_oc[1] = (N_SF1_PUCCH == 5)?((3 * n_oc[0]) % N_SF1_PUCCH):(n_oc[0] % N_SF1_PUCCH);// for second slot
-    //printf("\n OrthoSeq n_oc[%d  %d]  \n\n",n_oc1[0],n_oc1[1]);
+    printf("\n OrthoSeq n_oc[%d  %d]  \n\n",n_oc1[0],n_oc1[1]);
 return 0;
 }
 
