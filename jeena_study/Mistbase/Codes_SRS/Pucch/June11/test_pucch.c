@@ -1017,7 +1017,7 @@ uint32_t Get_v_value_pucch(struct pucch_config *cfg, uint32_t M_sc,struct SRS_UL
 return v;
 }
 
-int pucch_dmrs_gen(uint32_t format,struct pucch_config *cfg,struct SRS_UL *srs_ul, struct cell *cell, uint32_t n_rs,float complex *r_uv_n,uint32_t l)
+int pucch_dmrs_gen(uint32_t format,struct pucch_config *cfg,struct SRS_UL *srs_ul, struct cell *cell, uint32_t n_rs,float complex *r_uv_n,uint32_t *l)
 {
 int ret = ERROR_INVALID_INPUTS;
   uint32_t m;
@@ -1047,7 +1047,7 @@ int ret = ERROR_INVALID_INPUTS;
        // Add cyclic prefix alpha for format 1/1a/1b
           if (format < format_2)
           {
-        	 get_pucch_format1(cfg,srs_ul,&n_oc,n_rs,cfg->format,alpha);
+        	 get_pucch_format1(cfg,srs_ul,&n_oc,n_rs,cfg->format,alpha,l);
           }
           // Choose number of symbols and orthogonal sequence from Tables 5.5.2.2.1-1 to 5.5.2.2.1-3
           float  *w=0;
@@ -1069,9 +1069,9 @@ int ret = ERROR_INVALID_INPUTS;
         	  float complex rpucch[N_sc*n_rs*cfg->NSLOTS_X_FRAME];
         	  for (n = 0;n < N_sc; n++)
               {
-        	     tot=(mprime*M_sc*n_rs+0*M_sc+n);
+        	     tot=(mprime*M_sc*n_rs+m*M_sc+n);
                  //printf ("m = %d , ns = %d , tot= %d \n",m,ns,tot);// Symbols
-        	     r_uv_n[tot] = z_m*w[0]*r_uv_12[n]*cexpf(I*alpha[ns][l[0]*n);//
+        	     r_uv_n[tot] = z_m*w[m]*r_uv_12[n]*cexpf(I*alpha[ns][l[m]*n);//
         	     printf("r_uv_n[%d] = %.4f + i%.4f \n\n",tot,creal(r_uv_n[tot] ),cimag(r_uv_n[tot] ));
               }
            }
@@ -1156,7 +1156,7 @@ struct pucch_config pucch;
 int n;
 
 //PUCCH
-uint32_t nprime[2],ns,m;
+uint32_t nprime[2],ns,m[3];
 uint32_t M_sc = N_sc;
 float alpha[pucch.NSLOTS_X_FRAME][CP_NSYMB(pucch.CP)];
 uint32_t n_oc;
@@ -1164,7 +1164,7 @@ uint32_t n_rs = get_N_rs_PUCCH(pucch.format,pucch.CP);
 uint32_t l =  get_pucch_dmrs_symbol(n_rs, pucch.format, pucch.CP);
 uint32_t n_cs_cell[pucch.NSLOTS_X_FRAME][CP_NSYMB(pucch.CP)-pucch.n_pucch_1];
 get_n_cs_cell(&pucch,n_cs_cell,&srs);
-get_pucch_format1(&pucch,&srs,&n_oc,n_rs,pucch.format,alpha);
+get_pucch_format1(&pucch,&srs,&n_oc,n_rs,pucch.format,alpha,m);
 float complex r_uv_n[N_sc*n_rs*pucch.NSLOTS_X_FRAME];
 float complex r_uv[N_sc*n_rs*pucch.NSLOTS_X_FRAME];
 pucch_dmrs_gen(pucch.format,&pucch,&srs, &cells,n_rs,l,r_uv_n,m);
