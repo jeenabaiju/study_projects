@@ -1055,7 +1055,7 @@ int pucch_format2a_2b_mod_symbol(uint32_t format, uint32_t bits[2], float comple
 uint32_t get_pucch_format3(struct pucch_config *cfg,uint32_t *n_oc)
 {
 
-    uint32_t nprime[2];
+    uint32_t nprime[2],i;
     //uint32_t N_SF0_PUCCH = 0;
     uint32_t N_SF1_PUCCH = 0;
     //N_SF0_PUCCH = (cfg->shortened)?5:5;
@@ -1064,7 +1064,7 @@ uint32_t get_pucch_format3(struct pucch_config *cfg,uint32_t *n_oc)
     n_oc[0]= cfg->n_pucch_3 % N_SF1_PUCCH;// for first slot
     n_oc[1] = (N_SF1_PUCCH == 5)?((3 * n_oc[0]) % N_SF1_PUCCH):(n_oc[0] % N_SF1_PUCCH);// for second slot
     printf("\n OrthoSeq n_oc[%d  %d]  \n\n",n_oc[0],n_oc[1]);
-    for (i = 0;i<2;i++)
+    for (i=0;i<2;i++)
     {
        switch(n_oc[i])
     {
