@@ -1365,6 +1365,7 @@ int n;
 uint32_t nprime[2],ns,m[3];
 uint32_t M_sc = N_sc;
 float alpha[pucch.NSLOTS_X_FRAME][CP_NSYMB(pucch.CP)];
+float alpha1[2];
 uint32_t n_oc[2];
 uint32_t n_oc1,i;
 uint32_t n_rs = get_N_rs_PUCCH(pucch.format,pucch.CP);
@@ -1379,6 +1380,6 @@ get_pucch_format3(&pucch,&srs,n_rs,alpha);
 pucch_dmrs_gen(pucch.format,&pucch,&srs, &cells,n_rs,r_uv_n,l);
 //get_pucch_format2(&pucch,&srs,n_rs,alpha);
 
-
+alpha_lambda(&pucch,pucch.format,n_oc,alpha1);
 
 }
