@@ -991,6 +991,7 @@ uint32_t get_pucch_format2(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32
        {
           //if (cfg->n_pucch_2 < ((cfg->N_RB_2 * N_sc) + ((cfg->N_cs_1/8) * (N_sc - cfg->N_cs_1 - 2))))
           //{
+          n_cs[nslot][l[m]] = 0;
            if ((nslot % 2) == 0)
             {
             nprime[0] = (cfg->n_pucch_2 < (N_sc * cfg->N_RB_2))?(cfg->n_pucch_2 % N_sc):((cfg->n_pucch_2 + cfg->N_cs_1 + 1) % N_sc);
