@@ -828,7 +828,6 @@ static uint32_t get_N_rs_PUCCH(uint32_t format, uint32_t CP)
   }
   return 0;
 }
-
  /****************************************************************************/
  // cyclic shift n_cs_cell
  /****************************************************************************/
@@ -857,7 +856,6 @@ static uint32_t get_N_rs_PUCCH(uint32_t format, uint32_t CP)
      }
  	 return SUCCESS;
  }
-
 /******************************************************************************************************************************/
 /*PUCCH format1/1a/1b*/
 /******************************************************************************************************************************/
@@ -867,7 +865,6 @@ uint32_t get_pucch_format1(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32
 	int i;
     uint32_t c ;
     c = cfg->CP?3:2;
-     /**************************************************************************/
     uint32_t n_cs_cell[cfg->NSLOTS_X_FRAME][CP_NSYMB(cfg->CP)];
    /* Generates n_cs_cell according to Sec 5.4 of 36.211 */
     get_n_cs_cell(cfg,n_cs_cell,srs_ul,n_rs);
@@ -879,8 +876,6 @@ uint32_t get_pucch_format1(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32
            printf ("NCellCyclicShifts = [%d]\n ",n_cs_cell[nslot][l[m]]);//nprime[2]
     	 }
       }
-
-/**************************************************************************************/
 	uint32_t temp;uint32_t temp1;    uint32_t temp3;    uint32_t temp_n_cs[2] , temp_1[2],temp_2[2]; int temp2;
     uint32_t h_p = 0;
     uint16_t d;
@@ -958,15 +953,12 @@ uint32_t get_pucch_format1(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32
 /******************************************************************************************************************************/
 uint32_t get_pucch_format2(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32_t n_rs,float alpha[cfg->NSLOTS_X_FRAME][CP_NSYMB(cfg->CP)])
 {
-
-	uint32_t nslot,l[n_rs],m;
-    uint32_t nprime[2];
-    uint32_t c;
+	uint32_t nslot,l[n_rs],m;uint32_t nprime[2];uint32_t c;
     c = cfg->CP?3:2;
     uint32_t n_cs_cell[cfg->NSLOTS_X_FRAME][CP_NSYMB(cfg->CP)];
     get_pucch_dmrs_symbol(cfg->format,cfg->CP,l);
     uint32_t n_cs[cfg->NSLOTS_X_FRAME][CP_NSYMB(cfg->CP)];
-/**************************************************************************/
+
    /* Generates n_cs_cell according to Sec 5.4 of 36.211 */
     get_n_cs_cell(cfg,n_cs_cell,srs_ul,n_rs);
 
@@ -978,24 +970,18 @@ uint32_t get_pucch_format2(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32
        }
 
     }
-/**************************************************************************************/
 
     for ( nslot = 0; nslot < cfg->NSLOTS_X_FRAME; nslot++)
     {
        for (m = 0; m < n_rs  ; m++)
        {
-          //if (cfg->n_pucch_2 < ((cfg->N_RB_2 * N_sc) + ((cfg->N_cs_1/8) * (N_sc - cfg->N_cs_1 - 2))))
-          //{
-
             nprime[0] = (cfg->n_pucch_2 < (N_sc * cfg->N_RB_2))?(cfg->n_pucch_2 % N_sc):((cfg->n_pucch_2 + cfg->N_cs_1 + 1) % N_sc);
             nprime[1] = (cfg->n_pucch_2 < (N_sc * cfg->N_RB_2))?(((N_sc * (nprime[0] + 1)) % (N_sc +1))-1):((N_sc - 2 - cfg->n_pucch_2 ) % N_sc);
             //printf("\n Resource Index nprime[%d  %d]  \n\n",nprime[0],nprime[1]);
             n_cs[nslot][l[m]] = 0;
 	        n_cs[nslot][l[m]] = (n_cs_cell[nslot][l[m]] + nprime[nslot]) % N_sc;
 	        //printf("\n n_cs[%d][%d]=%d  \n\n",nslot,l[m],n_cs[nslot][l[m]]);
-	        //n_cs[nslot+1][l[m]] = (n_cs_cell[nslot][l[m]]  + nprime[1]) % N_sc
-
-        }
+       }
     }
 
 	/****************************************************************************/
@@ -1013,26 +999,72 @@ uint32_t get_pucch_format2(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32
     return 0;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /****************************************************************************/
-/* Generates DMRS for PUCCH formats 1/1a/1b,2/2a/2b,3 according to 5.5.2.2 in 36.211 */
+/* Modulated bits 20 and 21 for Formats 2a and 2b as in Table 5.4.2-1 in 36.211 */
 /*******************************************************/
+int pucch_format2a_2b_mod_symbol(uint32_t format, uint32_t bits[2], float complex *d_10)
+{
+  if (d_10)
+  {
+    if (format == format_2a)
+    {
+      *d_10 = bits[0]?-1.0:1.0;
+      return SUCCESS;
+    }
+    else if (format == format_2b)
+    {
+      if (bits[0] == 0)
+      {
+        if (bits[1] == 0)
+        {
+          *d_10 = 1.0;
+        }
+        else
+        {
+          *d_10 = -I;
+        }
+      }
+      else
+      {
+        if (bits[1] == 0)
+        {
+          *d_10 = I;
+        }
+        else
+        {
+          *d_10 = -1.0;
+        }
+      }
+      return SUCCESS;
+    }
+    else
+    {
+      return ERROR;
+    }
+  }
+  else
+  {
+    return ERROR;
+  }
+}
+/****************************************************************************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /******************************************************************************/
 /* * Calculate Sequence Hopping(v)Tue 24 May 2016 10:18:08 AM
  * input- pucch config, srs config, ns
@@ -1071,17 +1103,23 @@ uint32_t Get_v_value_pucch(struct pucch_config *cfg, uint32_t M_sc,struct SRS_UL
    }
 return v;
 }
-
+/****************************************************************************/
+/* Generates DMRS for PUCCH formats 1/1a/1b,2/2a/2b,3 according to 5.5.2.2 in 36.211 */
+/*******************************************************/
 int pucch_dmrs_gen(uint32_t format,struct pucch_config *cfg,struct SRS_UL *srs_ul, struct cell *cell, uint32_t n_rs,float complex *r_pucch,uint32_t *l)
 {
 int ret = ERROR_INVALID_INPUTS;
-  uint32_t m;float arg; uint32_t n_oc; uint32_t u,v; uint32_t n,m_prime,tot;  uint32_t M_sc;  uint32_t mprime;
+  uint32_t m;float arg; uint32_t n_oc; uint32_t u,v; uint32_t n,m_prime,tot;  uint32_t M_sc;  uint32_t mprime; uint32_t  pucch_bits[2] = {0,1};
   float complex z_m_1 = 1.0;// set for 1 default
   float alpha[cfg->NSLOTS_X_FRAME][CP_NSYMB(cfg->CP)];
   float Seq_Nsc_exp[N_sc];
   float complex r_uv_12[N_sc];
 
   M_sc = N_sc; //M_sc = 12
+  if (format == format_2a || format == format_2b)
+  {
+       pucch_format2a_2b_mod_symbol(format,pucch_bits, &z_m_1);
+  }
   for (mprime = 0; mprime < 2; mprime++)
   {
        u = Get_u_value(srs_ul);// calculate u value for seq group hopping
