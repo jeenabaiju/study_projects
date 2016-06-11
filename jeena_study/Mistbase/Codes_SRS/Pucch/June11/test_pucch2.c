@@ -999,6 +999,7 @@ uint32_t get_pucch_format2(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32
             printf("\n Resource Index nprime[%d  %d]  \n\n",nprime[0],nprime[1]);
 
 	        n_cs[nslot][l[m]] = (n_cs_cell[nslot][l[m]] + nprime[nslot]) % N_sc;
+	        printf("\n n_cs[%d][%d]  \n\n",nslot,l[m],n_cs[nslot][l[m]]);
 	        //n_cs[nslot+1][l[m]] = (n_cs_cell[nslot][l[m]]  + nprime[1]) % N_sc;
             }
 
