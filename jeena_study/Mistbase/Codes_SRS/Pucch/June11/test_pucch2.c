@@ -1064,7 +1064,7 @@ uint32_t get_pucch_format3(struct pucch_config *cfg)
     n_oc[0]= cfg->n_pucch_3 % N_SF1_PUCCH;// for first slot
     n_oc[1] = (N_SF1_PUCCH == 5)?((3 * n_oc[0]) % N_SF1_PUCCH):(n_oc[0] % N_SF1_PUCCH);// for second slot
     //printf("\n OrthoSeq n_oc[%d  %d]  \n\n",n_oc1[0],n_oc1[1]);
-
+return 0;
 }
 
 
@@ -1183,7 +1183,7 @@ int ret = ERROR_INVALID_INPUTS;
               tot=(mprime*M_sc*n_rs+m*M_sc+n);
               //printf ("m = %d , ns = %d , tot= %d \n",m,ns,tot);// Symbols
         	  r_pucch[tot] = z_m*w[m]*r_uv_12[n]*cexpf(I*alpha[mprime][l[m]]*n);//
-        	  printf("r_pucch[%d] = %.4f + i%.4f \n\n",tot,creal(r_pucch[tot] ),cimag(r_pucch[tot] ));
+        	  //printf("r_pucch[%d] = %.4f + i%.4f \n\n",tot,creal(r_pucch[tot] ),cimag(r_pucch[tot] ));
             }
           }
           else
