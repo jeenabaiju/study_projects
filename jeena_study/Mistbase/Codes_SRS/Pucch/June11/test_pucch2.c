@@ -1320,9 +1320,10 @@ get_n_cs_cell(&pucch,n_cs_cell,&srs,n_rs);
 get_pucch_format1(&pucch,&srs,&n_oc1,n_rs,alpha);
 float complex r_uv_n[N_sc*n_rs*pucch.NSLOTS_X_FRAME];
 float complex r_uv[N_sc*n_rs*pucch.NSLOTS_X_FRAME];
+get_pucch_format3(&pucch,&srs,n_rs,alpha);
 pucch_dmrs_gen(pucch.format,&pucch,&srs, &cells,n_rs,r_uv_n,l);
 //get_pucch_format2(&pucch,&srs,n_rs,alpha);
-get_pucch_format3(&pucch,&srs,n_rs,alpha);
+
 
 
 }
