@@ -1241,9 +1241,9 @@ int ret = ERROR_INVALID_INPUTS;
 /****************************************************************************/
 // Alpha_lambda for PUCCH format 4 and 5
 /****************************************************************************/
-static float alpha_lambda(struct pucch_config *cfg,uint32_t format, uint32_t n_oc)
+static float alpha_lambda(struct pucch_config *cfg,uint32_t format, uint32_t n_oc,float *alpha)
 {
-    float alpha;
+
     float n_cs_lambda;
     uint32_t n_dmrs_2 = 0;
     uint32_t nslot;
@@ -1284,6 +1284,9 @@ static float alpha_lambda(struct pucch_config *cfg,uint32_t format, uint32_t n_o
       }
       n_PN[nslot] = n_pn;
       printf("n_PN =[%d %d] \n",n_PN[0],n_PN[1]);
+      n_cs_lambda[nslot] = (n_dmrs_1[cfg->cyclicShift] + n_dmrs_2 + n_PN[nslot]) % 12;
+      alpha[nslot] = 2 * M_PI * n_cs_lambda[nslot] / 12;
+      printf("alphalambda =[%f %f] \n",alpha[0],alpha[1]);
     }
 }
 void main ()
@@ -1350,7 +1353,7 @@ struct pucch_config pucch;
 	       pucch.n_ID_PUCCH = 0;// Configured=1 and Not Configured=0
 	       pucch.n_ID_PUSCH = 0;// Configured=1 and Not Configured=0
 	       pucch.shortened = 0; //Configured=1 and Not Configured=0
-           pucch.format =5; //{1,2.....9}
+           pucch.format =8; //{1,2.....9}
 
 	       struct cell cells;
 
