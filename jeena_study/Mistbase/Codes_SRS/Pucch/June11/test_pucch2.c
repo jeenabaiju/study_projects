@@ -1273,14 +1273,14 @@ static float alpha_lambda(struct pucch_config *cfg,uint32_t format, uint32_t n_o
     }
     uint8_t c_init = ((cfg->CellID / 30) << 5) + (((cfg->CellID % 30) + cfg->delta_ss) % 30);
     uint32_t len = 8*CP_NSYMB(cfg->CP)*2+8;
-    uint8_t n_prs[len];
+    uint8_t n_prs[len];uint32_t n_pn ;
     calc_prs_c( c_init, len, n_prs);
     for (nslot = 0;nslot < cfg->NSLOTS_X_FRAME;nslot++)
     {
 
       for (i = 0; i < 8; i++)
       {
-          uint32_t n_pn = 0;
+        n_pn = 0;
         n_pn += (n_prs[8*CP_NSYMB(cfg->CP)*nslot+i] << i);
       }
       n_PN[nslot] = n_pn;
