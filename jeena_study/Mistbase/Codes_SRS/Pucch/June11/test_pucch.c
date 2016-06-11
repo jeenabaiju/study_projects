@@ -973,7 +973,7 @@ uint32_t get_pucch_format1(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32
               }
            }
 
-           loc[0] = 2;
+           loc[0] = 2;//location of ref symbols in pucch 1/1a/1b
            loc[1] = 3;
            loc[2] = 4;
 }
@@ -1023,28 +1023,18 @@ return v;
 int pucch_dmrs_gen(uint32_t format,struct pucch_config *cfg,struct SRS_UL *srs_ul, struct cell *cell, uint32_t n_rs,float complex *r_uv_n,uint32_t *l)
 {
 int ret = ERROR_INVALID_INPUTS;
-  uint32_t m;
-  float arg;
-  uint32_t n_oc;
-  uint32_t u,v;
-  uint32_t n,m_prime,tot;
+  uint32_t m;float arg; uint32_t n_oc; uint32_t u,v; uint32_t n,m_prime,tot;  uint32_t M_sc;  uint32_t mprime;
   float complex z_m_1 = 1.0;// set for 1 default
-  uint32_t M_sc;
-  uint32_t mprime;
-  M_sc = N_sc; //M_sc = 12
   float alpha[cfg->NSLOTS_X_FRAME][CP_NSYMB(cfg->CP)];
   float Seq_Nsc_exp[N_sc];
-
   float complex r_uv_12[N_sc];
+
+  M_sc = N_sc; //M_sc = 12
   for (mprime = 0; mprime < 2; mprime++)
   {
-       u = Get_u_value(srs_ul);
-	   v = Get_v_value_pucch(cfg, M_sc,srs_ul,mprime);
-	   Seq_Msc12_Exp(Seq_Nsc_exp, u, N_sc); // M_sc = 12
-	   for (n = 0;n < N_sc; n++)
-	   {
-	 	  r_uv_12[n]= cexpf(I*(Seq_Nsc_exp[n]));
-	   }
+       u = Get_u_value(srs_ul);// calculate u value for seq group hopping
+	   v = Get_v_value_pucch(cfg, M_sc,srs_ul,mprime);// calculate v value for seq index
+	   Seq_Msc12_Exp(Seq_Nsc_exp, u, N_sc); // M_sc = 12 sequence
        for (m = 0; m < n_rs; m++)
        {
        // Add cyclic prefix alpha for format 1/1a/1b
