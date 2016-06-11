@@ -1020,7 +1020,7 @@ uint32_t Get_v_value_pucch(struct pucch_config *cfg, uint32_t M_sc,struct SRS_UL
 return v;
 }
 
-int pucch_dmrs_gen(uint32_t format,struct pucch_config *cfg,struct SRS_UL *srs_ul, struct cell *cell, uint32_t n_rs,float complex *r_uv_n,uint32_t *l)
+int pucch_dmrs_gen(uint32_t format,struct pucch_config *cfg,struct SRS_UL *srs_ul, struct cell *cell, uint32_t n_rs,float complex *r_pucch,uint32_t *l)
 {
 int ret = ERROR_INVALID_INPUTS;
   uint32_t m;float arg; uint32_t n_oc; uint32_t u,v; uint32_t n,m_prime,tot;  uint32_t M_sc;  uint32_t mprime;
@@ -1063,21 +1063,19 @@ int ret = ERROR_INVALID_INPUTS;
           }
           if (w)
           {
-        	  float complex rpucch[N_sc*n_rs*cfg->NSLOTS_X_FRAME];
-        	  for (n = 0;n < N_sc; n++)
-              {
-        	     tot=(mprime*M_sc*n_rs+m*M_sc+n);
-                 //printf ("m = %d , ns = %d , tot= %d \n",m,ns,tot);// Symbols
-        	     r_uv_n[tot] = z_m*w[m]*r_uv_12[n]*cexpf(I*alpha[mprime][l[m]]*n);//
-        	     printf("r_uv_n[%d] = %.4f + i%.4f \n\n",tot,creal(r_uv_n[tot] ),cimag(r_uv_n[tot] ));
-              }
-           }
-           else
-           {
-        	  return ERROR;
-           }
+            for (n = 0;n < N_sc; n++)
+            {
+              tot=(mprime*M_sc*n_rs+m*M_sc+n);
+              //printf ("m = %d , ns = %d , tot= %d \n",m,ns,tot);// Symbols
+        	  r_pucch[tot] = z_m*w[m]*r_uv_12[n]*cexpf(I*alpha[mprime][l[m]]*n);//
+        	  printf("r_pucch[%d] = %.4f + i%.4f \n\n",tot,creal(r_pucch[tot] ),cimag(r_pucch[tot] ));
+            }
+          }
+          else
+          {
+              return ERROR;
+          }
        }
-       printf("end\n\n");
   }
 }
 void main ()
