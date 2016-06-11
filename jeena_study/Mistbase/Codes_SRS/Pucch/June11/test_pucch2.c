@@ -1104,7 +1104,7 @@ int ret = ERROR_INVALID_INPUTS;
        // Add cyclic prefix alpha for format 1/1a/1b
           if (format < format_2)
           {
-        	 get_pucch_format1(cfg,srs_ul,&n_oc,n_rs,cfg->format,alpha,l);
+        	 get_pucch_format1(cfg,srs_ul,&n_oc,n_rs,alpha,l);
           }
           // Choose number of symbols and orthogonal sequence from Tables 5.5.2.2.1-1 to 5.5.2.2.1-3
           float  *w=0;
