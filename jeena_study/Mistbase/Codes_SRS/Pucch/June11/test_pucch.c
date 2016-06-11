@@ -1092,7 +1092,7 @@ void main ()
 struct SRS_UL srs;
 
            srs.Duplex_Mode = 1;// FDD-0,TDD-1
-           srs.CP = 1;// Normal -1, Extended-0
+           srs.CP = 0;// Normal -1, Extended-0
            srs.N_Tx =1; //{1,2,4}
            srs.nf = 0; //System frame number SFN
            srs.n_ul_rb = 6;// must be 6 or greater in value
@@ -1129,7 +1129,7 @@ struct SRS_UL srs;
 
 
 struct pucch_config pucch;
-	       pucch.CP = 1;// Normal-1 and extended-0
+	       pucch.CP = 0;// Normal-1 and extended-0
 	       pucch.CellID = 1 ;
 	       pucch.delta_ss = 1;
 	       pucch.N_cs_1 = 0; // No.of cyclic shift for PUCCH 1/1a/1b{0...7}
@@ -1154,7 +1154,7 @@ struct pucch_config pucch;
 
 	       struct cell cells;
 
-	           cells.CP = 1;
+	           cells.CP = 0;
 	           cells.CellID = 1;
 int n;
 
