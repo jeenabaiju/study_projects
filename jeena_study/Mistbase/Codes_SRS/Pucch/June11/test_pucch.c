@@ -872,9 +872,9 @@ static uint32_t get_N_rs_PUCCH(uint32_t format, uint32_t CP)
 /******************************************************************************************************************************/
 /*PUCCH format1/1a/1b*/
 /******************************************************************************************************************************/
-uint32_t get_pucch_format1(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32_t* n_oc, uint32_t n_rs,uint32_t format, float alpha[cfg->NSLOTS_X_FRAME][CP_NSYMB(cfg->CP)],uint32_t *l)
+uint32_t get_pucch_format1(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32_t* n_oc, uint32_t n_rs,uint32_t format, float alpha[cfg->NSLOTS_X_FRAME][CP_NSYMB(cfg->CP)],uint32_t *loc)
 {
-    uint32_t nslot;uint32_t l;
+    uint32_t nslot,l;
 	int i;
     uint32_t c ;uint32_t ns1;
     c = cfg->CP?3:2;
@@ -972,7 +972,7 @@ uint32_t get_pucch_format1(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32
 
               }
            }
-           uint32_t l[3] = {2,3,4};
+           uint32_t loc[3] = {2,3,4};
 }
 
 /****************************************************************************/
@@ -1071,7 +1071,7 @@ int ret = ERROR_INVALID_INPUTS;
               {
         	     tot=(mprime*M_sc*n_rs+m*M_sc+n);
                  //printf ("m = %d , ns = %d , tot= %d \n",m,ns,tot);// Symbols
-        	     r_uv_n[tot] = z_m*w[m]*r_uv_12[n]*cexpf(I*alpha[ns][l[m]*n);//
+        	     r_uv_n[tot] = z_m*w[m]*r_uv_12[n]*cexpf(I*alpha[mprime][l[m]*n);//
         	     printf("r_uv_n[%d] = %.4f + i%.4f \n\n",tot,creal(r_uv_n[tot] ),cimag(r_uv_n[tot] ));
               }
            }
