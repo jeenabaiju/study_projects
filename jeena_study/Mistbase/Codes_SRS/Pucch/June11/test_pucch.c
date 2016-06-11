@@ -972,7 +972,10 @@ uint32_t get_pucch_format1(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32
 
               }
            }
-           uint32_t loc[3] = {2,3,4};
+
+           loc[0] = 2;
+           loc[1] = 3;
+           loc[2] = 4;
 }
 
 /****************************************************************************/
