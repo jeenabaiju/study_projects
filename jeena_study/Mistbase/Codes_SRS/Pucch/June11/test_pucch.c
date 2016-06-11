@@ -1035,9 +1035,11 @@ int ret = ERROR_INVALID_INPUTS;
   float Seq_Nsc_exp[N_sc];
 
   float complex r_uv_12[N_sc];
-
+  for (l=idx;l<CP_NSYMB(cfg->CP)-idx;l++)
+  {
   for (ns = 2*cfg->sf_idx; ns < 2*(cfg->sf_idx+1);ns++)
   {
+
 	   u = Get_u_value(srs_ul);
 	   v = Get_v_value_pucch(cfg, M_sc,srs_ul,ns);
 	   printf ("SeqIdx = %d \nSeqGroup = %d\n",v,u);
@@ -1076,15 +1078,15 @@ int ret = ERROR_INVALID_INPUTS;
         	  float complex rpucch[N_sc*n_rs*cfg->NSLOTS_X_FRAME];
         	 // float complex r_uv_n[N_sc*n_rs*cfg->NSLOTS_X_FRAME];
         	 // mprime= ns % 2;// m= 0,1 so it changes value just like for even and odd slot numbers
-             for (l=idx;l<CP_NSYMB(cfg->CP)-idx;l++)
-           	 {
+
         	    for (n = 0;n < N_sc; n++)
         	    {
         	             tot=(ns%2)*M_sc*n_rs+m*M_sc+n;
         	             printf ("m = %d , ns = %d , tot= %d \n",m,ns,tot);// Symbols
+
         	             r_uv_n[tot] = z_m*w[m]*r_uv_12[n]*cexpf(I*alpha[ns][l]*n);// this is applied in the following with w(p). exp(A.B)=exp(A)+exp(B)
         	             printf("r_uv_n[%d] = %.4f + i%.4f \n\n",tot,creal(r_uv_n[tot] ),cimag(r_uv_n[tot] ));
-        	    }
+                        }
 
         	 }
        	   }
