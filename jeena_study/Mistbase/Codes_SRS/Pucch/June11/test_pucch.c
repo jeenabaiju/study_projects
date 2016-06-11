@@ -1021,13 +1021,11 @@ int pucch_dmrs_gen(uint32_t format,struct pucch_config *cfg,struct SRS_UL *srs_u
 {
 int ret = ERROR_INVALID_INPUTS;
   uint32_t m;
-   uint32_t ns,uint32_t l;
+  uint32_t ns;uint32_t l;
    ns =0; l=2;
   float arg;
   uint32_t n_oc;
   uint32_t u,v;
-  uint32_t ns;
-  uint32_t l;
   uint32_t n,m_prime,tot;
   float complex z_m_1 = 1.0;// set for 1 default
   uint32_t M_sc;
