@@ -983,8 +983,7 @@ uint32_t get_pucch_format2(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32
     {
        for (l = idx; l < CP_NSYMB(cfg->CP)-idx  ; l++)
        {
-
-          // printf ("NCellCyclicShifts = [%d]\n ",n_cs_cell[nslot][l]);//nprime[2]
+          printf ("NCellCyclicShifts = [%d]\n ",n_cs_cell[nslot][l]);//nprime[2]
        }
 
     }
@@ -1130,7 +1129,7 @@ int ret = ERROR_INVALID_INPUTS;
               tot=(mprime*M_sc*n_rs+m*M_sc+n);
               //printf ("m = %d , ns = %d , tot= %d \n",m,ns,tot);// Symbols
         	  r_pucch[tot] = z_m*w[m]*r_uv_12[n]*cexpf(I*alpha[mprime][l[m]]*n);//
-        	  printf("r_pucch[%d] = %.4f + i%.4f \n\n",tot,creal(r_pucch[tot] ),cimag(r_pucch[tot] ));
+        	  //printf("r_pucch[%d] = %.4f + i%.4f \n\n",tot,creal(r_pucch[tot] ),cimag(r_pucch[tot] ));
             }
           }
           else
@@ -1204,7 +1203,7 @@ struct pucch_config pucch;
 	       pucch.n_ID_PUCCH = 0;// Configured=1 and Not Configured=0
 	       pucch.n_ID_PUSCH = 0;// Configured=1 and Not Configured=0
 	       pucch.shortened = 0; //Configured=1 and Not Configured=0
-           pucch.format =1; //{1,2.....9}
+           pucch.format =4; //{1,2.....9}
 
 	       struct cell cells;
 
