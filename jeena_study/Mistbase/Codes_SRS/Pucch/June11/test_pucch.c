@@ -1074,7 +1074,7 @@ int ret = ERROR_INVALID_INPUTS;
               {
         	     tot=(mprime*M_sc*n_rs+m*M_sc+n);
                  //printf ("m = %d , ns = %d , tot= %d \n",m,ns,tot);// Symbols
-        	     r_uv_n[tot] = z_m*w[m]*r_uv_12[n]*cexpf(I*alpha[mprime][l[m]*n);//
+        	     r_uv_n[tot] = z_m*w[m]*r_uv_12[n]*cexpf(I*alpha[mprime][l[m]]*n);//
         	     printf("r_uv_n[%d] = %.4f + i%.4f \n\n",tot,creal(r_uv_n[tot] ),cimag(r_uv_n[tot] ));
               }
            }
