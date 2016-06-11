@@ -965,7 +965,7 @@ uint32_t get_pucch_format1(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32
 /******************************************************************************************************************************/
 /*format2/2a/2b */
 /******************************************************************************************************************************/
-uint32_t get_pucch_format2(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32_t ns,uint32_t n_rs,float alpha[cfg->NSLOTS_X_FRAME][CP_NSYMB(cfg->CP)])
+uint32_t get_pucch_format2(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32_t n_rs,float alpha[cfg->NSLOTS_X_FRAME][CP_NSYMB(cfg->CP)])
 {
 
 	uint32_t nslot,l;
@@ -1017,7 +1017,7 @@ uint32_t get_pucch_format2(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32
               {
             	  alpha[nslot][l] = 0;
                   alpha[nslot][l] = (2*M_PI*n_cs[nslot][l])/N_sc;
-                 //printf ("alpha[%d][%d] = %f \n\n",nslot,l,alpha[nslot][l]);
+                 printf ("alpha[%d][%d] = %f \n\n",nslot,l,alpha[nslot][l]);
               }
            }
     return 0;
@@ -1225,4 +1225,6 @@ get_pucch_format1(&pucch,&srs,&n_oc,n_rs,alpha,m);
 float complex r_uv_n[N_sc*n_rs*pucch.NSLOTS_X_FRAME];
 float complex r_uv[N_sc*n_rs*pucch.NSLOTS_X_FRAME];
 pucch_dmrs_gen(pucch.format,&pucch,&srs, &cells,n_rs,r_uv_n,m);
+get_pucch_format2(&pucch,&srs,n_rs, alpha);
+
 }
