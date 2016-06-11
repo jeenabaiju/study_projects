@@ -1064,6 +1064,36 @@ uint32_t get_pucch_format3(struct pucch_config *cfg,uint32_t *n_oc)
     n_oc[0]= cfg->n_pucch_3 % N_SF1_PUCCH;// for first slot
     n_oc[1] = (N_SF1_PUCCH == 5)?((3 * n_oc[0]) % N_SF1_PUCCH):(n_oc[0] % N_SF1_PUCCH);// for second slot
     printf("\n OrthoSeq n_oc[%d  %d]  \n\n",n_oc[0],n_oc[1]);
+    for (i = 0;i<2;i++)
+    {
+       switch(n_oc[i])
+    {
+       case 0:
+           nprime[0] = nprime[1] =0;
+           break;
+       case 1:
+           nprime[0] = nprime[1] = 3;
+           break;
+       case 2:
+           nprime[0] = nprime[1] = 6;
+           break;
+       case 3:
+           nprime[0] = nprime[1] =(N_SF1_PUCCH == 5)?8:9;
+           break;
+       case 4:
+           if(N_SF1_PUCCH == 5)
+           {
+               nprime[0] = 10;
+           }
+           else
+           {
+               return ERROR_INVALID_INPUTS;
+           }
+           break;
+    }
+    }
+            printf("\n Resource Index nprime[%d  %d]  \n\n",nprime[0],nprime[1]);
+
 return 0;
 }
 
