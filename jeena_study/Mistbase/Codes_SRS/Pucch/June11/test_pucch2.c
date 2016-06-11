@@ -1136,6 +1136,10 @@ int ret = ERROR_INVALID_INPUTS;
           {
         	 get_pucch_format1(cfg,srs_ul,&n_oc,n_rs,alpha);
           }
+          else if (format >= format_2)(format < format_3))
+          {
+             get_pucch_format2(cfg,srs_ul,n_rs,alpha);
+          }
           // Choose number of symbols and orthogonal sequence from Tables 5.5.2.2.1-1 to 5.5.2.2.1-3
           float  *w=0;
           switch (format)
@@ -1144,6 +1148,13 @@ int ret = ERROR_INVALID_INPUTS;
         	  case format_1a :
         	  case format_1b :
         	       w = cfg->CP?w_arg_pucch_format1_cpnorm[n_oc]:w_arg_pucch_format1_cpext[n_oc];
+                   break;
+              case format_2:
+                   w = cfg->CP?w_arg_pucch_format2_cpnorm:w_arg_pucch_format2_cpext;
+                   break;
+              case format_2a:
+              case format_2b:
+                   w = w_arg_pucch_format2_cpnorm;// extended CP not applicable as per Table  5.5.2.2.1-1
                    break;
           }
           float complex z_m = 1.0;
