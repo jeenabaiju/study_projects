@@ -1052,10 +1052,10 @@ int pucch_format2a_2b_mod_symbol(uint32_t format, uint32_t bits[2], float comple
 /******************************************************************************************************************************/
 /*format 3 */
 /******************************************************************************************************************************/
-uint32_t get_pucch_format3(struct pucch_config *cfg,uint32_t n_rs,uint32_t *n_oc)
+uint32_t get_pucch_format3(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32_t n_rs,uint32_t *n_oc)
 {
 
-    uint32_t nprime[2],i,l[n_rs],nslot;
+    uint32_t nprime[2],i,m,l[n_rs],nslot;
     uint32_t n_cs[cfg->NSLOTS_X_FRAME][CP_NSYMB(cfg->CP)];
     uint32_t n_cs_cell[cfg->NSLOTS_X_FRAME][CP_NSYMB(cfg->CP)];
     get_pucch_dmrs_symbol(cfg->format,cfg->CP,l);
@@ -1324,7 +1324,7 @@ float complex r_uv_n[N_sc*n_rs*pucch.NSLOTS_X_FRAME];
 float complex r_uv[N_sc*n_rs*pucch.NSLOTS_X_FRAME];
 pucch_dmrs_gen(pucch.format,&pucch,&srs, &cells,n_rs,r_uv_n,l);
 //get_pucch_format2(&pucch,&srs,n_rs,alpha);
-get_pucch_format3(&pucch,n_rs,n_oc);
+get_pucch_format3(&pucch,&srs,n_rs,n_oc);
 
 
 }
