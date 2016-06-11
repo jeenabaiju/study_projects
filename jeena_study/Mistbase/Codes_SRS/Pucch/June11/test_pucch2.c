@@ -1199,7 +1199,7 @@ struct pucch_config pucch;
 	       pucch.n_ID_PUCCH = 0;// Configured=1 and Not Configured=0
 	       pucch.n_ID_PUSCH = 0;// Configured=1 and Not Configured=0
 	       pucch.shortened = 0; //Configured=1 and Not Configured=0
-           pucch.format =4; //{1,2.....9}
+           pucch.format =1; //{1,2.....9}
 
 	       struct cell cells;
 
