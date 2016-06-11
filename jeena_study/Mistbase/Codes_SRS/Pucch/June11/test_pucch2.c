@@ -965,7 +965,7 @@ uint32_t get_pucch_format1(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32
 /******************************************************************************************************************************/
 /*format2/2a/2b */
 /******************************************************************************************************************************/
-uint32_t get_pucch_format2(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32_t ns,uint32_t n_rs)
+uint32_t get_pucch_format2(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32_t ns,uint32_t n_rs,float alpha[cfg->NSLOTS_X_FRAME][CP_NSYMB(cfg->CP)])
 {
 
 	uint32_t nslot,l;
