@@ -1234,6 +1234,58 @@ int ret = ERROR_INVALID_INPUTS;
        }
   }
 }
+/****************************************************************************************************************************************/
+// PUCCH format 4 and 5
+/**********************************************/
+
+/****************************************************************************/
+// Alpha_lambda for PUCCH format 4 and 5
+/****************************************************************************/
+static float alpha_lambda(struct pucch_config *cfg,uint32_t format, uint32_t n_oc)
+{
+    float alpha;
+    float n_cs_lambda;
+    uint32_t n_dmrs_2 = 0;
+    uint32_t nslot;
+    uint32_t n_PN [cfg->NSLOTS_X_FRAME];
+    int i;
+    //find n_dmrs_2
+    if (format == format_5)
+    {
+    	if (n_oc == 0)
+    	{
+    		n_dmrs_2 = 0;
+    	}
+    	else
+    	{
+    		if(n_oc ==1)
+    		{
+    			n_dmrs_2 = 6;
+    		}
+    	}
+    }
+    else
+    {
+    	 if (format == format_4)
+    	 {
+    		   n_dmrs_2 =0;
+    	 }
+    }
+    uint8_t c_init = ((cfg->CellID / 30) << 5) + (((cfg->CellID % 30) + cfg->delta_ss) % 30);
+    uint32_t len = 8*CP_NSYMB(cfg->CP)*2+8;
+    uint8_t n_prs[len];
+    calc_prs_c( c_init, len, n_prs);
+    for (nslot = 0;nslot < cfg->NSLOTS_X_FRAME;nslot++)
+    {
+      uint32_t n_pn = 0;
+      for (i = 0; i < 8; i++)
+      {
+        n_pn += (n_prs[8*CP_NSYMB(cfg->CP)*nslot+i] << i);
+      }
+      n_PN[nslot] = n_pn;
+      printf("n_PN =[%d %d] \n",n_PN[0],n_PN[1]);
+    }
+}
 void main ()
 {
 
