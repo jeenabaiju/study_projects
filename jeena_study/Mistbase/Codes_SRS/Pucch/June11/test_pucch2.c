@@ -1244,7 +1244,7 @@ int ret = ERROR_INVALID_INPUTS;
 static float alpha_lambda(struct pucch_config *cfg,uint32_t format, uint32_t n_oc,float *alpha)
 {
 
-    float n_cs_lambda;
+    float n_cs_lambda[2];
     uint32_t n_dmrs_2 = 0;
     uint32_t nslot;
     uint32_t n_PN [cfg->NSLOTS_X_FRAME];
