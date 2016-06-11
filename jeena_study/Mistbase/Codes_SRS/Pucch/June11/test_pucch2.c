@@ -965,7 +965,7 @@ uint32_t get_pucch_format1(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32
 /******************************************************************************************************************************/
 /*format2/2a/2b */
 /******************************************************************************************************************************/
-uint32_t get_pucch_format2(struct pucch_config *cfg,uint32_t ns)
+uint32_t get_pucch_format2(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32_t ns)
 {
 
 	uint32_t nslot,l;
@@ -973,11 +973,12 @@ uint32_t get_pucch_format2(struct pucch_config *cfg,uint32_t ns)
     uint32_t c;
     c = cfg->CP?3:2;
     uint32_t n_cs_cell[cfg->NSLOTS_X_FRAME][CP_NSYMB(cfg->CP)];
+    uint32_t idx = get_pucch_dmrs_symbol(n_rs,cfg->format,cfg->CP);
     uint32_t n_cs[cfg->NSLOTS_X_FRAME][CP_NSYMB(cfg->CP)-idx];
 /**************************************************************************/
    /* Generates n_cs_cell according to Sec 5.4 of 36.211 */
     get_n_cs_cell(cfg,n_cs_cell,srs_ul);
-    uint32_t idx = get_pucch_dmrs_symbol(n_rs,cfg->format,cfg->CP);
+
     for ( nslot = 0; nslot < cfg->NSLOTS_X_FRAME; nslot++)
     {
        for (l = idx; l < CP_NSYMB(cfg->CP)-idx  ; l++)
