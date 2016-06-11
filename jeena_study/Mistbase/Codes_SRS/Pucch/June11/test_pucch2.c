@@ -1136,7 +1136,7 @@ int ret = ERROR_INVALID_INPUTS;
           {
         	 get_pucch_format1(cfg,srs_ul,&n_oc,n_rs,alpha);
           }
-          else if (format >= format_2)(format < format_3))
+          else if ((format >= format_2)&&(format < format_3))
           {
              get_pucch_format2(cfg,srs_ul,n_rs,alpha);
           }
