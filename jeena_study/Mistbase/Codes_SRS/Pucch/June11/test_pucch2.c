@@ -1270,7 +1270,7 @@ uint32_t nprime[2],ns,m[3];
 uint32_t M_sc = N_sc;
 float alpha[pucch.NSLOTS_X_FRAME][CP_NSYMB(pucch.CP)];
 uint32_t n_oc[2];
-uint32_t n_oc1;
+uint32_t n_oc1,i;
 uint32_t n_rs = get_N_rs_PUCCH(pucch.format,pucch.CP);
 uint32_t l[n_rs];
 get_pucch_dmrs_symbol(pucch.format,pucch.CP,l);
@@ -1282,4 +1282,9 @@ float complex r_uv[N_sc*n_rs*pucch.NSLOTS_X_FRAME];
 pucch_dmrs_gen(pucch.format,&pucch,&srs, &cells,n_rs,r_uv_n,l);
 //get_pucch_format2(&pucch,&srs,n_rs,alpha);
 get_pucch_format3(&pucch,n_oc);
+for(i=0;i<2;i++)
+{
+    printf("n_oc [%d %d]\n", n_oc[0],n_oc[1]);
+}
+
 }
