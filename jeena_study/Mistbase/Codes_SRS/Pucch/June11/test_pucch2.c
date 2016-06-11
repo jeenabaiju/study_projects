@@ -1188,7 +1188,7 @@ struct pucch_config pucch;
 	       pucch.NSLOTS_X_FRAME = 2;//number of slots per frame
 	       pucch.N_UL_RB = 6;
 	       pucch.n_pucch_1 =0;//{0...2047}
-	       pucch.n_pucch_2 =1;
+	       pucch.n_pucch_2 =0;
 	       pucch.n_pucch_3 =1;
 	       pucch.n_pucch_4 =1;
 	       pucch.sf_idx = 0;
