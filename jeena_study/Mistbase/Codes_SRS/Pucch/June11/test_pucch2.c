@@ -1189,7 +1189,7 @@ int ret = ERROR_INVALID_INPUTS;
           }
           else if (format == format_3)
           {
-              get_pucch_format3(cfg,srs_ul,n_rs,n_oc,alpha);
+              get_pucch_format3(cfg,srs_ul,n_rs,alpha);
           }
 
           // Choose number of symbols and orthogonal sequence from Tables 5.5.2.2.1-1 to 5.5.2.2.1-3
