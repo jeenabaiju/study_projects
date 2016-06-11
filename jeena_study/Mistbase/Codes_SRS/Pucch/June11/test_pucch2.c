@@ -970,7 +970,7 @@ uint32_t get_pucch_format2(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32
     c = cfg->CP?3:2;
     uint32_t n_cs_cell[cfg->NSLOTS_X_FRAME][CP_NSYMB(cfg->CP)];
     get_pucch_dmrs_symbol(cfg->format,cfg->CP,l);
-    uint32_t n_cs[cfg->NSLOTS_X_FRAME][CP_NSYMB(cfg->CP)-idx];
+    uint32_t n_cs[cfg->NSLOTS_X_FRAME][CP_NSYMB(cfg->CP)];
 /**************************************************************************/
    /* Generates n_cs_cell according to Sec 5.4 of 36.211 */
     get_n_cs_cell(cfg,n_cs_cell,srs_ul,n_rs);
