@@ -1170,5 +1170,5 @@ get_n_cs_cell(&pucch,n_cs_cell,&srs);
 get_pucch_format1(&pucch,&srs,&n_oc,n_rs,pucch.format,alpha,m);
 float complex r_uv_n[N_sc*n_rs*pucch.NSLOTS_X_FRAME];
 float complex r_uv[N_sc*n_rs*pucch.NSLOTS_X_FRAME];
-pucch_dmrs_gen(pucch.format,&pucch,&srs, &cells,n_rs,l,r_uv_n,m);
+pucch_dmrs_gen(pucch.format,&pucch,&srs, &cells,n_rs,r_uv_n,m);
 }
