@@ -1282,9 +1282,6 @@ float complex r_uv[N_sc*n_rs*pucch.NSLOTS_X_FRAME];
 pucch_dmrs_gen(pucch.format,&pucch,&srs, &cells,n_rs,r_uv_n,l);
 //get_pucch_format2(&pucch,&srs,n_rs,alpha);
 get_pucch_format3(&pucch,n_oc);
-for(i=0;i<2;i++)
-{
-    printf("n_oc [%d %d]\n", n_oc[0],n_oc[1]);
-}
+
 
 }
