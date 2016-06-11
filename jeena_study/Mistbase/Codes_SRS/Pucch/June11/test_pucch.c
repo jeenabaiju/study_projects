@@ -1035,6 +1035,10 @@ int ret = ERROR_INVALID_INPUTS;
        u = Get_u_value(srs_ul);// calculate u value for seq group hopping
 	   v = Get_v_value_pucch(cfg, M_sc,srs_ul,mprime);// calculate v value for seq index
 	   Seq_Msc12_Exp(Seq_Nsc_exp, u, N_sc); // M_sc = 12 sequence
+	   for (n = 0;n < N_sc; n++)
+	   {
+	 	  r_uv_12[n]= cexpf(I*(Seq_Nsc_exp[n]));
+	   }
        for (m = 0; m < n_rs; m++)
        {
        // Add cyclic prefix alpha for format 1/1a/1b
