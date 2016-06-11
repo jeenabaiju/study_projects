@@ -1052,7 +1052,7 @@ int pucch_format2a_2b_mod_symbol(uint32_t format, uint32_t bits[2], float comple
 /******************************************************************************************************************************/
 /*format 3 */
 /******************************************************************************************************************************/
-uint32_t get_pucch_format3(struct pucch_config *cfg)
+uint32_t get_pucch_format3(struct pucch_config *cfg,uint32_t *n_oc)
 {
 
     uint32_t nprime[2];
@@ -1060,7 +1060,7 @@ uint32_t get_pucch_format3(struct pucch_config *cfg)
     uint32_t N_SF1_PUCCH = 0;
     //N_SF0_PUCCH = (cfg->shortened)?5:5;
     N_SF1_PUCCH = (cfg->shortened)?4:5;
-    uint32_t n_oc[2];
+    //uint32_t n_oc[2];
     n_oc[0]= cfg->n_pucch_3 % N_SF1_PUCCH;// for first slot
     n_oc[1] = (N_SF1_PUCCH == 5)?((3 * n_oc[0]) % N_SF1_PUCCH):(n_oc[0] % N_SF1_PUCCH);// for second slot
     //printf("\n OrthoSeq n_oc[%d  %d]  \n\n",n_oc1[0],n_oc1[1]);
@@ -1269,7 +1269,7 @@ int n;
 uint32_t nprime[2],ns,m[3];
 uint32_t M_sc = N_sc;
 float alpha[pucch.NSLOTS_X_FRAME][CP_NSYMB(pucch.CP)];
-uint32_t n_oc;
+uint32_t n_oc[2];
 uint32_t n_rs = get_N_rs_PUCCH(pucch.format,pucch.CP);
 uint32_t l[n_rs];
 get_pucch_dmrs_symbol(pucch.format,pucch.CP,l);
@@ -1280,5 +1280,5 @@ float complex r_uv_n[N_sc*n_rs*pucch.NSLOTS_X_FRAME];
 float complex r_uv[N_sc*n_rs*pucch.NSLOTS_X_FRAME];
 pucch_dmrs_gen(pucch.format,&pucch,&srs, &cells,n_rs,r_uv_n,l);
 //get_pucch_format2(&pucch,&srs,n_rs,alpha);
-get_pucch_format3(&pucch);
+get_pucch_format3(&pucch,n_oc);
 }
