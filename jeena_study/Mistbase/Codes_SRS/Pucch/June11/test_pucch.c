@@ -1079,7 +1079,7 @@ int ret = ERROR_INVALID_INPUTS;
         	    for (n = 0;n < N_sc; n++)
         	    {
         	             tot=(mprime*M_sc*n_rs+m*M_sc+n);
-        	             printf ("m = %d , ns = %d , tot= %d \n",m,ns,tot);// Symbols
+        	             //printf ("m = %d , ns = %d , tot= %d \n",m,ns,tot);// Symbols
         	             r_uv_n[tot] = z_m*w[m]*r_uv_12[n]*cexpf(I*alpha[ns][l]*n);// this is applied in the following with w(p). exp(A.B)=exp(A)+exp(B)
         	             printf("r_uv_n[%d] = %.4f + i%.4f \n\n",tot,creal(r_uv_n[tot] ),cimag(r_uv_n[tot] ));
                 }
