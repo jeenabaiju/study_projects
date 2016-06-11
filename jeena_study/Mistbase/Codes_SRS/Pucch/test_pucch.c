@@ -1040,13 +1040,13 @@ int ret = ERROR_INVALID_INPUTS;
   {
 	   u = Get_u_value(srs_ul);
 	   v = Get_v_value_pucch(cfg, M_sc,srs_ul,ns);
-	   printf ("SeqIdx = %d \nSeqGroup = %d\n",v,u);
+	   //printf ("SeqIdx = %d \nSeqGroup = %d\n",v,u);
 	   Seq_Msc12_Exp(Seq_Nsc_exp, u, N_sc); // M_sc = 12
 	   for (n = 0;n < N_sc; n++)
 	   {
 	 	  r_uv_12[n]= cexpf(I*(Seq_Nsc_exp[n]));
-	 	  printf ("Seqn[%d] = %.4f \n\n",n,Seq_Nsc_exp[n]);
-	   	printf ("r_uv_12[%d] = %.4f +i%.4f \n\n",n,creal(r_uv_12[n]),cimag(r_uv_12[n]));
+	 	  //printf ("Seqn[%d] = %.4f \n\n",n,Seq_Nsc_exp[n]);
+	   	  //printf ("r_uv_12[%d] = %.4f +i%.4f \n\n",n,creal(r_uv_12[n]),cimag(r_uv_12[n]));
 	   }
        for (m = 0; m < n_rs; m++)
        {
