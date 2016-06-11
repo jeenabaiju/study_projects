@@ -993,20 +993,21 @@ uint32_t get_pucch_format2(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32
     {
        for (l = 0; l < c ; l++)
        {
-          if (cfg->n_pucch_2 < ((cfg->N_RB_2 * N_sc) + ((cfg->N_cs_1/8) * (N_sc - cfg->N_cs_1 - 2))))
-          {
+          //if (cfg->n_pucch_2 < ((cfg->N_RB_2 * N_sc) + ((cfg->N_cs_1/8) * (N_sc - cfg->N_cs_1 - 2))))
+          //{
+           if ((nslot % 2) == 0)
+            {
             nprime[0] = (cfg->n_pucch_2 < (N_sc * cfg->N_RB_2))?(cfg->n_pucch_2 % N_sc):((cfg->n_pucch_2 + cfg->N_cs_1 + 1) % N_sc);
             nprime[1] = (cfg->n_pucch_2 < (N_sc * cfg->N_RB_2))?(((N_sc * (nprime[0] + 1)) % (N_sc +1))-1):((N_sc - 2 - cfg->n_pucch_2 ) % N_sc);
             printf("\n Resource Index nprime[%d  %d]  \n\n",nprime[0],nprime[1]);
-            if ((nslot % 2) == 0)
-            {
+
 	        n_cs[nslot][l] = (n_cs_cell[nslot][l] + nprime[0]) % N_sc;
 	        n_cs[nslot+1][l] = (n_cs_cell[nslot][l]  + nprime[1]) % N_sc;
             }
 
-          }
-       }
-     }
+        }
+    }
+
 	/****************************************************************************/
 	// ALPHA PUCCH format2/2a/2b
 	/****************************************************************************/
