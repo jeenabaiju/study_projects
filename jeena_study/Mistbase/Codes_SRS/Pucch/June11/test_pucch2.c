@@ -782,7 +782,7 @@ static uint32_t get_N_rs_PUCCH(uint32_t format, uint32_t CP)
 	        {
 	        loc[0] = pucch_dmrs_symbol_format1_cpnorm[0];//location of ref symbols in pucch 1/1a/1b
             loc[1] = pucch_dmrs_symbol_format1_cpnorm[1];
-            loc[2] = pucch_dmrs_symbol_format1_cpnorm[2]);
+            loc[2] = pucch_dmrs_symbol_format1_cpnorm[2];
             }
 	        else
 	        {
@@ -813,7 +813,6 @@ static uint32_t get_N_rs_PUCCH(uint32_t format, uint32_t CP)
             {
                 return ERROR;
             }
-	      }
 	      break;
 	    case 8:
 	    case 9:
@@ -825,8 +824,7 @@ static uint32_t get_N_rs_PUCCH(uint32_t format, uint32_t CP)
 	    	{
 	    		loc[0] = pucch_dmrs_symbol_format4_5_cpext[0];
 	    	}
-	    	}
-         break;
+            break;
   }
 }
 
