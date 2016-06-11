@@ -863,7 +863,7 @@ static uint32_t get_N_rs_PUCCH(uint32_t format, uint32_t CP)
          for ( i=0;i<8;i++)
          {
              n_cs_cell[nslot][l] += n_prs[8*CP_NSYMB(cfg->CP) *nslot+8*l+i]<<i;
-          }
+         }
        }
      }
  	 return SUCCESS;
@@ -872,7 +872,7 @@ static uint32_t get_N_rs_PUCCH(uint32_t format, uint32_t CP)
 /******************************************************************************************************************************/
 /*PUCCH format1/1a/1b*/
 /******************************************************************************************************************************/
-uint32_t get_pucch_format1(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32_t* n_oc, uint32_t n_rs,uint32_t format, float alpha[cfg->NSLOTS_X_FRAME][CP_NSYMB(cfg->CP)])
+uint32_t get_pucch_format1(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32_t* n_oc, uint32_t n_rs,uint32_t format, float alpha[cfg->NSLOTS_X_FRAME][CP_NSYMB(cfg->CP)],uint32_t *l)
 {
     uint32_t nslot;uint32_t l;
 	int i;
@@ -972,7 +972,7 @@ uint32_t get_pucch_format1(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32
 
               }
            }
-
+           uint32_t l[3] = {2,3,4};
 }
 
 /****************************************************************************/
@@ -1017,12 +1017,10 @@ uint32_t Get_v_value_pucch(struct pucch_config *cfg, uint32_t M_sc,struct SRS_UL
 return v;
 }
 
-int pucch_dmrs_gen(uint32_t format,struct pucch_config *cfg,struct SRS_UL *srs_ul, struct cell *cell, uint32_t n_rs,uint32_t idx,float complex *r_uv_n)
+int pucch_dmrs_gen(uint32_t format,struct pucch_config *cfg,struct SRS_UL *srs_ul, struct cell *cell, uint32_t n_rs,float complex *r_uv_n,uint32_t l)
 {
 int ret = ERROR_INVALID_INPUTS;
   uint32_t m;
-  uint32_t ns;uint32_t l;
-   ns =0; l=2;
   float arg;
   uint32_t n_oc;
   uint32_t u,v;
@@ -1038,14 +1036,11 @@ int ret = ERROR_INVALID_INPUTS;
   for (mprime = 0; mprime < 2; mprime++)
   {
        u = Get_u_value(srs_ul);
-	   v = Get_v_value_pucch(cfg, M_sc,srs_ul,ns);
-	   //printf ("SeqIdx = %d \nSeqGroup = %d\n",v,u);
+	   v = Get_v_value_pucch(cfg, M_sc,srs_ul,mprime);
 	   Seq_Msc12_Exp(Seq_Nsc_exp, u, N_sc); // M_sc = 12
 	   for (n = 0;n < N_sc; n++)
 	   {
 	 	  r_uv_12[n]= cexpf(I*(Seq_Nsc_exp[n]));
-	 	  //printf ("Seqn[%d] = %.4f \n\n",n,Seq_Nsc_exp[n]);
-          //printf ("r_uv_12[%d] = %.4f +i%.4f \n\n",n,creal(r_uv_12[n]),cimag(r_uv_12[n]));
 	   }
        for (m = 0; m < n_rs; m++)
        {
@@ -1073,24 +1068,18 @@ int ret = ERROR_INVALID_INPUTS;
           {
         	  int count= 0;
         	  float complex rpucch[N_sc*n_rs*cfg->NSLOTS_X_FRAME];
-        	 // float complex r_uv_n[N_sc*n_rs*cfg->NSLOTS_X_FRAME];
-        	 // mprime= ns % 2;// m= 0,1 so it changes value just like for even and odd slot numbers
-
-        	    for (n = 0;n < N_sc; n++)
-        	    {
-        	             tot=(mprime*M_sc*n_rs+m*M_sc+n);
-        	             //printf ("m = %d , ns = %d , tot= %d \n",m,ns,tot);// Symbols
-        	             r_uv_n[tot] = z_m*w[m]*r_uv_12[n]*cexpf(I*alpha[ns][l]*n);// this is applied in the following with w(p). exp(A.B)=exp(A)+exp(B)
-        	             printf("r_uv_n[%d] = %.4f + i%.4f \n\n",tot,creal(r_uv_n[tot] ),cimag(r_uv_n[tot] ));
-                }
-
+        	  for (n = 0;n < N_sc; n++)
+              {
+        	     tot=(mprime*M_sc*n_rs+m*M_sc+n);
+                 //printf ("m = %d , ns = %d , tot= %d \n",m,ns,tot);// Symbols
+        	     r_uv_n[tot] = z_m*w[m]*r_uv_12[n]*cexpf(I*alpha[ns][l[m]*n);//
+        	     printf("r_uv_n[%d] = %.4f + i%.4f \n\n",tot,creal(r_uv_n[tot] ),cimag(r_uv_n[tot] ));
+              }
            }
            else
            {
         	  return ERROR;
            }
-        	 //printf ("w[%d] = %.2f + i %.2f \n\n",m,creal(w[m]),cimag(w[m]));
-        	 //printf ("z_m = %f +i %f \n\n",creal(z_m), cimag(z_m));// Symbols
        }
        printf("end\n\n");
   }
@@ -1179,5 +1168,5 @@ get_n_cs_cell(&pucch,n_cs_cell,&srs);
 get_pucch_format1(&pucch,&srs,&n_oc,n_rs,pucch.format,alpha);
 float complex r_uv_n[N_sc*n_rs*pucch.NSLOTS_X_FRAME];
 float complex r_uv[N_sc*n_rs*pucch.NSLOTS_X_FRAME];
-pucch_dmrs_gen(pucch.format,&pucch,&srs, &cells,n_rs,l,r_uv_n);
+pucch_dmrs_gen(pucch.format,&pucch,&srs, &cells,n_rs,l,r_uv_n,m);
 }
