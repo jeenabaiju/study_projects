@@ -1120,7 +1120,7 @@ int ret = ERROR_INVALID_INPUTS;
               tot=(mprime*M_sc*n_rs+m*M_sc+n);
               //printf ("m = %d , ns = %d , tot= %d \n",m,ns,tot);// Symbols
         	  r_pucch[tot] = z_m*w[m]*r_uv_12[n]*cexpf(I*alpha[mprime][l[m]]*n);//
-        	  //printf("r_pucch[%d] = %.4f + i%.4f \n\n",tot,creal(r_pucch[tot] ),cimag(r_pucch[tot] ));
+        	  printf("r_pucch[%d] = %.4f + i%.4f \n\n",tot,creal(r_pucch[tot] ),cimag(r_pucch[tot] ));
             }
           }
           else
