@@ -826,6 +826,7 @@ static uint32_t get_N_rs_PUCCH(uint32_t format, uint32_t CP)
 	    	}
             break;
   }
+  return 0;
 }
 
  /****************************************************************************/
@@ -841,7 +842,6 @@ static uint32_t get_N_rs_PUCCH(uint32_t format, uint32_t CP)
  	const uint16_t N_ID = Get_cellID(srs_ul);
  	const uint32_t c_init = N_ID;
  	calc_prs_c( c_init, len, n_prs);
- 	uint32_t m = get_N_rs_PUCCH(cfg->format,cfg->CP);
     get_pucch_dmrs_symbol(cfg->format,cfg->CP,l);
    /* Generates n_cs_cell according to Sec 5.4 of 36.211 */
      for (nslot=0;nslot<cfg->NSLOTS_X_FRAME;nslot++)
@@ -1214,9 +1214,10 @@ uint32_t M_sc = N_sc;
 float alpha[pucch.NSLOTS_X_FRAME][CP_NSYMB(pucch.CP)];
 uint32_t n_oc;
 uint32_t n_rs = get_N_rs_PUCCH(pucch.format,pucch.CP);
-uint32_t l =  get_pucch_dmrs_symbol(n_rs, pucch.format, pucch.CP);
+uint32_t l[n_rs];
+get_pucch_dmrs_symbol(n_rs, pucch.format, pucch.CP,l);
 uint32_t n_cs_cell[pucch.NSLOTS_X_FRAME][CP_NSYMB(pucch.CP)-pucch.n_pucch_1];
-get_n_cs_cell(&pucch,n_cs_cell,&srs);
+get_n_cs_cell(&pucch,n_cs_cell,&srs,n_rs);
 get_pucch_format1(&pucch,&srs,&n_oc,n_rs,alpha,m);
 float complex r_uv_n[N_sc*n_rs*pucch.NSLOTS_X_FRAME];
 float complex r_uv[N_sc*n_rs*pucch.NSLOTS_X_FRAME];
