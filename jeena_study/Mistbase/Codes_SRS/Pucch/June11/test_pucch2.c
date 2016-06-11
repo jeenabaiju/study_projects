@@ -965,7 +965,7 @@ uint32_t get_pucch_format1(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32
 /******************************************************************************************************************************/
 /*format2/2a/2b */
 /******************************************************************************************************************************/
-uint32_t get_pucch_format2(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32_t ns)
+uint32_t get_pucch_format2(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32_t ns,uint32_t n_rs)
 {
 
 	uint32_t nslot,l;
@@ -997,12 +997,12 @@ uint32_t get_pucch_format2(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32
           if (cfg->n_pucch_2 < ((cfg->N_RB_2 * N_sc) + ((cfg->N_cs_1/8) * (N_sc - cfg->N_cs_1 - 2))))
           {
             nprime[0] = (cfg->n_pucch_2 < (N_sc * cfg->N_RB_2))?(cfg->n_pucch_2 % N_sc):((cfg->n_pucch_2 + cfg->N_cs_1 + 1) % N_sc);
-            nprime[1] = (cfg->n_pucch_2 < (N_sc * cfg->N_RB_2))?(((N_sc * (n_prime[0] + 1)) % (N_sc +1))-1):((N_sc - 2 - cfg->n_pucch_2 ) % N_sc);
+            nprime[1] = (cfg->n_pucch_2 < (N_sc * cfg->N_RB_2))?(((N_sc * (nprime[0] + 1)) % (N_sc +1))-1):((N_sc - 2 - cfg->n_pucch_2 ) % N_sc);
             printf("\n Resource Index nprime[%d  %d]  \n\n",nprime[0],nprime[1]);
             if ((nslot % 2) == 0)
             {
-	        n_cs[nslot][l] = (n_cs_cell[nslot][l] + n_prime[0]) % N_sc;
-	        n_cs[nslot+1][l] = (n_cs_cell[nslot][l]  + n_prime[1]) % N_sc;
+	        n_cs[nslot][l] = (n_cs_cell[nslot][l] + nprime[0]) % N_sc;
+	        n_cs[nslot+1][l] = (n_cs_cell[nslot][l]  + nprime[1]) % N_sc;
             }
 
           }
@@ -1011,14 +1011,15 @@ uint32_t get_pucch_format2(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32
 	/****************************************************************************/
 	// ALPHA PUCCH format2/2a/2b
 	/****************************************************************************/
-          float alpha[cfg->NSLOTS_X_FRAME][c];
-          for ( nslot = 0; nslot < cfg->NSLOTS_X_FRAME; nslot++)
-          {
-             for (l = 0; l < c ; l++)
-             {
-                    alpha[nslot][l] = 2 * M_PI * n_cs[nslot][l] / N_sc;
-             }
-          }
+           for ( nslot=0;nslot<cfg->NSLOTS_X_FRAME;nslot++)
+           {
+              for (l=idx;l<CP_NSYMB(cfg->CP)-idx;l++)
+              {
+            	  alpha[nslot][l] = 0;
+                  alpha[nslot][l] = (2*M_PI*n_cs[nslot][l])/N_sc;
+                 //printf ("alpha[%d][%d] = %f \n\n",nslot,l,alpha[nslot][l]);
+              }
+           }
     return 0;
 }
 
