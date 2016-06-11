@@ -968,7 +968,7 @@ uint32_t get_pucch_format1(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32
 uint32_t get_pucch_format2(struct pucch_config *cfg,uint32_t ns)
 {
 
-	uint32_t nslot;
+	uint32_t nslot,l;
     uint32_t nprime[2];
     uint32_t c;
     c = cfg->CP?3:2;
@@ -977,7 +977,7 @@ uint32_t get_pucch_format2(struct pucch_config *cfg,uint32_t ns)
 /**************************************************************************/
    /* Generates n_cs_cell according to Sec 5.4 of 36.211 */
     get_n_cs_cell(cfg,n_cs_cell,srs_ul);
-    uint32_t idx = get_pucch_dmrs_symbol(n_rs,format,cfg->CP);
+    uint32_t idx = get_pucch_dmrs_symbol(n_rs,cfg->format,cfg->CP);
     for ( nslot = 0; nslot < cfg->NSLOTS_X_FRAME; nslot++)
     {
        for (l = idx; l < CP_NSYMB(cfg->CP)-idx  ; l++)
@@ -997,7 +997,7 @@ uint32_t get_pucch_format2(struct pucch_config *cfg,uint32_t ns)
           {
             nprime[0] = (cfg->n_pucch_2 < (N_sc * cfg->N_RB_2))?(cfg->n_pucch_2 % N_sc):((cfg->n_pucch_2 + cfg->N_cs_1 + 1) % N_sc);
             nprime[1] = (cfg->n_pucch_2 < (N_sc * cfg->N_RB_2))?(((N_sc * (n_prime[0] + 1)) % (N_sc +1))-1):((N_sc - 2 - cfg->n_pucch_2 ) % N_sc);
-            printf("\n Resource Index nprime[%d  %d]  \n\n",nprime[0],n_oc1[1]);
+            printf("\n Resource Index nprime[%d  %d]  \n\n",nprime[0],nprime[1]);
             if ((nslot % 2) == 0)
             {
 	        n_cs[nslot][l] = (n_cs_cell[nslot][l] + n_prime[0]) % N_sc;
