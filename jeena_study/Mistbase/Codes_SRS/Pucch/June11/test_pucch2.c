@@ -861,7 +861,7 @@ static uint32_t get_N_rs_PUCCH(uint32_t format, uint32_t CP)
 /******************************************************************************************************************************/
 /*PUCCH format1/1a/1b*/
 /******************************************************************************************************************************/
-uint32_t get_pucch_format1(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32_t* n_oc, uint32_t n_rs, float alpha[cfg->NSLOTS_X_FRAME][CP_NSYMB(cfg->CP)],uint32_t *loc)
+uint32_t get_pucch_format1(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32_t* n_oc, uint32_t n_rs, float alpha[cfg->NSLOTS_X_FRAME][CP_NSYMB(cfg->CP)])
 {
     uint32_t nslot,m, l[n_rs];
 	int i;
@@ -876,10 +876,8 @@ uint32_t get_pucch_format1(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32
       {
          for (m= 0; m < n_rs  ; m++)
          {
-
-          // printf ("NCellCyclicShifts = [%d]\n ",n_cs_cell[nslot][l[m]]);//nprime[2]
+           printf ("NCellCyclicShifts = [%d]\n ",n_cs_cell[nslot][l[m]]);//nprime[2]
     	 }
-
       }
 
 /**************************************************************************************/
@@ -951,13 +949,9 @@ uint32_t get_pucch_format1(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32
               {
             	  alpha[nslot][l[m]] = 0;
                   alpha[nslot][l[m]] = (2*M_PI*n_cs[nslot][l[m]])/N_sc;
-                 //printf ("alpha[%d][%d] = %f \n\n",nslot,l[m],alpha[nslot][l[m]]);
+                  printf ("alpha[%d][%d] = %f \n\n",nslot,l[m],alpha[nslot][l[m]]);
               }
            }
-           loc[0] = 2;//location of ref symbols in pucch 1/1a/1b
-           loc[1] = 3;
-           loc[2] = 4;
-}
 /******************************************************************************************************************************/
 /*format2/2a/2b */
 /******************************************************************************************************************************/
@@ -1217,10 +1211,10 @@ uint32_t l[n_rs];
 get_pucch_dmrs_symbol(pucch.format,pucch.CP,l);
 uint32_t n_cs_cell[pucch.NSLOTS_X_FRAME][CP_NSYMB(pucch.CP)-pucch.n_pucch_1];
 get_n_cs_cell(&pucch,n_cs_cell,&srs,n_rs);
-get_pucch_format1(&pucch,&srs,&n_oc,n_rs,alpha,m);
+get_pucch_format1(&pucch,&srs,&n_oc,n_rs,alpha);
 float complex r_uv_n[N_sc*n_rs*pucch.NSLOTS_X_FRAME];
 float complex r_uv[N_sc*n_rs*pucch.NSLOTS_X_FRAME];
-pucch_dmrs_gen(pucch.format,&pucch,&srs, &cells,n_rs,r_uv_n,m);
+pucch_dmrs_gen(pucch.format,&pucch,&srs, &cells,n_rs,r_uv_n,l);
 get_pucch_format2(&pucch,&srs,n_rs, alpha);
 
 }
