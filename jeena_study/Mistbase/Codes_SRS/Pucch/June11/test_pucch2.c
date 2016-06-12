@@ -1275,7 +1275,7 @@ static float alpha_lambda(struct pucch_config *cfg,uint32_t format, uint32_t n_o
     uint32_t len = 8*CP_NSYMB(cfg->CP)*2+7;
     uint8_t n_prs[len];uint32_t n_pn ;
     calc_prs_c( c_init, len, n_prs);
-    for (i = 0; i < 8; i++)
+    for (i = 0; i < len; i++)
       {
         printf("c_init = %d , len= %d ,n_PRS [%d] = %d\n",c_init,len,i,n_prs[i]);
       }
