@@ -1275,7 +1275,10 @@ static float alpha_lambda(struct pucch_config *cfg,uint32_t format, uint32_t n_o
     uint32_t len = 8*CP_NSYMB(cfg->CP)*2+7;
     uint8_t n_prs[len];uint32_t n_pn ;
     calc_prs_c( c_init, len, n_prs);
-
+    for (i = 0; i < 8; i++)
+      {
+        printf("n_PRS [%d] = %d\n",i,n_prs[i]);
+      }
     for (nslot = 0;nslot < cfg->NSLOTS_X_FRAME;nslot++)
     {
       n_pn = 0;
@@ -1382,6 +1385,6 @@ get_pucch_format3(&pucch,&srs,n_rs,alpha);
 pucch_dmrs_gen(pucch.format,&pucch,&srs, &cells,n_rs,r_uv_n,l);
 //get_pucch_format2(&pucch,&srs,n_rs,alpha);
 
-//alpha_lambda(&pucch,pucch.format,n_oc1,alpha1);
+alpha_lambda(&pucch,pucch.format,n_oc1,alpha1);
 
 }
