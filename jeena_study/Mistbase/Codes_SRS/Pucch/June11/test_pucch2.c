@@ -1301,11 +1301,11 @@ void r_pucch_format4_5(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32_t f
     uint32_t u;uint32_t v; int n; uint32_t m, tot; uint32_t M_sc;uint32_t M_sc_PUCCH4;
     M_sc_PUCCH4 = 0;
     // Calculate M_sc
-    if ((format_4) && ( M_RB_pucch4 <= cfg->N_UL_RB))// value of Msc Pucch is less or equal to nulrb
+    if ((format == format_4) && ( M_RB_pucch4 <= cfg->N_UL_RB))// value of Msc Pucch is less or equal to nulrb
     {
         M_sc_PUCCH4 = M_RB_pucch4 * N_sc;
     }
-    M_sc = (format_4)?M_sc_PUCCH4:N_sc;
+    M_sc = (format == format_4)?M_sc_PUCCH4:N_sc;
     uint32_t N_zc = Get_Nzc(M_sc);
     float alpha[2];
     float r_uv[M_sc];
@@ -1326,6 +1326,7 @@ void r_pucch_format4_5(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32_t f
               r_pucch[tot] = r_uv_4_5[n];
               printf("r_pucch[%d] = %.4f + i%.4f \n\n",tot,creal(r_pucch[tot] ),cimag(r_pucch[tot] ));
            }
+           printf("end\n");
     }
 }
 void main ()
