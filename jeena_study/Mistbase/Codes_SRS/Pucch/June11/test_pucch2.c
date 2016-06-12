@@ -1326,7 +1326,7 @@ void r_pucch_format4_5(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32_t f
               r_pucch[tot] = r_uv_4_5[n];
               printf("r_pucch[%d] = %.4f + i%.4f \n\n",tot,creal(r_pucch[tot] ),cimag(r_pucch[tot] ));
            }
-           printf("end\n");
+
     }
 }
 void main ()
@@ -1393,7 +1393,7 @@ struct pucch_config pucch;
 	       pucch.n_ID_PUCCH = 0;// Configured=1 and Not Configured=0
 	       pucch.n_ID_PUSCH = 0;// Configured=1 and Not Configured=0
 	       pucch.shortened = 0; //Configured=1 and Not Configured=0
-           pucch.format =9; //{1,2.....9}
+           pucch.format =8; //{1,2.....9}
            pucch.n_oc5 = 1;//  {0 or 1 . this is only for format5}
            pucch.M_RB_pucch4 = 6;
 	       struct cell cells;
