@@ -1295,7 +1295,7 @@ static float alpha_lambda(struct pucch_config *cfg,uint32_t format, uint32_t n_o
 /****************************************************************************/
 // Generate DRMS for PUCCH format 4 and 5
 /****************************************************************************/
-void r_pucch_format4_5(struct pucch_config *cfg,uint32_t format ,uint32_t n_oc5, uint32_t M_RB_PUCCH4, float complex *r_pucch,struct SRS_UL *srs_ul )
+void r_pucch_format4_5(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32_t format ,uint32_t n_oc5, uint32_t M_RB_PUCCH4, float complex *r_pucch)
 {
     uint32_t u;uint32_t v; int n; uint32_t m, tot; uint32_t M_sc;uint32_t M_sc_PUCCH4;
     M_sc_PUCCH4 = 0;
@@ -1413,12 +1413,12 @@ get_pucch_dmrs_symbol(pucch.format,pucch.CP,l);
 uint32_t n_cs_cell[pucch.NSLOTS_X_FRAME][CP_NSYMB(pucch.CP)-pucch.n_pucch_1];
 get_n_cs_cell(&pucch,n_cs_cell,&srs,n_rs);
 get_pucch_format1(&pucch,&srs,&n_oc1,n_rs,alpha);
-float complex r_uv_n[N_sc*n_rs*pucch.NSLOTS_X_FRAME];
+float complex r_pucch[N_sc*n_rs*pucch.NSLOTS_X_FRAME];
 float complex r_uv[N_sc*n_rs*pucch.NSLOTS_X_FRAME];
 get_pucch_format3(&pucch,&srs,n_rs,alpha);
-pucch_dmrs_gen(pucch.format,&pucch,&srs, &cells,n_rs,r_uv_n,l);
+pucch_dmrs_gen(pucch.format,&pucch,&srs, &cells,n_rs,r_pucch,l);
 //get_pucch_format2(&pucch,&srs,n_rs,alpha);
 
 alpha_lambda(&pucch,pucch.format,pucch.n_oc5,alpha1);
-
+r_pucch_format4_5(&pucch,&srs,pucch.format,pucch.n_oc5,pucch.M_RB_PUCCH4,r_pucch);
 }
