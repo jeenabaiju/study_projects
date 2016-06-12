@@ -1277,7 +1277,7 @@ static float alpha_lambda(struct pucch_config *cfg,uint32_t format, uint32_t n_o
     calc_prs_c( c_init, len, n_prs);
     for (i = 0; i < 8; i++)
       {
-        printf("n_PRS [%d] = %d\n",i,n_prs[i]);
+        printf("c_init = %d , len= %d ,n_PRS [%d] = %d\n",c_init,len,i,n_prs[i]);
       }
     for (nslot = 0;nslot < cfg->NSLOTS_X_FRAME;nslot++)
     {
