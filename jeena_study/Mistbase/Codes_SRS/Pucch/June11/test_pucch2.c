@@ -1297,7 +1297,7 @@ static float alpha_lambda(struct pucch_config *cfg,uint32_t format, uint32_t n_o
 /****************************************************************************/
 void r_pucch_format4_5(struct pucch_config *cfg,uint32_t format ,uint32_t n_oc5, uint32_t M_RB_PUCCH4, float complex *r_pucch,struct SRS_UL *srs_ul )
 {
-    int m;uint32_t u;uint32_t v; int n; uint32_t m; uint32_t M_sc;uint32_t M_sc_PUCCH4;
+    int m;uint32_t u;uint32_t v; int n; uint32_t m, tot; uint32_t M_sc;uint32_t M_sc_PUCCH4;
     M_sc_PUCCH4 = 0;
     // Calculate M_sc
     if ((format_4) && ( M_RB_PUCCH4 <= cfg->N_UL_RB))// value of Msc Pucch is less or equal to nulrb
