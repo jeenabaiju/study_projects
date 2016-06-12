@@ -1304,8 +1304,12 @@ void r_pucch_format4_5(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32_t f
     if ((format == format_4) && ( M_RB_pucch4 <= cfg->N_UL_RB))// value of Msc Pucch is less or equal to nulrb
     {
         M_sc_PUCCH4 = M_RB_pucch4 * N_sc;
+        M_sc = M_sc_PUCCH4;
     }
-    M_sc = (format == format_4)?M_sc_PUCCH4:N_sc;
+    else
+    {
+        M_sc = N_sc;
+    }
     uint32_t N_zc = Get_Nzc(M_sc);
     float alpha[2];
     float r_uv[M_sc];
