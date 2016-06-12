@@ -1288,6 +1288,7 @@ static float alpha_lambda(struct pucch_config *cfg,uint32_t format, uint32_t n_o
       alpha[nslot] = 2 * M_PI * n_cs_lambda[nslot] / 12;
       printf("alphalambda =[%f %f] \n",alpha[0],alpha[1]);
     }
+    return 0;
 }
 void main ()
 {
