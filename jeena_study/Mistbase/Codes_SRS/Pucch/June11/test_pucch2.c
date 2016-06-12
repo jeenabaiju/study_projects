@@ -1382,6 +1382,6 @@ get_pucch_format3(&pucch,&srs,n_rs,alpha);
 pucch_dmrs_gen(pucch.format,&pucch,&srs, &cells,n_rs,r_uv_n,l);
 //get_pucch_format2(&pucch,&srs,n_rs,alpha);
 
-alpha_lambda(&pucch,pucch.format,n_oc1,alpha1);
+//alpha_lambda(&pucch,pucch.format,n_oc1,alpha1);
 
 }
