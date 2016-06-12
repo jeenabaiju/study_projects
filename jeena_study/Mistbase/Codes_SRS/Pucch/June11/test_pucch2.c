@@ -1130,10 +1130,7 @@ uint32_t Get_v_value_pucch(struct pucch_config *cfg, uint32_t M_sc,struct SRS_UL
    {
       uint32_t len = M_sc;
       uint8_t n_prs[len];
-      for ( i=0;i<len;i++)
-      {
-             printf("n_prs[%d] = %d\n",i,n_prs[i]);
-      }
+
       const uint16_t n_ID = Get_cellID(srs_ul);
       uint32_t temp;
       uint32_t temp1;
@@ -1141,6 +1138,10 @@ uint32_t Get_v_value_pucch(struct pucch_config *cfg, uint32_t M_sc,struct SRS_UL
       temp1 = (n_ID % 30) + cfg->delta_ss;
       uint32_t  c_init = temp + (temp1 % 30);
       calc_prs_c( c_init, len, n_prs); /*generate_pseudo random sequence*/
+      for ( i=0;i<len;i++)
+      {
+             printf("n_prs[%d] = %d\n",i,n_prs[i]);
+      }
       if ((cfg->sequence_hopping == 1) && (cfg->group_hopping == 0))
       {
 	  v = n_prs[ns];
