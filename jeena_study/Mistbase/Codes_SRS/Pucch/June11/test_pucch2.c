@@ -1295,14 +1295,14 @@ static float alpha_lambda(struct pucch_config *cfg,uint32_t format, uint32_t n_o
 /****************************************************************************/
 // Generate DRMS for PUCCH format 4 and 5
 /****************************************************************************/
-void r_pucch_format4_5(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32_t format ,uint32_t n_oc5, uint32_t M_RB_PUCCH4, float complex *r_pucch)
+void r_pucch_format4_5(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32_t format ,uint32_t n_oc5, uint32_t M_RB_pucch4, float complex *r_pucch)
 {
     uint32_t u;uint32_t v; int n; uint32_t m, tot; uint32_t M_sc;uint32_t M_sc_PUCCH4;
     M_sc_PUCCH4 = 0;
     // Calculate M_sc
-    if ((format_4) && ( M_RB_PUCCH4 <= cfg->N_UL_RB))// value of Msc Pucch is less or equal to nulrb
+    if ((format_4) && ( M_RB_pucch4 <= cfg->N_UL_RB))// value of Msc Pucch is less or equal to nulrb
     {
-        M_sc_PUCCH4 = M_RB_PUCCH4 * N_sc;
+        M_sc_PUCCH4 = M_RB_pucch4 * N_sc;
     }
     M_sc = (format_4)?M_sc_PUCCH4:N_sc;
     uint32_t N_zc = Get_Nzc(M_sc);
@@ -1420,5 +1420,5 @@ pucch_dmrs_gen(pucch.format,&pucch,&srs, &cells,n_rs,r_pucch,l);
 //get_pucch_format2(&pucch,&srs,n_rs,alpha);
 
 alpha_lambda(&pucch,pucch.format,pucch.n_oc5,alpha1);
-r_pucch_format4_5(&pucch,&srs,pucch.format,pucch.n_oc5,pucch.M_RB_PUCCH4,r_pucch);
+r_pucch_format4_5(&pucch,&srs,pucch.format,pucch.n_oc5,pucch.M_RB_pucch4,r_pucch);
 }
