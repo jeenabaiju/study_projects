@@ -1346,7 +1346,7 @@ struct pucch_config pucch;
 	       pucch.n_pucch_3 =0;
 	       pucch.n_pucch_4 =0;
 	       pucch.sf_idx = 0;
-	       pucch.cyclicShift = 1;
+	       pucch.cyclicShift = 0;
 	       pucch.sequence_hopping =1;// enable=1 and disbale=0
 	       pucch.group_hopping = 0;// enable=1 and disbale=0
 	       pucch.PUCCH_ID = 0;  //
