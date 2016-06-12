@@ -1361,7 +1361,7 @@ struct pucch_config pucch;
 	       pucch.n_ID_PUSCH = 0;// Configured=1 and Not Configured=0
 	       pucch.shortened = 0; //Configured=1 and Not Configured=0
            pucch.format =9; //{1,2.....9}
-           pucch.n_oc5 = 0;//  {0 or 1 . this is only for format5}
+           pucch.n_oc5 = 1;//  {0 or 1 . this is only for format5}
 	       struct cell cells;
 
 	           cells.CP = 1;
