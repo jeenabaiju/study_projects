@@ -1312,8 +1312,8 @@ void r_pucch_format4_5(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32_t f
     }
     uint32_t N_zc = Get_Nzc(M_sc);
     float alpha[2];
-    float r_uv[M_sc*2];
-    float complex r_uv_4_5[M_sc*2];
+    float r_uv[M_sc];
+    float complex r_uv_4_5[M_sc];
     for (m = 0; m < 2;m++)
     {
        // Get group hopping number u
@@ -1420,11 +1420,12 @@ uint32_t n_cs_cell[pucch.NSLOTS_X_FRAME][CP_NSYMB(pucch.CP)-pucch.n_pucch_1];
 get_n_cs_cell(&pucch,n_cs_cell,&srs,n_rs);
 get_pucch_format1(&pucch,&srs,&n_oc1,n_rs,alpha);
 float complex r_pucch[N_sc*n_rs*pucch.NSLOTS_X_FRAME];
+float complex r_pucch1[72*2];
 float complex r_uv[N_sc*n_rs*pucch.NSLOTS_X_FRAME];
 get_pucch_format3(&pucch,&srs,n_rs,alpha);
 pucch_dmrs_gen(pucch.format,&pucch,&srs, &cells,n_rs,r_pucch,l);
 //get_pucch_format2(&pucch,&srs,n_rs,alpha);
 
 alpha_lambda(&pucch,pucch.format,pucch.n_oc5,alpha1);
-r_pucch_format4_5(&pucch,&srs,pucch.format,pucch.n_oc5,pucch.M_RB_pucch4,r_pucch);
+r_pucch_format4_5(&pucch,&srs,pucch.format,pucch.n_oc5,pucch.M_RB_pucch4,r_pucch1);
 }
