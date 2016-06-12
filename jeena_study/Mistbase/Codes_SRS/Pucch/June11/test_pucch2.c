@@ -106,11 +106,7 @@ struct pucch_config {
     uint32_t NSLOTS_X_FRAME;//number of slots per frame
     uint8_t N_ID_PUCCH;// cell ID if configured 1 else 0
     uint32_t N_UL_RB;
-    uint8_t n_pucch_1;//{0,1,.. 2047}
-    uint8_t n_pucch_2;
-    uint8_t n_pucch_3;
-    uint8_t n_pucch_4;
-    uint8_t n_pucch_5;
+
     uint32_t sf_idx;
     uint32_t cyclicShift;
     uint32_t sequence_hopping;// enable=1 and disbale=0
@@ -121,6 +117,12 @@ struct pucch_config {
     uint32_t n_ID_PUSCH;// Configured=1 and Not Configured=0
     uint32_t shortened; //Configured=1 and Not Configured=0
     uint32_t format;//{1,2,.....9}
+    uint8_t n_pucch_1;//{0,1,.. 2047}
+    uint8_t n_pucch_2;
+    uint8_t n_pucch_3;
+    uint8_t n_pucch_4;
+    uint8_t n_pucch_5;
+    uint32_t M_RB_pucch4;//
     uint32_t n_oc5;//  {0 or 1 . this is only for format5}
 };
 /* //Table 5.2.3-1: Resource block parameters according to 3GPP 36.211 5.2.3*/
@@ -1275,10 +1277,6 @@ static float alpha_lambda(struct pucch_config *cfg,uint32_t format, uint32_t n_o
     uint32_t len = 8*CP_NSYMB(cfg->CP)*2+7;
     uint8_t n_prs[len];uint32_t n_pn ;
     calc_prs_c( c_init, len, n_prs);
-    for (i = 0; i < len; i++)
-      {
-        printf("c_init = %d , len= %d ,n_PRS [%d] = %d\n",c_init,len,i,n_prs[i]);
-      }
     for (nslot = 0;nslot < cfg->NSLOTS_X_FRAME;nslot++)
     {
       n_pn = 0;
@@ -1287,14 +1285,47 @@ static float alpha_lambda(struct pucch_config *cfg,uint32_t format, uint32_t n_o
         n_pn += n_prs[8*CP_NSYMB(cfg->CP)*nslot+i] << i;
       }
       n_PN[nslot] = n_pn;
-      printf("n_PN =[%d] \n",n_PN[nslot]);
       n_cs_lambda[nslot] = (n_dmrs_1[cfg->cyclicShift] + n_dmrs_2 + n_PN[nslot]) % 12;
       alpha[nslot] = 2 * M_PI * n_cs_lambda[nslot] / 12;
-      printf("alphalambda =[%f] \n",alpha[nslot]);
     }
           printf("n_PN =[%d %d] \n",n_PN[0],n_PN[1]);
-           printf("alphalambda =[%f %f] \n",alpha[0],alpha[1]);
+          printf("alphalambda =[%f %f] \n",alpha[0],alpha[1]);
     return 0;
+}
+/****************************************************************************/
+// Generate DRMS for PUCCH format 4 and 5
+/****************************************************************************/
+void r_pucch_format4_5(struct pucch_config *cfg,uint32_t format ,uint32_t n_oc5, uint32_t M_RB_PUCCH4, float complex *r_pucch,struct SRS_UL *srs_ul )
+{
+    int m;uint32_t u;uint32_t v; int n; uint32_t m; uint32_t M_sc;uint32_t M_sc_PUCCH4;
+    M_sc_PUCCH4 = 0;
+    // Calculate M_sc
+    if ((format_4) && ( M_RB_PUCCH4 <= cfg->N_UL_RB))// value of Msc Pucch is less or equal to nulrb
+    {
+        M_sc_PUCCH4 = M_RB_PUCCH4 * N_sc;
+    }
+    M_sc = (format_4)?M_sc_PUCCH4:N_sc;
+    uint32_t N_zc = Get_Nzc(M_sc);
+    float alpha[2];
+    float r_uv[M_sc];
+    float complex r_uv_4_5[M_sc];
+    for (m = 0; m < 2;m++)
+    {
+       // Get group hopping number u
+       //Calculate u value
+       u = Get_u_value(srs_ul);
+       //Calculate v value
+       v = Get_v_value_pucch(cfg, M_sc,srs_ul,m);// calculate v value for seq index
+       alpha_lambda(cfg,format,cfg->n_oc5,alpha);
+       r_uv_arg(r_uv, M_sc, N_zc, u, v);
+       for (n = 0; n < M_sc; n++)
+           {
+              r_uv_4_5[n] = cexpf( I * ( r_uv[n] + ( alpha[m]* n ) ) );
+              tot = m * M_sc + n;
+              r_pucch[tot] = r_uv_4_5[n];
+              printf("r_pucch[%d] = %.4f + i%.4f \n\n",tot,creal(r_pucch[tot] ),cimag(r_pucch[tot] ));
+           }
+    }
 }
 void main ()
 {
@@ -1362,6 +1393,7 @@ struct pucch_config pucch;
 	       pucch.shortened = 0; //Configured=1 and Not Configured=0
            pucch.format =9; //{1,2.....9}
            pucch.n_oc5 = 1;//  {0 or 1 . this is only for format5}
+           pucch.M_RB_pucch4 = 6;
 	       struct cell cells;
 
 	           cells.CP = 1;
