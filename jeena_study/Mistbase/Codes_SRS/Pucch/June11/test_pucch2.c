@@ -1312,8 +1312,8 @@ void r_pucch_format4_5(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32_t f
     }
     uint32_t N_zc = Get_Nzc(M_sc);
     float alpha[2];
-    float r_uv[M_sc];
-    float complex r_uv_4_5[M_sc];
+    float r_uv[M_sc*2];
+    float complex r_uv_4_5[M_sc*2];
     for (m = 0; m < 2;m++)
     {
        // Get group hopping number u
