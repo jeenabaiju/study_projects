@@ -121,7 +121,7 @@ struct pucch_config {
     uint32_t n_ID_PUSCH;// Configured=1 and Not Configured=0
     uint32_t shortened; //Configured=1 and Not Configured=0
     uint32_t format;//{1,2,.....9}
-    uint32_t c;
+    uint32_t n_oc5;//  {0 or 1 . this is only for format5}
 };
 /* //Table 5.2.3-1: Resource block parameters according to 3GPP 36.211 5.2.3*/
 uint32_t N_sc = 12;
@@ -1241,7 +1241,7 @@ int ret = ERROR_INVALID_INPUTS;
 /****************************************************************************/
 // Alpha_lambda for PUCCH format 4 and 5
 /****************************************************************************/
-static float alpha_lambda(struct pucch_config *cfg,uint32_t format, uint32_t n_oc,float *alpha)
+static float alpha_lambda(struct pucch_config *cfg,uint32_t format, uint32_t n_oc5,float *alpha)
 {
 
     float n_cs_lambda[2];
@@ -1252,13 +1252,13 @@ static float alpha_lambda(struct pucch_config *cfg,uint32_t format, uint32_t n_o
     //find n_dmrs_2
     if (format == format_5)
     {
-    	if (n_oc == 0)
+    	if (n_oc5 == 0)
     	{
     		n_dmrs_2 = 0;
     	}
     	else
     	{
-    		if(n_oc ==1)
+    		if(n_oc5 ==1)
     		{
     			n_dmrs_2 = 6;
     		}
@@ -1360,8 +1360,8 @@ struct pucch_config pucch;
 	       pucch.n_ID_PUCCH = 0;// Configured=1 and Not Configured=0
 	       pucch.n_ID_PUSCH = 0;// Configured=1 and Not Configured=0
 	       pucch.shortened = 0; //Configured=1 and Not Configured=0
-           pucch.format =8; //{1,2.....9}
-
+           pucch.format =9; //{1,2.....9}
+           pucch.n_oc5 = 0;//  {0 or 1 . this is only for format5}
 	       struct cell cells;
 
 	           cells.CP = 1;
@@ -1387,6 +1387,6 @@ get_pucch_format3(&pucch,&srs,n_rs,alpha);
 pucch_dmrs_gen(pucch.format,&pucch,&srs, &cells,n_rs,r_uv_n,l);
 //get_pucch_format2(&pucch,&srs,n_rs,alpha);
 
-alpha_lambda(&pucch,pucch.format,n_oc1,alpha1);
+alpha_lambda(&pucch,pucch.format,pucch.n_oc5,alpha1);
 
 }
