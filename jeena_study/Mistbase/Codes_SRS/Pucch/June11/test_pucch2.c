@@ -1287,11 +1287,12 @@ static float alpha_lambda(struct pucch_config *cfg,uint32_t format, uint32_t n_o
         n_pn += n_prs[8*CP_NSYMB(cfg->CP)*nslot+i] << i;
       }
       n_PN[nslot] = n_pn;
-      printf("n_PN =[%d %d] \n",n_PN[0],n_PN[1]);
+
       n_cs_lambda[nslot] = (n_dmrs_1[cfg->cyclicShift] + n_dmrs_2 + n_PN[nslot]) % 12;
       alpha[nslot] = 2 * M_PI * n_cs_lambda[nslot] / 12;
       printf("alphalambda =[%f %f] \n",alpha[0],alpha[1]);
     }
+          printf("n_PN =[%d %d] \n",n_PN[0],n_PN[1]);
     return 0;
 }
 void main ()
