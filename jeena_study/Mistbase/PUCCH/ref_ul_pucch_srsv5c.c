@@ -2124,7 +2124,7 @@ uint32_t get_pucch_mvalue(struct pucch_config *cfg, uint32_t format, uint32_t n_
   uint32_t N_SF0_PUCCH ;
   N_SF0_PUCCH = 5;
   /*Table 10.1.1-2: Number of PRBs for PUCCCH format 4   corresponding to higher layer parameter numberOfPRB-format4-r13*/
-  uint32_t M_RB_pucch4 = get_M_rb_pucchvalue(cfg->numberOfPRB_format4 )
+  uint32_t M_RB_pucch4 = get_M_rb_pucchvalue(cfg->numberOfPRB_format4 );
   switch (format)
   {
       case format_1:
