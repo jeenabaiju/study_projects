@@ -1993,7 +1993,7 @@ int refsignal_dmrs_pucch_map(struct pucch_config *cfg, struct cell *cell,uint32_
       for (i = 0;i < n_rs; i++)
       {
         get_pucch_dmrs_symbol(format, cfg->CP,l);
-        memcpy(&output[RE_IDX(cfg,cell->n_ul_rb, l[i] + nslot *nsymbols, n_PRB * N_sc)],&r_pucch[nslot * n_rs * N_sc + i * N_sc],N_sc*sizeof(float complex));
+        memcpy(&output[RE_IDX(cfg->n_ul_rb, l[i] + nslot *nsymbols, n_PRB * N_sc)],&r_pucch[nslot * n_rs * N_sc + i * N_sc],N_sc*sizeof(float complex));
       }
     }
 
