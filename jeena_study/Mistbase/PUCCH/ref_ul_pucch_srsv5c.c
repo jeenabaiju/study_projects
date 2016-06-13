@@ -120,7 +120,7 @@ struct pucch_config {
     uint8_t n_pucch_3;
     uint8_t n_pucch_4;
     uint8_t n_pucch_5;
-    uint32_t M_RB_pucch4;//
+    uint32_t numberOfPRB_format4;//{0,1....6}
     uint32_t n_oc5;//  {0 or 1 . this is only for format5}
     uint32_t  pucch_bits[2];
     uint32_t Beta_pucch;
@@ -1443,7 +1443,7 @@ int refsignal_srs_map(struct SRS_UL *srs_ul,float complex *r_srs, float complex 
   return ret;
 }
 
-//*************************************************************************************************************************************************/
+/*************************************************************************************************************************************************/
 //PUCCH
 /*******************************************************/
 // n_dmrs_2 table 5.5.2.1.1-1 from 36.211
@@ -1480,10 +1480,6 @@ uint32_t pucch_dmrs_symbol_format2_3_cpext[1] = {3};
 uint32_t pucch_dmrs_symbol_format2a_2b_cpnorm[2] = {1, 5};
 uint32_t pucch_dmrs_symbol_format4_5_cpnorm[1] = {3};
 uint32_t pucch_dmrs_symbol_format4_5_cpext[1] = {2};
-
-
-/*Table 10.1.1-2: Number of PRBs for PUCCCH format 4   corresponding to higher layer parameter numberOfPRB-format4-r13*/
-M_RB_pucch4[8]
 /****************************************************************************/
 //PUCCH FUNCTIONS
 /****************************************************************************/
@@ -1587,6 +1583,36 @@ static uint32_t get_N_rs_PUCCH(uint32_t format, uint32_t CP)
   }
   return 0;
 }
+/*Table 10.1.1-2: Number of PRBs for PUCCCH format 4   corresponding to higher layer parameter numberOfPRB-format4-r13*/
+ uint32_t get_M_rb_pucchvalue(uint32_t numberOfPRB_format4 )
+ {
+     uint32_t M_RB_pucch4;
+     switch (numberOfPRB_format4)
+     {
+         case 0:
+             M_RB_pucch4 = 1;
+             break;
+         case 1:
+             M_RB_pucch4 = 2;
+             break;
+         case 2:
+             M_RB_pucch4 = 3;
+             break;
+         case 3:
+             M_RB_pucch4 = 4;
+             break;
+         case 4:
+             M_RB_pucch4 = 5;
+             break;
+         case 5:
+             M_RB_pucch4 = 6;
+             break;
+         case 6:
+             M_RB_pucch4 = 8;
+             break;
+      }
+      return M_RB_pucch4;
+ }
  /****************************************************************************/
  // cyclic shift n_cs_cell
  /****************************************************************************/
@@ -2094,10 +2120,11 @@ void r_pucch_format4_5(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32_t f
 /****************************************************************************/
 uint32_t get_pucch_mvalue(struct pucch_config *cfg, uint32_t format, uint32_t n_pucch,uint32_t CP,uint32_t *m)
 {
-   int i;int len = 0;
+  int i;int len = 0;
   uint32_t N_SF0_PUCCH ;
   N_SF0_PUCCH = 5;
-  uint32_t m1[cfg->M_RB_pucch4];
+  /*Table 10.1.1-2: Number of PRBs for PUCCCH format 4   corresponding to higher layer parameter numberOfPRB-format4-r13*/
+  uint32_t M_RB_pucch4 = get_M_rb_pucchvalue(cfg->numberOfPRB_format4 )
   switch (format)
   {
       case format_1:
@@ -2124,11 +2151,11 @@ uint32_t get_pucch_mvalue(struct pucch_config *cfg, uint32_t format, uint32_t n_
     	  len = 1;
     	  break;
      case format_4:
-         for( i =0;i < cfg->M_RB_pucch4; i++)
+         for( i =0;i < M_RB_pucch4; i++)
          {
             m[i] = cfg->n_pucch_4 + i;
          }
-         len = cfg->M_RB_pucch4;
+         len = M_RB_pucch4;
          break;
      case format_5:
     	  *m = n_pucch;
@@ -2189,7 +2216,6 @@ int refsignal_dmrs_pucch_map(struct pucch_config *cfg, struct cell *cell,uint32_
              {
                 get_pucch_dmrs_symbol(format, cfg->CP,l);
                 memcpy(&output[RE_IDX(cfg->N_UL_RB, l[j] + nslot *nsymbols, n_PRB[i] * N_sc)],&r_pucch[nslot * n_rs * N_sc + j * N_sc],N_sc*sizeof(float complex));
-
              }
           }
       }
