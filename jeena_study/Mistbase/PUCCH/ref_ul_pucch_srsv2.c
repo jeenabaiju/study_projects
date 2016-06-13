@@ -22,8 +22,6 @@
 #define ERROR                  -1
 #define ERROR_INVALID_INPUTS   -2
 
-#define shortened                 0
-#define normal                  1
 #define format_1                1
 #define format_1a               2
 #define format_1b               3
@@ -2002,7 +2000,7 @@ int refsignal_dmrs_pucch_map(struct pucch_config *cfg, struct cell *cell,uint32_
     ret = SUCCESS;
   }
   return ret;
-}*/
+}
 int refsignal_srs_map(struct SRS_UL *srs_ul,float complex *r_srs, float complex *sf_symbols,uint32_t Fb, uint32_t N_b , uint32_t k_pbar,  uint32_t K_Tc_p)
 {
   int ret = ERROR_INVALID_INPUTS;int i;
