@@ -1056,8 +1056,8 @@ return m_srs_0[c_srs];
  * Returns 0 if no SRS shall be transmitted or -1 if error. */
 /*******************************************************/
 int srs_send_cs(uint32_t subframe_config, uint32_t sf_idx,uint32_t DuplexMode)
-
-/* Frame structure Type 1 from Table 5.5.3.3-1 according to 36.211 v13*/
+{
+  /* Frame structure Type 1 from Table 5.5.3.3-1 according to 36.211 v13*/
   if (subframe_config < 15 && sf_idx < 10)
   {
     if (DuplexMode)
@@ -2220,8 +2220,7 @@ int refsignal_dmrs_pucch_map(struct pucch_config *cfg, struct cell *cell,uint32_
           }
       }
 
-
-    ret = SUCCESS;
+   ret = SUCCESS;
   }
   return ret;
 }
