@@ -1935,7 +1935,7 @@ uint32_t get_pucch_mvalue(struct pucch_config *cfg, uint32_t format, uint32_t n_
     	  m = n_pucch / N_SF0_PUCCH;
     	  break;
      case format_4:
-         unt32_t m1[cfg->M_RB_pucch4];
+         uint32_t m1[cfg->M_RB_pucch4];
          for( i =0;i < cfg->M_RB_pucch4; i++)
          {
             m1[i] = cfg->n_pucch_4 + i;
