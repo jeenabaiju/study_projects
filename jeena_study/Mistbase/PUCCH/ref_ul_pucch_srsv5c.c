@@ -1056,7 +1056,8 @@ return m_srs_0[c_srs];
  * Returns 0 if no SRS shall be transmitted or -1 if error. */
 /*******************************************************/
 int srs_send_cs(uint32_t subframe_config, uint32_t sf_idx,uint32_t DuplexMode)
-{
+
+/* Frame structure Type 1 from Table 5.5.3.3-1 according to 36.211 v13*/
   if (subframe_config < 15 && sf_idx < 10)
   {
     if (DuplexMode)
@@ -1135,6 +1136,7 @@ int srs_send_cs(uint32_t subframe_config, uint32_t sf_idx,uint32_t DuplexMode)
   }
   else
   {
+      /* Frame structure Type 2 from Table 5.5.3.3-2 according to 36.211 v13*/
       uint32_t tsfc = T_sfc[subframe_config];
       if (subframe_config ==0)
       {
@@ -1478,6 +1480,10 @@ uint32_t pucch_dmrs_symbol_format2_3_cpext[1] = {3};
 uint32_t pucch_dmrs_symbol_format2a_2b_cpnorm[2] = {1, 5};
 uint32_t pucch_dmrs_symbol_format4_5_cpnorm[1] = {3};
 uint32_t pucch_dmrs_symbol_format4_5_cpext[1] = {2};
+
+
+/*Table 10.1.1-2: Number of PRBs for PUCCCH format 4   corresponding to higher layer parameter numberOfPRB-format4-r13*/
+M_RB_pucch4[8]
 /****************************************************************************/
 //PUCCH FUNCTIONS
 /****************************************************************************/
@@ -1719,7 +1725,6 @@ uint32_t get_pucch_format2(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32
        {
           //printf ("NCellCyclicShifts = [%d]\n ",n_cs_cell[nslot][l[m]]);//nprime[2]
        }
-
     }
 
     for ( nslot = 0; nslot < cfg->NSLOTS_X_FRAME; nslot++)
@@ -2087,9 +2092,9 @@ void r_pucch_format4_5(struct pucch_config *cfg,struct SRS_UL *srs_ul,uint32_t f
 /****************************************************************************/
 // Compute m according to Section 5.4.3 of 36.211
 /****************************************************************************/
-uint32_t get_pucch_mvalue(struct pucch_config *cfg, uint32_t format, uint32_t n_pucch,uint32_t CP)
+uint32_t get_pucch_mvalue(struct pucch_config *cfg, uint32_t format, uint32_t n_pucch,uint32_t CP,uint32_t *m)
 {
-  uint32_t m=0; int i;
+   int i;int len = 0;
   uint32_t N_SF0_PUCCH ;
   N_SF0_PUCCH = 5;
   uint32_t m1[cfg->M_RB_pucch4];
@@ -2098,41 +2103,46 @@ uint32_t get_pucch_mvalue(struct pucch_config *cfg, uint32_t format, uint32_t n_
       case format_1:
       case format_1a:
       case format_1b:
-           m = cfg->N_RB_2;
+           *m = cfg->N_RB_2;
            // Find CP
            uint32_t c=(CP)?3:2;
            // Calculate m
            if (n_pucch >= c*cfg->N_cs_1 / cfg->delta_ss)
            {
-             m = (n_pucch - c*cfg->N_cs_1 / cfg->delta_ss) / (c*N_sc/cfg->delta_ss) + cfg->N_RB_2+(uint32_t)ceilf((float) cfg->N_cs_1/8);
+             *m = (n_pucch - c*cfg->N_cs_1 / cfg->delta_ss) / (c*N_sc/cfg->delta_ss) + cfg->N_RB_2+(uint32_t)ceilf((float) cfg->N_cs_1/8);
            }
+           len = 1;
            break;
      case format_2:
      case format_2a:
      case format_2b:
-          m = n_pucch/N_sc;
+          *m = n_pucch/N_sc;
+          len = 1;
           break;
      case format_3:
-    	  m = n_pucch / N_SF0_PUCCH;
+    	  *m = n_pucch / N_SF0_PUCCH;
+    	  len = 1;
     	  break;
      case format_4:
          for( i =0;i < cfg->M_RB_pucch4; i++)
          {
-            m1[i] = cfg->n_pucch_4 + i;
+            m[i] = cfg->n_pucch_4 + i;
          }
-            m = m1[i];
+         len = cfg->M_RB_pucch4;
          break;
      case format_5:
-    	  m = n_pucch;
+    	  *m = n_pucch;
+    	  len = 1;
     	  break;
   }
-  return m;
+
+  return len;
 }
 
 /****************************************************************************/
 // Mapping dmrs to physical resources according to Section 5.4.3 of 36.211
 /****************************************************************************/
-int refsignal_dmrs_pucch_map(struct pucch_config *cfg, struct cell *cell,uint32_t format, uint32_t n_pucch, float complex *r_pucch, float complex *output)
+int refsignal_dmrs_pucch_map(struct pucch_config *cfg, struct cell *cell,uint32_t format, uint32_t n_pucch, float complex *r_pucch, float complex *output,uint32_t nslot)
 {
   int ret = ERROR_INVALID_INPUTS;
   if (cfg && output && r_pucch)
@@ -2140,44 +2150,50 @@ int refsignal_dmrs_pucch_map(struct pucch_config *cfg, struct cell *cell,uint32_
     ret = ERROR;
     uint32_t nsymbols;
     nsymbols = cfg->CP?3:2;
-    uint32_t nslot;
-    uint32_t i;
+    uint32_t i,j;
     uint32_t n_rs;
 
     // Determine m
-    uint32_t m = get_pucch_mvalue(cfg, format, n_pucch, cfg->CP);
-    uint32_t n_PRB ;
+    uint32_t m[cfg->N_UL_RB];
+    uint32_t len = get_pucch_mvalue(cfg, format, n_pucch, cfg->CP,m);
+    uint32_t n_PRB[len] ;
     n_rs=get_N_rs_PUCCH(format, cfg->CP);
     uint32_t l[n_rs];
-    for (nslot = 0 ; nslot < 2 ; nslot++)
-    {
       // Determine n_prb as in 36.211 version 13.0 section 5.4.3
       if (format != format_4)
       {
-          n_PRB = m/2;
-          if ((m + nslot) % 2)
+          n_PRB[0] = m[0]/2;
+          if ((m[0] + nslot) % 2)
           {
-             n_PRB = cfg->N_UL_RB - 1 - (m/2);
+             n_PRB[0]= cfg->N_UL_RB - 1 - (m[0]/2);
+          }
+          for (i = 0;i < n_rs; i++)
+          {
+             get_pucch_dmrs_symbol(format, cfg->CP,l);
+             memcpy(&output[RE_IDX(cfg->N_UL_RB, l[i] + nslot *nsymbols, n_PRB[0] * N_sc)],&r_pucch[nslot * n_rs * N_sc + i * N_sc],N_sc*sizeof(float complex));
           }
       }
       else
       {
-          if(nslot%2)
+          for(i = 0; i<len;i++)
           {
-              n_PRB = cfg->N_UL_RB - 1 - m;
-          }
-          else
-          {
-              n_PRB = m;
+             if(nslot%2)
+             {
+                n_PRB[i] = cfg->N_UL_RB - 1 - m[i];
+             }
+             else
+             {
+                n_PRB[i]= m[i];
+             }
+             for (j = 0;j < n_rs; j++)
+             {
+                get_pucch_dmrs_symbol(format, cfg->CP,l);
+                memcpy(&output[RE_IDX(cfg->N_UL_RB, l[j] + nslot *nsymbols, n_PRB[i] * N_sc)],&r_pucch[nslot * n_rs * N_sc + j * N_sc],N_sc*sizeof(float complex));
+
+             }
           }
       }
 
-      for (i = 0;i < n_rs; i++)
-      {
-        get_pucch_dmrs_symbol(format, cfg->CP,l);
-        memcpy(&output[RE_IDX(cfg->N_UL_RB, l[i] + nslot *nsymbols, n_PRB * N_sc)],&r_pucch[nslot * n_rs * N_sc + i * N_sc],N_sc*sizeof(float complex));
-      }
-    }
 
     ret = SUCCESS;
   }
