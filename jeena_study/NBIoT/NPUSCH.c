@@ -23,6 +23,7 @@ struct NPUSCH npusch{
 
 uint32_t Get_N_RU(uint32_t I_RU)
 {
+    uint32_t N_RU;
     //Table 16.5.1.1-2: Number of resource units (N_RU) for NPUSCH.
   if (I_RU < 6)
   {
@@ -36,15 +37,18 @@ uint32_t Get_N_RU(uint32_t I_RU)
   {
      N_RU = 10;
   }
+  return N_RU;
 }
 uint32_t Get_Nslots(delta_f)
 {
+    uint32_t Nslots;
     Nslots = delta_f ? 1:2;
+    return Nslots;
 }
 
 uint32_t get_M_identical_NPUSCH(uint32_t N_sc_RU,uint32_t M_rep_NPUSCH)
 {
-    uint16_t temp;
+    uint16_t temp,M_identical;
     if (N_sc_RU)
     {
         M_identical = 1;
@@ -52,12 +56,16 @@ uint32_t get_M_identical_NPUSCH(uint32_t N_sc_RU,uint32_t M_rep_NPUSCH)
     else if(N_sc_RU > 2)
     {
         temp = M_rep_NPUSCH/2;
-        if temp < 4
+        if (temp < 4)
         {
            M_identical = temp;
         }
-           M_identical = 4;
-    }
+        else
+        {
+             M_identical = 4;
+        }
+     }
+     return M_identical;
 }
 
 
@@ -69,7 +77,7 @@ uint32_t get_M_identical_NPUSCH(uint32_t N_sc_RU,uint32_t M_rep_NPUSCH)
 
 // Table 10.1.4.1.1-1: Definition of   w(n)
 
-w_n[16][16] = {{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+int w_n[16][16] = {{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
               {1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1},
               {1,1,-1,-1,1,1,-1,-1,1,1,-1,-1,1,1,-1,-1},
               {1,-1,-1,1,1,-1,-1,1,1,-1,-1,1,1,-1,-1,1},
