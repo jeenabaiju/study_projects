@@ -201,13 +201,13 @@ uint32_t Get_r_u_format2(uint32_t N_CellID, uint32_t ns,uint32_t N_UL_slots,uint
 {
     int n,m;
     uint32_t w_m;
-    w_m = w_arg_pusch_format1
+
     Get_r_u_bar(N_CellID,N_UL_slots,N_rep_NPUSCH, N_RU,u,r_u_bar);
     for (m = 0; m < 3; m++)
     {
        for (n = 0; n < N_rep_NPUSCH*N_UL_slots*N_RU ; n++)
        {
-
+         w_m = w_arg_pusch_format1[n_oc][m];
          r_u_format2[3*n+m] = w_m*r_u_bar[n];
        }
     }
