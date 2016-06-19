@@ -11,7 +11,7 @@
 #define ERROR_INVALID_INPUTS   -2
 #define CP_NSYMB                7
 uint32_t N_sc_RB = 12;
-struct NPUSCH npusch{
+struct NPUSCH {
            uint32_t sequence_hopping;// enable=1 and disbale=0
            uint32_t group_hopping;// enable=1 and disbale=0
            uint32_t delta_ss; //delta_ss = { 0 , 1 ,..., 29 }
