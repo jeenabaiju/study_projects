@@ -16,7 +16,7 @@ struct NPUSCH {
            uint32_t group_hopping;// enable=1 and disbale=0
            uint32_t delta_ss; //delta_ss = { 0 , 1 ,..., 29 }
            uint32_t ns;//Slot number within a radio frame
-           uint32_t npusch-AllSymbols;//true -1 false -0
+           uint32_t npusch_AllSymbols;//true -1 false -0
            uint32_t srsSubframeConfig;
            uint32_t I_RU;
            };
