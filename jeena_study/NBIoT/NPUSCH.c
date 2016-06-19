@@ -46,7 +46,7 @@ int w_n[16][16] = {{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
               {1,-1,-1,1,-1,1,1,-1,-1,1,1,-1,1,-1,-1,1}};
 
 /* Orthogonal sequences for NPUSCH formats 2. Table 5.5.2.2.1-2*/
-float w_arg_pusch_format1_cpnorm[3][3] = {{1, 1, 1},
+float w_arg_pusch_format2[3][3] = {{1, 1, 1},
                                          {1, 2*M_PI/3, 4*M_PI/3},
                                          {1, 4*M_PI/3, 2*M_PI/3}};
 /******************************************************************************/
@@ -201,13 +201,13 @@ uint32_t Get_r_u_format2(uint32_t N_CellID, uint32_t ns,uint32_t N_UL_slots,uint
 {
     int n,m;
     uint32_t w_m;
-
+    float complex r_u_bar[N_rep_NPUSCH*N_UL_slots*N_RU];
     Get_r_u_bar(N_CellID,N_UL_slots,N_rep_NPUSCH, N_RU,u,r_u_bar);
     for (m = 0; m < 3; m++)
     {
        for (n = 0; n < N_rep_NPUSCH*N_UL_slots*N_RU ; n++)
        {
-         w_m = w_arg_pusch_format1[n_oc][m];
+         w_m = w_arg_pusch_format2[n_oc][m];
          r_u_format2[3*n+m] = w_m*r_u_bar[n];
        }
     }
