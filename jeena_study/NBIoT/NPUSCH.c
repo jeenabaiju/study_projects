@@ -163,6 +163,7 @@ uint32_t Get_r_u_bar(uint32_t N_CellID,uint32_t N_UL_slots,uint32_t N_rep_NPUSCH
     int n;
     uint32_t c_init = 35;
     uint32_t len = 35;
+    uint32_t n_prs[len];
     calc_prs_c( c_init, len, n_prs); /*generate_pseudo random sequence*/
     for (n = 0; n < N_rep_NPUSCH*N_UL_slots*N_RU ; n++)
     {
@@ -187,6 +188,7 @@ uint32_t Get_n_oc(uint32_t N_CellID,uint32_t ns,uint32_t *n_oc)
     int i;
     uint32_t c_init = N_CellID;
     uint32_t len = 8 * ns + 8;
+    uint32_t n_prs[len];
     uint32_t temp;
     temp = 0;
     calc_prs_c( c_init, len, n_prs); /*generate_pseudo random sequence*/
