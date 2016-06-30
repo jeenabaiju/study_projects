@@ -700,6 +700,7 @@ int refsignal_dmrs_npusch_map(struct NPUSCH *npusch, uint32_t loc, float complex
     get_npusch_dmrs_symbollocation(npusch->NPUSCHformat, npusch->Subcarrierspacing,loc);
     // find the number of repetitions for Nslots
     uint32_t M_identical = get_M_identical_NPUSCH(N_sc_RU,M_Rep_NPUSCH);
+    printf(" lM_identical = %d \n",M_identical);
     float complex Symbol[N_sc_RU][2*CP_NSYMB];
     //memset(Symbol, 0, sizeof(Symbol[0][0]) * N_sc_RU * (2*CP_NSYMB));    // set the symbol matrix to zero
     float complex  Mapping_slots[N_sc_RU][CP_NSYMB*N_UL_slots*N_RU*CP_NSYMB];
