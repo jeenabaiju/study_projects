@@ -750,10 +750,11 @@ int refsignal_dmrs_npusch_map(struct NPUSCH *npusch, uint32_t loc, float complex
                                    for (nslots = 0; nslots<Nslots;nslots++)
                                    {
 		                               Symbol[k][loc[l]+nslots*CP_NSYMB] =  r_npusch[k] ;
-		                                printf(" Symbol[%d][%d] = %.4f+i%.4f \n",k,loc[l],creal(Symbol[k][loc[l]]),cimag(Symbol[k][loc[l]]));
+
 		                              // Mapping_slots = repmat(Symbol,1,M_identical-1);
 		     					   }
                                   }
+                               printf(" Symbol[%d][%d] = %.4f+i%.4f \n",k,loc[l],creal(Symbol[k][loc[l]]),cimag(Symbol[k][loc[l]]));
 		     				  }
 		     				  else if (M_identical)
 		     				  {
