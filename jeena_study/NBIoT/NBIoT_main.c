@@ -737,8 +737,7 @@ int refsignal_dmrs_npusch_map(struct NPUSCH *npusch, uint32_t loc, float complex
 	else if (N_sc_RU >1)
 	{
 		Get_refsignal_r_u_greaterthan1(npusch,N_sc_RU,N_seq_RU,npusch->ns,r_npusch);
-		 for (i=0;i<N_UL_slots*N_RU*CP_NSYMB;i++)
-		     	  {
+
 		     		  for (l=0;l<nsymbols;l++)
 		     		  {
 		     			  for (k=0;k<N_sc_RU;k++)
@@ -750,11 +749,12 @@ int refsignal_dmrs_npusch_map(struct NPUSCH *npusch, uint32_t loc, float complex
                                    for (nslots = 0; nslots<Nslots;nslots++)
                                    {
 		                               Symbol[k][loc[l]+nslots*CP_NSYMB] =  r_npusch[k] ;
-                                       Mapping_slots[k][loc[l]+i*Nslots*CP_NSYMB] = Symbol[k][loc[l]+nslots*CP_NSYMB];
+                                       Mapping_slots[k][loc[l]+m*Nslots*CP_NSYMB] = Symbol[k][loc[l]+nslots*CP_NSYMB];
 		                              // Mapping_slots = repmat(Symbol,1,M_identical-1);
 		     					   }
-
-		     					   printf(" Mapping_slots[%d][%d] = %.4f+i%.4f \n",k,loc[l]+m*Nslots*CP_NSYMB,creal(Mapping_slots[k][loc[l]+m*Nslots*CP_NSYMB]),cimag(Mapping_slots[k][loc[l]+m*Nslots*CP_NSYMB]));
+                          for (i=0;i<N_UL_slots*N_RU*CP_NSYMB;i++)
+		     	           {
+		     					   printf(" Mapping_slots[%d][%d] = %.4f+i%.4f \n",k,loc[l]+i*Nslots*CP_NSYMB,creal(Mapping_slots[k][loc[l]+i*Nslots*CP_NSYMB]),cimag(Mapping_slots[k][loc[l]+i*Nslots*CP_NSYMB]));
                                   }
 		     				  }
 		     				  else if (M_identical)
