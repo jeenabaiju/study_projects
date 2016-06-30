@@ -687,7 +687,7 @@ int refsignal_dmrs_npusch_map(struct NPUSCH *npusch, uint32_t loc, float complex
   if (npusch && r_npusch)
   {
     ret = ERROR;
-    uint32_t nsymbols;
+    uint32_t nsymbols,m;
     uint32_t N_rep_NPUSCH,Nslots;
     N_rep_NPUSCH = N_rep[I_Rep];
     // find the number of dmrs symbols
