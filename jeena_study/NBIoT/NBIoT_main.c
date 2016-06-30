@@ -754,14 +754,14 @@ int refsignal_dmrs_npusch_map(struct NPUSCH *npusch, uint32_t loc, float complex
 		     					  for (nslots = 0; nslots<Nslots;nslots++)
 		     					  {
 		                               Symbol[k][loc[l]+nslots*CP_NSYMB] =  r_npusch[k] ;
-		                                printf(" Symbol[%d][%d] = %.4f+i%.4f \n",k,n,creal(Symbol[k][n]),cimag(Symbol[k][n]));
+		                                printf(" Symbol[%d][%d] = %.4f+i%.4f \n",k,i,creal(Symbol[k][i]),cimag(Symbol[k][i]));
 		                              // Mapping_slots = repmat(Symbol,1,M_identical-1);
 		     					  }
 		     				  }
 		     				  else
 		     				  {
 		     					 Mapping_slots[k][loc[l]+i*CP_NSYMB] = r_npusch[k];
-		     					 printf(" Mapping_slots[%d][%d]= %.4f+i%.4f      r_npusch[%d]= %.4f+i%.4f \n",k,loc[l]+n*CP_NSYMB,creal(Mapping_slots[k][loc[l]+n*CP_NSYMB]),cimag(Mapping_slots[k][loc[l]+n*CP_NSYMB]),k,creal(r_npusch[k]),cimag(r_npusch[k]));
+		     					 printf(" Mapping_slots[%d][%d]= %.4f+i%.4f      r_npusch[%d]= %.4f+i%.4f \n",k,loc[l]+i*CP_NSYMB,creal(Mapping_slots[k][loc[l]+i*CP_NSYMB]),cimag(Mapping_slots[k][loc[l]+i*CP_NSYMB]),k,creal(r_npusch[k]),cimag(r_npusch[k]));
 		     				  }
 		     			  }
 		     		  }
