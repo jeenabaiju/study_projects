@@ -259,7 +259,7 @@ uint32_t Get_N_seq_RU(uint32_t N_sc_RU)
  * */
 /****************************************************************************/
 
-uint32_t get_M_identical_NPUSCH(uint32_t N_sc_RU,uint32_t M_rep_NPUSCH)
+uint32_t get_M_identical_NPUSCH(uint32_t N_sc_RU,uint32_t M_Rep_NPUSCH)
 {
     uint16_t temp,M_identical;
     if (N_sc_RU)
@@ -268,7 +268,7 @@ uint32_t get_M_identical_NPUSCH(uint32_t N_sc_RU,uint32_t M_rep_NPUSCH)
     }
     else if(N_sc_RU > 2)
     {
-        temp = M_rep_NPUSCH/2;
+        temp = M_Rep_NPUSCH/2;
         if (temp < 4)
         {
            M_identical = temp;
@@ -700,9 +700,8 @@ int refsignal_dmrs_npusch_map(struct NPUSCH *npusch, uint32_t loc, float complex
     get_npusch_dmrs_symbollocation(npusch->NPUSCHformat, npusch->Subcarrierspacing,loc);
     // find the number of repetitions for Nslots
     uint32_t M_identical = get_M_identical_NPUSCH(N_sc_RU,M_Rep_NPUSCH);
-    printf(" lM_identical = %d \n",M_identical);
+    printf(" M_identical = %d \n",M_identical);
     float complex Symbol[N_sc_RU][2*CP_NSYMB];
-    //memset(Symbol, 0, sizeof(Symbol[0][0]) * N_sc_RU * (2*CP_NSYMB));    // set the symbol matrix to zero
     float complex  Mapping_slots[N_sc_RU][CP_NSYMB*N_UL_slots*N_RU*CP_NSYMB];
 	float complex r_npusch[N_rep_NPUSCH*N_UL_slots*N_RU*3];
     Get_n_oc(npusch->N_CellID,npusch->ns,&n_oc);
