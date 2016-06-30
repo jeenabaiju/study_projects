@@ -764,14 +764,15 @@ int refsignal_dmrs_npusch_map(struct NPUSCH *npusch, uint32_t loc, float complex
 		     			  }
 		     		  }
 		     	  }
-		     	  for (i=0;i<N_UL_slots*N_RU*CP_NSYMB;i++)
+		     	/*  for (i=0;i<N_UL_slots*N_RU*CP_NSYMB;i++)
 		     	  {
-                          for (k=0;k<N_sc_RU;k++)
-		     			  {
-		     			      printf(" Mapping_slots[%d][%d]= %.4f+i%.4f \n ",k,i,creal(Mapping_slots[k][i]),cimag(Mapping_slots[k][i]));
-		     			  }
-		     			  printf("\n\n\n");
+                    for (k=0;k<N_sc_RU;k++)
+                    {
+		     			printf(" Mapping_slots[%d][%d]= %.4f+i%.4f \n ",k,i,creal(Mapping_slots[k][i]),cimag(Mapping_slots[k][i]));
+		     		}
+                    printf("\n\n\n");*/
 		     	  }
+
 	}
   ret = SUCCESS;
   }
