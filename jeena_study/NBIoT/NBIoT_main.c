@@ -710,18 +710,10 @@ int refsignal_dmrs_npusch_map(struct NPUSCH *npusch, uint32_t loc, float complex
 		if (npusch->NPUSCHformat==0)
 		{
 		  Get_refsignal_NPUSCHformat1(npusch,npusch->ns,N_UL_slots,I_Rep,N_RU,N_seq_RU,r_npusch);
-			 for (n = 0; n < N_rep_NPUSCH*N_UL_slots*N_RU; n++)
-		     {
-			  // printf(" r_npusch[%d] = %.4f+i%.4f \n",n,creal(r_npusch[n]),cimag(r_npusch[n]));
-		     }
 		}
 		else
 		{
 			Get_refsignal_NPUSCHformat2(npusch,npusch->ns,N_UL_slots,N_RU,N_seq_RU,n_oc,I_Rep,r_npusch);
-			 for (n = 0; n < N_rep_NPUSCH*N_UL_slots*N_RU; n++)
-		     {
-			   printf(" r_npusch[%d] = %.4f+i%.4f \n",n,creal(r_npusch[n]),cimag(r_npusch[n]));
-		     }
 		}
 		for (n=0;n<(N_rep_NPUSCH*N_UL_slots*N_RU);n++)
 		{
@@ -739,10 +731,6 @@ int refsignal_dmrs_npusch_map(struct NPUSCH *npusch, uint32_t loc, float complex
 	else
 	{
 		Get_refsignal_r_u_greaterthan1(npusch,N_sc_RU,N_seq_RU,npusch->ns,r_npusch);
-		 for (n = 0; n < N_sc_RU; n++)
-	     {
-			 printf(" r_npusch[%d] = %.4f+i%.4f \n",n,creal(r_npusch[n]),cimag(r_npusch[n]));
-	     }
 		 for (i=0;i<N_UL_slots*N_RU*CP_NSYMB;i++)
 		     	  {
 		     		  for (l=0;l<nsymbols;l++)
@@ -761,7 +749,7 @@ int refsignal_dmrs_npusch_map(struct NPUSCH *npusch, uint32_t loc, float complex
 		     				  else
 		     				  {
 		     					 Mapping_slots[k][loc[l]+i*CP_NSYMB] = r_npusch[k];
-		     					 printf(" Mapping_slots[%d][%d]= %.4f+i%.4f      r_npusch[%d]= %.4f+i%.4f \n",k,i,creal(Mapping_slots[k][i]),cimag(Mapping_slots[k][i]),k,creal(r_npusch[k]),cimag(r_npusch[k]));
+		     					 printf(" Mapping_slots[%d][%d]= %.4f+i%.4f      r_npusch[%d]= %.4f+i%.4f \n",k,loc[l]+i*CP_NSYMB],creal(Mapping_slots[k][loc[l]+i*CP_NSYMB]]),cimag(Mapping_slots[k][loc[l]+i*CP_NSYMB]]),k,creal(r_npusch[k]),cimag(r_npusch[k]));
 		     				  }
 		     			  }
 		     		  }
