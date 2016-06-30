@@ -750,12 +750,11 @@ int refsignal_dmrs_npusch_map(struct NPUSCH *npusch, uint32_t loc, float complex
                                    for (nslots = 0; nslots<Nslots;nslots++)
                                    {
 		                               Symbol[k][loc[l]+nslots*CP_NSYMB] =  r_npusch[k] ;
-
+                                       Mapping_slots[k][loc[l]+i*Nslots*CP_NSYMB] = Symbol[k][loc[l]+nslots*CP_NSYMB];
 		                              // Mapping_slots = repmat(Symbol,1,M_identical-1);
 		     					   }
-		     					   Mapping_slots[k][loc[l]+i*Nslots*CP_NSYMB] = Symbol[k][loc[l]];
-		     					   printf(" Mapping_slots[%d][%d] = %.4f+i%.4f \n",k,loc[l]+m*Nslots*CP_NSYMB,creal(Mapping_slots[k][loc[l]+m*Nslots*CP_NSYMB]),cimag(Mapping_slots[k][loc[l]+m*Nslots*CP_NSYMB]));
 
+		     					   printf(" Mapping_slots[%d][%d] = %.4f+i%.4f \n",k,loc[l]+m*Nslots*CP_NSYMB,creal(Mapping_slots[k][loc[l]+m*Nslots*CP_NSYMB]),cimag(Mapping_slots[k][loc[l]+m*Nslots*CP_NSYMB]));
                                   }
 		     				  }
 		     				  else if (M_identical)
