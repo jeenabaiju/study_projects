@@ -261,23 +261,25 @@ uint32_t Get_N_seq_RU(uint32_t N_sc_RU)
 
 uint32_t get_M_identical_NPUSCH(uint32_t N_sc_RU,uint32_t M_Rep_NPUSCH)
 {
-    uint16_t temp,M_identical;
-    if (N_sc_RU)
-    {
-        M_identical = 1;
-    }
-    else if(N_sc_RU > 1)
+    uint32_t temp,M_identical;
+
+    if(N_sc_RU > 1)
     {
         temp = M_Rep_NPUSCH/2;
         if (temp < 4)
         {
            M_identical = temp;
         }
-        else{
+        else
+        {
             M_identical = 4;
         }
     }
-     return M_identical;
+    else
+    {
+        M_identical = 1;
+    }
+   return M_identical;
 }
 /****************************************************************************/
 /* //Compute and generate pseudo random sequence
