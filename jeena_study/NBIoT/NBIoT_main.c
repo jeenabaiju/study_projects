@@ -696,6 +696,7 @@ int refsignal_dmrs_npusch_map(struct NPUSCH *npusch, uint32_t loc, float complex
     Nslots = npusch->Subcarrierspacing ? 1:2;
     uint32_t i,nslots,k,l,n,n_oc;
     uint32_t loc[nsymbols];
+    M_Rep_NPUSCH = 4;
     // find the symbol location according to table 10.1.4.2-1 in CR 36.211 rel13 v13.1.0
     get_npusch_dmrs_symbollocation(npusch->NPUSCHformat, npusch->Subcarrierspacing,loc);
     // find the number of repetitions for Nslots
