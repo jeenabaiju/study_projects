@@ -266,12 +266,15 @@ uint32_t get_M_identical_NPUSCH(uint32_t N_sc_RU,uint32_t M_Rep_NPUSCH)
     {
         M_identical = 1;
     }
-    else if(N_sc_RU > 2)
+    else if(N_sc_RU > 1)
     {
         temp = M_Rep_NPUSCH/2;
         if (temp < 4)
         {
            M_identical = temp;
+        }
+        else{
+            M_identical = 4;
         }
     }
      return M_identical;
@@ -729,7 +732,7 @@ int refsignal_dmrs_npusch_map(struct NPUSCH *npusch, uint32_t loc, float complex
 		  }
 		}
 	}
-	else
+	else if (N_sc_RU >1)
 	{
 		Get_refsignal_r_u_greaterthan1(npusch,N_sc_RU,N_seq_RU,npusch->ns,r_npusch);
 		 for (i=0;i<N_UL_slots*N_RU*CP_NSYMB;i++)
@@ -762,9 +765,9 @@ int refsignal_dmrs_npusch_map(struct NPUSCH *npusch, uint32_t loc, float complex
 		     	  {
                           for (k=0;k<N_sc_RU;k++)
 		     			  {
-		     			      printf(" Mapping_slots[%d][%d]= %.4f+i%.4f ",k,i,creal(Mapping_slots[k][i]),cimag(Mapping_slots[k][i]));
+		     			      printf(" Mapping_slots[%d][%d]= %.4f+i%.4f \n ",k,i,creal(Mapping_slots[k][i]),cimag(Mapping_slots[k][i]));
 		     			  }
-		     			  printf("\n");
+		     			  printf("\n\n\n");
 		     	  }
 	}
   ret = SUCCESS;
