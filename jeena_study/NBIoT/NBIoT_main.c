@@ -702,7 +702,7 @@ int refsignal_dmrs_npusch_map(struct NPUSCH *npusch, uint32_t loc, float complex
     uint32_t M_identical = get_M_identical_NPUSCH(N_sc_RU,M_Rep_NPUSCH);
     float complex Symbol[N_sc_RU][2*CP_NSYMB];
     //memset(Symbol, 0, sizeof(Symbol[0][0]) * N_sc_RU * (2*CP_NSYMB));    // set the symbol matrix to zero
-    uint32_t Mapping_slots[N_sc_RU][N_rep_NPUSCH*N_UL_slots*N_RU];
+    float complex  Mapping_slots[N_sc_RU][N_rep_NPUSCH*N_UL_slots*N_RU];
 	float complex r_npusch[N_rep_NPUSCH*N_UL_slots*N_RU*3];
     Get_n_oc(npusch->N_CellID,npusch->ns,&n_oc);
 	if(N_sc_RU == 1)
