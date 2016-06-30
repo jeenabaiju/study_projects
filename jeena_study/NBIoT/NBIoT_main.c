@@ -770,8 +770,8 @@ int refsignal_dmrs_npusch_map(struct NPUSCH *npusch, uint32_t loc, float complex
                     {
 		     			printf(" Mapping_slots[%d][%d]= %.4f+i%.4f \n ",k,i,creal(Mapping_slots[k][i]),cimag(Mapping_slots[k][i]));
 		     		}
-                    printf("\n\n\n");*/
-		     	  }
+                    printf("\n\n\n");
+		     	  }*/
 
 	}
   ret = SUCCESS;
