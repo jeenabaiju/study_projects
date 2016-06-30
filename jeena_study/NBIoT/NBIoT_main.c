@@ -739,12 +739,15 @@ int refsignal_dmrs_npusch_map(struct NPUSCH *npusch, uint32_t loc, float complex
 		     			  {
 		     				  if (M_identical >1)
 		     				  {
-		     					  for (nslots = 0; nslots<Nslots;nslots++)
-		     					  {
+		     				      for (m = 0;m<M_identical-1;m++)
+                                  {
+                                   for (nslots = 0; nslots<Nslots;nslots++)
+                                   {
 		                               Symbol[k][loc[l]+nslots*CP_NSYMB] =  r_npusch[k] ;
 		                                printf(" Symbol[%d][%d] = %.4f+i%.4f \n",k,i,creal(Symbol[k][i]),cimag(Symbol[k][i]));
 		                              // Mapping_slots = repmat(Symbol,1,M_identical-1);
-		     					  }
+		     					   }
+                                  }
 		     				  }
 		     				  else
 		     				  {
@@ -790,6 +793,7 @@ void main()
 	nbiot.sixToneCyclicShift;// {0,1,,2,3}
 
 	uint32_t M_Rep_NPUSCH,N_sc_RU,N_UL_slots,N_RU,loc[3],nsymbols,n_oc,N_seq_RU;
+	M_Rep_NPUSCH = 4;
 	uint32_t I_Rep =2,i,n,N_rep_NPUSCH,N_Uplinkslots;
 	N_rep_NPUSCH = N_rep[I_Rep];
 	N_sc_RU=get_N_sc_RU(nbiot.Subcarrierspacing,nbiot.NPUSCHformat,nbiot.tone,&N_UL_slots);
